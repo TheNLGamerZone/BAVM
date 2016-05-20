@@ -1,0 +1,1 @@
+BAVM of BrinkAnema VoetbalManager is een spel waarin het doel is om een zo goed mogelijk team te bouwen en kampioen te worden. Je kunt spelers trainen en kopen van andere clubs op een transfermarkt en je team zo goed mogelijk voorbereiden op wedstrijden.
