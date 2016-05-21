@@ -1,7 +1,5 @@
 package me.nlt.bavm;
 
-import me.nlt.bavm.league.RandomNames;
-
 import java.awt.*;
 
 public class BAVM
@@ -56,8 +54,7 @@ public class BAVM
         }
 
         // Eigenlijk lieg ik bij het eerste bericht maar anders kan het niet
-        display.appendText("Thread locked, aan het wachten op een unlock");
-        display.appendText("Thread ge-unlocked\n");
+        display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked\n", "BAVM is gereed om te worden gebruikt!\n\n----");
 
         // Zorgen dat de rest laad
         this.initGame();
@@ -68,14 +65,16 @@ public class BAVM
      */
     private void initGame()
     {
-        RandomNames randomNames = new RandomNames();
+        /*RandomNames randomNames = new RandomNames();
 
         String BALTeamNames[] = randomNames.getBALTeamNames();
 
         for (int i = 0; i < 20; i++)
         {
             display.appendText(i + 1 + ". " + BALTeamNames[i]);
-        }
+        }*/
+
+        display.appendText("Hallo " + display.readLine(lockObject, "Wat is je naam?") + "!");
     }
 
     public static BAVM getMainInstance()
