@@ -3,6 +3,7 @@ package me.nlt.bavm;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -37,13 +38,15 @@ public class Display
         JFrame jFrame = new JFrame();
         JPanel jPanel = new JPanel();
         this.textArea = new JTextArea(width, height);
-        JScrollPane scroll = new JScrollPane(textArea);
+        JScrollPane jScrollPane = new JScrollPane(textArea);
+        DefaultCaret defaultCaret = (DefaultCaret) this.textArea.getCaret();
 
         // JPanel, JTextArea en JScrollPane 'configureren'
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        defaultCaret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         this.textArea.setEditable(false);
         jPanel.setBorder(new TitledBorder(new EtchedBorder(), "Actie venster"));
-        jPanel.add(scroll);
+        jPanel.add(jScrollPane);
 
         // Hier zorgen we dat onClose() wordt aangeroepen als het programma stopt
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
