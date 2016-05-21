@@ -1,8 +1,5 @@
 package me.nlt.bavm.league;
 
-/**
- * Created by Tip on 5/20/2016.
- */
 public class PlayerStats {
     public int[][] PlayerStats() {
         /* de stats:

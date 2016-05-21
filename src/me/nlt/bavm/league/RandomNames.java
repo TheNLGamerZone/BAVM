@@ -2,9 +2,6 @@ package me.nlt.bavm.league;
 
 import java.util.Random;
 
-/**
- * Created by Tip on 5/20/2016.
- */
 public class RandomNames {
     public String[] getBALTeamNames() {
         //in deze method worden de namen van alle 20 teams in de BrinkAnema League (BAL) aangemaakt
@@ -64,12 +61,12 @@ public class RandomNames {
 
         //willekeurig 1 of 0 om te kijken of het woord met een medeklinker ja of nee begint
         int consonantStart = randomNumber.nextInt(2);
-        boolean isConsonant = (consonantStart == 0) ? false : true;
+        boolean isConsonant = (consonantStart != 0);
         //de 'charAt' method van String geeft een char op de gespecificeerde index van de gegeven String, in dit geval is de index random zodat ook de letter ranodm is
-        word = (isConsonant == true) ? word + consonantsUpperCase.charAt(randomNumber.nextInt(21)) : word + vowelsUpperCase.charAt(randomNumber.nextInt(6));
+        word = (isConsonant) ? word + consonantsUpperCase.charAt(randomNumber.nextInt(21)) : word + vowelsUpperCase.charAt(randomNumber.nextInt(6));
 
         //eerst wordt gekeken of het wordt met een medeklinker begint om te kijken wat de volgende letter moet zijn, en vervolgens wordt steeds door 2 gedeeld om afwisselend medeklinkers of klinkers toe te voegen
-        for (int i = (isConsonant == true) ? 1 : 2; i <= wordLength; i++) {
+        for (int i = (isConsonant) ? 1 : 2; i <= wordLength; i++) {
             word = (i % 2 == 0) ? word + consonantsLowerCase.charAt(randomNumber.nextInt(21)) : word + vowelsLowerCase.charAt(randomNumber.nextInt(6));
         }
 
