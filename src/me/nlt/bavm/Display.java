@@ -3,6 +3,7 @@ package me.nlt.bavm;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -95,10 +96,14 @@ public class Display
      */
     public void appendText(String... strings)
     {
-        // Door alle strings lopen en die printen in het actie venster
-        for (String string : strings)
-        {
-            textArea.append(string + "\n");
-        }
+        // Op EDT uitvoeren
+        EventQueue.invokeLater(() -> {
+            // Door alle strings lopen en die printen in het actie venster
+            for (String string : strings)
+            {
+                textArea.append(string + "\n");
+            }
+        });
+
     }
 }
