@@ -1,6 +1,7 @@
 package me.nlt.bavm;
 
 import java.awt.*;
+import me.nlt.bavm.league.RandomNames;
 
 public class BAVM
 {
@@ -67,6 +68,14 @@ public class BAVM
     {
         // Even testen
         display.appendText("Hallo ik ben een string", "Ik wil kaas", "Ik ben ook een klant");
+
+        RandomNames randomNames = new RandomNames();
+
+        String BALTeamNames[] = randomNames.getBALTeamNames();
+
+        for (int i = 0; i < 20; i++) {
+            System.out.printf("%d. %s%n", i + 1,BALTeamNames[i]);
+        }
     }
 
     public static BAVM getMainInstance()
