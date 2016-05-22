@@ -75,7 +75,14 @@ public class BAVM
         }*/
 
         display.appendText("Wat is je naam?");
-        display.appendText("Hallo " + display.readLine() + "!");
+
+        String naam = display.readLine();
+
+        display.appendText("Wat is je leeftijd?");
+
+        int leeftijd = (int) display.readDouble();
+
+        display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);
     }
 
     public static BAVM getMainInstance()

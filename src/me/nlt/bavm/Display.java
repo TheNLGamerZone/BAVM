@@ -126,16 +126,26 @@ public class Display
     /**
      * Hiermee kan tekst worden toegevoegd aan de JTextArea en dus worden getoond
      *
-     * @param strings
+     * @param strings De strings die toegevoegd moeten worden
      */
     public void appendText(String... strings)
+    {
+       this.appendText(true, strings);
+    }
+
+    /**
+     * Hiermee kan je ook strings toevoegen alleen heb je hier ook nog de keuze of de string op een nieuwe regel moet
+     * @param newLine De boolean die aangeeft of het op een nieuwe regel moet of niet
+     * @param strings De strings die toegevoegd moeten worden
+     */
+    public void appendText(boolean newLine, String... strings)
     {
         // Op EDT uitvoeren
         EventQueue.invokeLater(() -> {
             // Door alle strings lopen en die printen in het actie venster
             for (String string : strings)
             {
-                textArea.append(string + "\n");
+                textArea.append((newLine ? "\n" : "") + string);
             }
         });
     }
@@ -156,7 +166,7 @@ public class Display
      */
     public String readLine(String questionString)
     {
-        final String[] inputLine = {""};
+        final String[] inputLine = {null};
 
         // Zet de textField aan zodat mensen dingen kunnen typen
         jTextField.setEnabled(true);
@@ -175,6 +185,8 @@ public class Display
                 // Zet de tekst in de textField in een array (variable moeten constant zijn om in een lambda te kunnen worden gebruikt)
                 inputLine[0] = jTextField.getText();
 
+                // De input van de gebruiker ook even 'printen'
+                appendText(false, "   --> " + inputLine[0]);
                 // Unlock het lockObject weer zodat de Thread die deze methode aanvroeg weer verder kan met het resultaat
                 synchronized (inputLine)
                 {
@@ -208,5 +220,40 @@ public class Display
         jTextField.setEnabled(false);
 
         return inputLine[0];
+    }
+
+    /**
+     * Hiermee kan je om een nummer vragen van de gebruiker zonder een vraag te stellen
+     * @return Het resultaat in de vorm van een double
+     */
+    public double readDouble()
+    {
+        return this.readDouble("");
+    }
+
+    /**
+     * Hiermee kan je om een nummer vragen van de gebruiker
+     * Het nummer wordt automatisch geparsed en mocht dat niet kunnen wordt er een bericht gestuurd
+     * @param questionString De vraag die er aan de gebruiker wordt gevraagd
+     * @return Het resultaat in de vorm van een double
+     */
+    public double readDouble(String questionString)
+    {
+        double result = Double.MIN_VALUE;
+
+        // Net zo lang blijven vragen totdat de gebruiker een waarde heeft gegeven waar we iets mee kunnen
+        while (result == Double.MIN_VALUE)
+        {
+            // Even kijken of de input wel een nummer is
+            try
+            {
+                result = Double.parseDouble(readLine(questionString));
+            } catch (NumberFormatException e)
+            {
+                appendText("Er wordt om een nummer gevraagd in het patroon '1.0' of '1'!");
+            }
+        }
+
+        return result;
     }
 }
