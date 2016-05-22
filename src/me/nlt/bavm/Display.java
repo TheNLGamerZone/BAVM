@@ -202,7 +202,7 @@ public class Display
         // Ga verder op EDT en wacht op het punt dat de gebruiker de 'enter' toets indrukt
         EventQueue.invokeLater(() -> jTextField.addActionListener(actionListener));
 
-        // Loch het lockObject zodat deze moet wachten tot de gebruiker iets heeft ingetypt
+        // Lock het lockObject zodat deze moet wachten tot de gebruiker iets heeft ingetypt
         synchronized (inputLine)
         {
             try
@@ -250,7 +250,7 @@ public class Display
                 result = Double.parseDouble(readLine(questionString));
             } catch (NumberFormatException e)
             {
-                appendText("Er wordt om een nummer gevraagd in het patroon '1.0' of '1'!");
+                appendText("Er wordt om een nummer gevraagd in het format '1.0' of '1'!");
             }
         }
 
