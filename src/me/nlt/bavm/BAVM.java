@@ -74,7 +74,8 @@ public class BAVM
             display.appendText(i + 1 + ". " + BALTeamNames[i]);
         }*/
 
-        display.appendText("Hallo " + display.readLine(lockObject, "Wat is je naam?") + "!");
+        display.appendText("Wat is je naam?");
+        display.appendText("Hallo " + display.readLine() + "!");
     }
 
     public static BAVM getMainInstance()

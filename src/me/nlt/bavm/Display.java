@@ -141,20 +141,31 @@ public class Display
     }
 
     /**
+     * Hiermee kan je de input van de gebruiker lezen zonder eerst een vraag te stellen
+     * @return De input van de gebruiker
+     */
+    public String readLine()
+    {
+        return this.readLine("");
+    }
+
+    /**
      * Hiermee kan je de input van de gebruiker lezen
-     * @param lockObject Het object dat gebruikt wordt om de thread te locken terwijl het EDT wacht op input
      * @param questionString De vraag die wordt gesteld aan de gebruiker
      * @return De input van de gebruiker
      */
-    public String readLine(Object lockObject, String questionString)
+    public String readLine(String questionString)
     {
         final String[] inputLine = {""};
 
         // Zet de textField aan zodat mensen dingen kunnen typen
         jTextField.setEnabled(true);
 
-        // Stel de vraag
-        appendText(questionString);
+        // Stel de vraag mits die er is
+        if (!questionString.trim().equals(""))
+        {
+            appendText(questionString);
+        }
 
         // Action listener maken
         ActionListener actionListener = e -> {
@@ -165,9 +176,9 @@ public class Display
                 inputLine[0] = jTextField.getText();
 
                 // Unlock het lockObject weer zodat de Thread die deze methode aanvroeg weer verder kan met het resultaat
-                synchronized (lockObject)
+                synchronized (inputLine)
                 {
-                    lockObject.notify();
+                    inputLine.notify();
                 }
             }
             else
@@ -180,11 +191,11 @@ public class Display
         EventQueue.invokeLater(() -> jTextField.addActionListener(actionListener));
 
         // Loch het lockObject zodat deze moet wachten tot de gebruiker iets heeft ingetypt
-        synchronized (lockObject)
+        synchronized (inputLine)
         {
             try
             {
-                lockObject.wait();
+                inputLine.wait();
             } catch (InterruptedException e)
             {
                 e.printStackTrace();
