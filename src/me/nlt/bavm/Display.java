@@ -119,7 +119,7 @@ public class Display
      */
     private void onClose()
     {
-        System.out.println("Afsluiten ..");
+        appendText("Afsluiten ..");
         System.exit(1);
     }
 
@@ -130,11 +130,12 @@ public class Display
      */
     public void appendText(String... strings)
     {
-       this.appendText(true, strings);
+        this.appendText(true, strings);
     }
 
     /**
      * Hiermee kan je ook strings toevoegen alleen heb je hier ook nog de keuze of de string op een nieuwe regel moet
+     *
      * @param newLine De boolean die aangeeft of het op een nieuwe regel moet of niet
      * @param strings De strings die toegevoegd moeten worden
      */
@@ -152,6 +153,7 @@ public class Display
 
     /**
      * Hiermee kan je de input van de gebruiker lezen zonder eerst een vraag te stellen
+     *
      * @return De input van de gebruiker
      */
     public String readLine()
@@ -161,6 +163,7 @@ public class Display
 
     /**
      * Hiermee kan je de input van de gebruiker lezen
+     *
      * @param questionString De vraag die wordt gesteld aan de gebruiker
      * @return De input van de gebruiker
      */
@@ -182,18 +185,18 @@ public class Display
             // Even checken of de gebruiker wel iets heeft getypt en stuur zo nodig een bericht waarin gevraagd wordt of hij/zij dat wilt doen
             if (!jTextField.getText().trim().equals(""))
             {
-                // Zet de tekst in de textField in een array (variable moeten constant zijn om in een lambda te kunnen worden gebruikt)
+                // Zet de tekst in de textField in een array (variable moeten constant/final zijn om in een lambda te kunnen worden gebruikt)
                 inputLine[0] = jTextField.getText();
 
                 // De input van de gebruiker ook even 'printen'
                 appendText(false, "   --> " + inputLine[0]);
+
                 // Unlock het lockObject weer zodat de Thread die deze methode aanvroeg weer verder kan met het resultaat
                 synchronized (inputLine)
                 {
                     inputLine.notify();
                 }
-            }
-            else
+            } else
             {
                 appendText("Je dient wel iets in te typen!");
             }
@@ -224,6 +227,7 @@ public class Display
 
     /**
      * Hiermee kan je om een nummer vragen van de gebruiker zonder een vraag te stellen
+     *
      * @return Het resultaat in de vorm van een double
      */
     public double readDouble()
@@ -234,6 +238,7 @@ public class Display
     /**
      * Hiermee kan je om een nummer vragen van de gebruiker
      * Het nummer wordt automatisch geparsed en mocht dat niet kunnen wordt er een bericht gestuurd
+     *
      * @param questionString De vraag die er aan de gebruiker wordt gevraagd
      * @return Het resultaat in de vorm van een double
      */

@@ -1,5 +1,8 @@
 package me.nlt.bavm;
 
+import me.nlt.bavm.teams.Player;
+import me.nlt.bavm.teams.PlayerFactory;
+
 import java.awt.*;
 
 public class BAVM
@@ -72,7 +75,7 @@ public class BAVM
         for (int i = 0; i < 20; i++)
         {
             display.appendText(i + 1 + ". " + BALTeamNames[i]);
-        }*/
+        }
 
         display.appendText("Wat is je naam?");
 
@@ -82,7 +85,13 @@ public class BAVM
 
         int leeftijd = (int) display.readDouble();
 
-        display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);
+        display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);*/
+
+        Player player = new Player("Tim Anema", 0, new int[]{0, 1, 2, 3, 4, 5, 6});
+        Player playerCopy = PlayerFactory.createPlayer(player.toString());
+
+        System.out.println("Van player: " + player.toString());
+        System.out.println("Van playerCopy: " + playerCopy.toString());
     }
 
     public static BAVM getMainInstance()
