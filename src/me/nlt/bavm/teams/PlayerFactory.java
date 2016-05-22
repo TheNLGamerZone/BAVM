@@ -11,7 +11,7 @@ public class PlayerFactory
     {
         String playerName = "";
         int playerID = 0;
-        int[] playerStats = new int[7];
+        double[] playerStats = new double[PlayerStats.Stat.values().length];
 
         // Randen van de string strippen
         playerString = playerString.substring(7, playerString.length() - 1);
@@ -36,11 +36,11 @@ public class PlayerFactory
                         // Stat verkrijgen
                         String stat = stats.split(":")[0];
                         PlayerStats.Stat playerStat = PlayerStats.getSkill(stat.toUpperCase());
-                        int value = 0;
+                        double value = 0;
 
-                        // Integer proberen maken uit string
+                        // Double proberen maken uit string
                         try {
-                            value = Integer.parseInt(stats.split(":")[1].replaceAll("}", ""));
+                            value = Double.parseDouble(stats.split(":")[1].replaceAll("}", ""));
                         } catch (NumberFormatException e)
                         {
                             continue;

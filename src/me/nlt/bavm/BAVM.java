@@ -87,7 +87,7 @@ public class BAVM
 
         display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);*/
 
-        Player player = new Player("Tim Anema", 0, new int[]{0, 1, 2, 3, 4, 5, 6});
+        Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5, 6});
         Player playerCopy = PlayerFactory.createPlayer(player.toString());
 
         System.out.println("Van player: " + player.toString());

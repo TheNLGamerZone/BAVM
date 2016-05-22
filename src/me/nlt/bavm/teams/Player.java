@@ -7,7 +7,13 @@ public class Player
 
     private PlayerStats playerStats;
 
-    public Player(String playerName, int playerID, int[] stats)
+    /**
+     * Player constructor
+     * @param playerName PlayerName
+     * @param playerID PlayerID
+     * @param stats Stats
+     */
+    public Player(String playerName, int playerID, double[] stats)
     {
         this.playerName = playerName;
         this.playerID = playerID;
@@ -41,6 +47,10 @@ public class Player
         return this.playerStats;
     }
 
+    /**
+     * Maakt en antwoord een string met alle data voor players
+     * @return De string met alle data
+     */
     @Override
     public String toString()
     {
