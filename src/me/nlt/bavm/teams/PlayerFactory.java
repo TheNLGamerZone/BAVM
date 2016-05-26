@@ -1,17 +1,21 @@
 package me.nlt.bavm.teams;
 
+import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
+
 public class PlayerFactory
 {
     /**
      * Deze methode maakt een speler-object uit een string met data
      * @param playerString String met data
      * @return Gemaakte speler
+     * @throws InvalidPlayerException Als een speler onjuiste gegevens of een onjuist controlegetal heeft
      */
-    public static Player createPlayer(String playerString)
+    public static Player createPlayer(String playerString) throws InvalidPlayerException
     {
         String playerName = "";
         int playerID = 0;
         double[] playerStats = new double[PlayerStats.Stat.values().length];
+        double checkSum = 0;
 
         // Randen van de string strippen
         playerString = playerString.substring(7, playerString.length() - 1);
@@ -40,19 +44,27 @@ public class PlayerFactory
 
                         // Double proberen maken uit string
                         try {
-                            value = Double.parseDouble(stats.split(":")[1].replaceAll("}", ""));
+                            value = Double.parseDouble(stats.split(":")[1].split("%", 2)[0].replaceAll("}", ""));
                         } catch (NumberFormatException e)
                         {
-                            continue;
+                        	throw new InvalidPlayerException(playerName);
                         }
 
                         // Juiste waarde in de array zetten mits de huidige stat een bestaande is
                         if (playerStat == null)
                         {
-                            continue;
+                        	throw new InvalidPlayerException(playerName);
                         }
 
                         playerStats[playerStat.getLocation()] = value;
+                    }
+                    
+                    // Proberen het controlegetal te parsen
+                    try {
+                    	checkSum = Double.parseDouble(data.split("%")[1].replace("}", ""));
+                    } catch (NumberFormatException e)
+                    {
+                    	throw new InvalidPlayerException(playerName);
                     }
                     break;
                 case "name":
@@ -77,6 +89,17 @@ public class PlayerFactory
             }
         }
 
+        // Speler met de verkregen gegevens maken
+        Player player = new Player(playerName, playerID, playerStats);
+        
+        // Controlegetallen vergelijken
+        if (player.getPlayerStats().getCheckSum() != checkSum)
+        {
+        	// Controlegetallen kloppen niet, er zijn dus waarschijnlijk handmatig stats aangepast
+        	throw new InvalidPlayerException(playerName, checkSum);
+        }
+        
+        // Controlegetallen kloppen
         return new Player(playerName, playerID, playerStats);
     }
 }

@@ -2,6 +2,7 @@ package me.nlt.bavm;
 
 import me.nlt.bavm.teams.Player;
 import me.nlt.bavm.teams.PlayerFactory;
+import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
 
 import java.awt.*;
 
@@ -88,7 +89,14 @@ public class BAVM
         display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);*/
 
         Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5, 6});
-        Player playerCopy = PlayerFactory.createPlayer(player.toString());
+        Player playerCopy = null;
+        
+        try {
+			playerCopy = PlayerFactory.createPlayer("Player{name=Tim_Anema,id=0,playerstats=PlayerStats{afmaken:0.0>aanval:4.0>balbezit:2.0>verdedigen:3.0>conditie:4.0>geluk:5.0>doelman:6.0%130.0}}");
+		} catch (InvalidPlayerException e) {
+			e.printStackTrace();
+			return;
+		}
 
         System.out.println("Van player: " + player.toString());
         System.out.println("Van playerCopy: " + playerCopy.toString());

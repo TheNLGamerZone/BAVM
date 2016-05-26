@@ -5,6 +5,8 @@ import java.util.HashMap;
 public class PlayerStats
 {
     private HashMap<Stat, Double> playerSkills = new HashMap<>();
+    private double checkSum;
+    
     public enum Stat
     {
         AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), CONDITIE(4), GELUK(5), DOELMAN(6);
@@ -41,8 +43,45 @@ public class PlayerStats
             // Skills in hashmap zetten
             playerSkills.put(stat, skillValues[stat.getLocation()]);
         }
+        
+        // Checksum maken
+        this.checkSum = 0;
+        
+        // Checksum 'vullen'
+        for (int i = 0; i < playerSkills.size(); i++)
+        {
+        	//DEBUG
+        	System.out.println(this.getValue(i));
+        	checkSum += this.getValue(i) * (i * 2);
+        }
     }
 
+    /**
+     * Geeft de waarde van de skill op de plek van de gegeven locatie
+     * @param location De locatie van de skill
+     * @return De waarde van de skill
+     */
+    public double getValue(int location)
+    {
+    	// Checken of de gegeven waarde bestaat in de hashmap
+    	if (location < 0 || location > playerSkills.size())
+    	{
+    		return -1;
+    	}
+    	
+    	
+    	return (double) playerSkills.values().toArray()[location];
+    }
+    
+    /**
+     * Geeft de waarde van de checksum
+     * @return Checksum
+     */
+    public double getCheckSum()
+    {
+    	return this.checkSum;
+    }
+    
     /**
      * Hiermee kan een stat verhoogd of verlaagd worden
      * @param stat De stat die verhoogd/verlaagd moet worden
@@ -98,6 +137,8 @@ public class PlayerStats
 
         return "PlayerStats{" +
                 statString +
+                "%" +
+                this.checkSum +
                 "}";
     }
 }

@@ -4,7 +4,7 @@ public class Player
 {
     private String playerName;
     private int playerID;
-
+    
     private PlayerStats playerStats;
 
     /**
@@ -55,9 +55,9 @@ public class Player
     public String toString()
     {
         return "Player{" +
-                "playerstats=" + this.playerStats.toString() +
-                ",name=" + this.playerName.replaceAll(" ", "_") +
+                "name=" + this.playerName.replaceAll(" ", "_") +
                 ",id=" + this.playerID +
+                ",playerstats=" + this.playerStats.toString() +
                 "}";
     }
 }
