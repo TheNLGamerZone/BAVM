@@ -33,15 +33,10 @@ public class RandomNames {
         return TDTeamNames;
     }
 
-    public String[] getPeopleNames(int nameAmount) {
+    public String getPeopleName() {
         //deze methode voegt twee willekeurige woorden samen als een voor- en achternaam
-        String peopleNames[] = new String[nameAmount];
-
-        for (int i = 0; i < nameAmount; i++) {
-            peopleNames[i] = this.getRandomWord() + " " + this.getRandomWord();
-        }
-
-        return peopleNames;
+        
+    	return getRandomWord() + " " + getRandomWord();
     }
 
     public String getRandomWord() {

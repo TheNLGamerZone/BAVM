@@ -1,5 +1,6 @@
 package me.nlt.bavm;
 
+import me.nlt.bavm.league.RandomPlayer;
 import me.nlt.bavm.teams.Player;
 import me.nlt.bavm.teams.PlayerFactory;
 import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
@@ -88,7 +89,9 @@ public class BAVM
 
         display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);*/
 
-        Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5, 6});
+        RandomPlayer.createRandomPlayers(10);
+    	
+    	Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5, 6});
         Player playerCopy = null;
         
         try {
