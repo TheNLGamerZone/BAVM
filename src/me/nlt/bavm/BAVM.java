@@ -70,30 +70,18 @@ public class BAVM
      */
     private void initGame()
     {
-        /*RandomNames randomNames = new RandomNames();
+        //ONE TEAM
+        //amount of players to create (in multiples of 23)
+        int amount23s = 10;
+        //the place ratio's (goalkeeper 3/23, defender 8/23 etc., midfielder, attacker)
+        double placeRatios[] = {3, 8, 6, 6};
+        RandomPlayer.createRandomPlayers(amount23s, placeRatios);
 
-        String BALTeamNames[] = randomNames.getBALTeamNames();
 
-        for (int i = 0; i < 20; i++)
-        {
-            display.appendText(i + 1 + ". " + BALTeamNames[i]);
-        }
 
-        display.appendText("Wat is je naam?");
-
-        String naam = display.readLine();
-
-        display.appendText("Wat is je leeftijd?");
-
-        int leeftijd = (int) display.readDouble();
-
-        display.appendText("Je bent dus " +  leeftijd + " jaar en je heet " + naam);*/
-
-        RandomPlayer.createRandomPlayers(10);
-    	
-    	Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5, 6});
+    	/*Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5});
         Player playerCopy = null;
-        
+
         try {
 			playerCopy = PlayerFactory.createPlayer("Player{name=Tim_Anema,id=0,playerstats=PlayerStats{afmaken:0.0>aanval:4.0>balbezit:2.0>verdedigen:3.0>conditie:4.0>geluk:5.0>doelman:6.0%130.0}}");
 		} catch (InvalidPlayerException e) {
@@ -102,7 +90,7 @@ public class BAVM
 		}
 
         System.out.println("Van player: " + player.toString());
-        System.out.println("Van playerCopy: " + playerCopy.toString());
+        System.out.println("Van playerCopy: " + playerCopy.toString());*/
     }
 
     public static BAVM getMainInstance()

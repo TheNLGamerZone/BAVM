@@ -9,7 +9,7 @@ public class PlayerStats
     
     public enum Stat
     {
-        AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), CONDITIE(4), GELUK(5), DOELMAN(6);
+        AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), CONDITIE(4), DOELMAN(5);
         private int location;
 
         /**
@@ -50,9 +50,9 @@ public class PlayerStats
         // Checksum 'vullen'
         for (int i = 0; i < playerSkills.size(); i++)
         {
-        	//DEBUG
+        	/*DEBUG
         	System.out.println(this.getValue(i));
-        	checkSum += this.getValue(i) * (i * 2);
+        	checkSum += this.getValue(i) * (i * 2);*/
         }
     }
 
