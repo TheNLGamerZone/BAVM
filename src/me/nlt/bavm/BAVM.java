@@ -1,8 +1,12 @@
 package me.nlt.bavm;
 
+import me.nlt.bavm.game.Game;
 import me.nlt.bavm.league.RandomPlayer;
+import me.nlt.bavm.league.RandomTeam;
+import me.nlt.bavm.teams.Coach;
 import me.nlt.bavm.teams.Player;
 import me.nlt.bavm.teams.PlayerFactory;
+import me.nlt.bavm.teams.Team;
 import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
 
 import java.awt.*;
@@ -70,14 +74,24 @@ public class BAVM
      */
     private void initGame()
     {
-        //ONE TEAM
+        display.appendText(Game.simulateGame());
+
+        /*//ONE TEAM
         //amount of players to create (in multiples of 23)
-        int amount23s = 10;
+        int amount23s = 23;
         //the place ratio's (goalkeeper 3/23, defender 8/23 etc., midfielder, attacker)
         double placeRatios[] = {3, 8, 6, 6};
         RandomPlayer.createRandomPlayers(amount23s, placeRatios);
+        RandomTeam.createRandomTeams(19);
 
+        String PlayerCoachName = display.readLine("Welcome to BAVM, please enter your coach name.");
+        double[] coachStats = {50, 50, 50};
+        Coach coach = new Coach(PlayerCoachName, 19, coachStats);
+        display.appendText(coach.toString());
 
+        String PlayerTeamName = display.readLine("Welcome to BAVM, please enter your team name.");
+        Team team = new Team(PlayerTeamName, 19, RandomTeam.generatePlayerIDList(0.5), 19);
+        display.appendText(team.toString());*/
 
     	/*Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5});
         Player playerCopy = null;

@@ -3,43 +3,27 @@ package me.nlt.bavm.league;
 import java.util.Random;
 
 public class RandomNames {
-    public String[] getBALTeamNames() {
-        //in deze method worden de namen van alle 20 teams in de BrinkAnema League (BAL) aangemaakt
+    public static String getTeamName() {
+        //in deze method wordt een willekeurige teamnaam gemaakt
 
         Random randomNumber = new Random();
 
-        String BALTeamNames[] = new String[20];
+        String teamName;
         String prefixes[] = {"", "FC ", "FC ", "FC ", "SV ", "SV "};
 
        //er wordt steeds een willekeurig woord samengevoegd met een prefix zoals 'FC'
-        for (int i = 0; i < 20; i++) {
-            BALTeamNames[i] = prefixes[randomNumber.nextInt(6)] + this.getRandomWord();
-        }
+        teamName = prefixes[randomNumber.nextInt(6)] + getRandomWord();
 
-        return BALTeamNames;
+        return teamName;
     }
 
-    public String[] getTDTeamNames() {
-        //in deze method worden de namen van alle teams in de Tweede Divisie aangemaakt (net zoals de BAL, maar dan met 22 teams)
-        Random randomNumber = new Random();
-
-        String TDTeamNames[] = new String[22];
-        String prefixes[] = {"", "FC ", "FC ", "FC ", "SV ", "SV "};
-
-        for (int i = 0; i < 22; i++) {
-            TDTeamNames[i] = prefixes[randomNumber.nextInt(6)] + this.getRandomWord();
-        }
-
-        return TDTeamNames;
-    }
-
-    public String getPeopleName() {
+    public static String getPeopleName() {
         //deze methode voegt twee willekeurige woorden samen als een voor- en achternaam
         
     	return getRandomWord() + " " + getRandomWord();
     }
 
-    public String getRandomWord() {
+    public static String getRandomWord() {
         //deze methode maakt willekeurige woorden aan, altijd in de volgorde (klinker-)medeklinkder-klinker-medeklinker etc.
 
         //eerst de waardes van de klinkers en medeklinkers geven
