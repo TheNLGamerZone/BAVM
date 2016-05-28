@@ -2,6 +2,7 @@ package me.nlt.bavm.game;
 
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Game {
     /*public static void initSim(int teamID0, int teamID1) {
@@ -36,6 +37,8 @@ public class Game {
 
     //0=next minute, same status, 1=change possession, 2=next quarter
     public int getConflictResult(HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballQuarter, int ballPossession) {
+        Random rnd = new Random();
+
         if (ballPossession == 0) {
 
             double quarterNumber = 0;
@@ -50,8 +53,8 @@ public class Game {
                 case 3 : quarterNumber = 0.85;
                     break;
             }
-            double forwardNumber =  1.5 * quarterNumber * (luck0 + (Math.random())) * coefficients.get(Coefficient.ATTCOEF0);
-            double pressureNumber =  1 * (luck1 + (Math.random())) * coefficients.get(Coefficient.DEFCOEF1);
+            double forwardNumber =  1.3 * quarterNumber * (luck0 + (rnd.nextInt(2))) * coefficients.get(Coefficient.ATTCOEF0);
+            double pressureNumber =  1 * (luck1 + (rnd.nextInt(2))) * coefficients.get(Coefficient.DEFCOEF1);
             double possessionNumber = 0.6 * coefficients.get(Coefficient.POSCOEF0);
 
             double forwardResult = forwardNumber - pressureNumber;
@@ -85,8 +88,8 @@ public class Game {
                 case 0 : quarterNumber = 0.850;
                     break;
             }
-            double forwardNumber = 1.5 * quarterNumber * (luck1 + (Math.random())) * coefficients.get(Coefficient.ATTCOEF1);
-            double pressureNumber = 1 * (luck0 + (Math.random()) * coefficients.get(Coefficient.DEFCOEF0));
+            double forwardNumber = 1.3 * quarterNumber * (luck1 + (rnd.nextInt(2))) * coefficients.get(Coefficient.ATTCOEF1);
+            double pressureNumber = 1 * (luck0 + (rnd.nextInt(2)) * coefficients.get(Coefficient.DEFCOEF0));
             double possessionNumber = 0.5 * coefficients.get(Coefficient.POSCOEF1);
 
             double forwardResult = forwardNumber - pressureNumber;
@@ -111,9 +114,11 @@ public class Game {
 
     //0=new goal chance, 1=fail, 2=goal, 3=back to final ball quarter
     public int getGoalChanceResult (HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballPossession) {
+        Random rnd = new Random();
+
         if (ballPossession == 0) {
 
-            double goalNumber = coefficients.get(Coefficient.AFMCOEF0) * (luck0 + Math.random() + 0.5) - (coefficients.get(Coefficient.KEP1) * (luck1 + Math.random() + 0.5));
+            double goalNumber = coefficients.get(Coefficient.AFMCOEF0) * (luck0 + rnd.nextInt(2) + 0.5) - (coefficients.get(Coefficient.KEP1) * (luck1 + rnd.nextInt(2) + 0.5));
             double possessionNumber = 0.33 * coefficients.get(Coefficient.POSCOEF0);
 
             System.out.println("goalnumber attempt from 0: " + goalNumber);
@@ -131,7 +136,7 @@ public class Game {
                 return 2;
             }
         } else  {
-            double goalNumber = coefficients.get(Coefficient.AFMCOEF1) * (luck1 + Math.random() + 0.5) - (coefficients.get(Coefficient.KEP0) * (luck0 + Math.random() + 0.5));
+            double goalNumber = coefficients.get(Coefficient.AFMCOEF1) * (luck1 + rnd.nextInt(2) + 0.5) - (coefficients.get(Coefficient.KEP0) * (luck0 + rnd.nextInt(2) + 0.5));
             double possessionNumber = 0.33 * coefficients.get(Coefficient.POSCOEF1);
 
             System.out.println("goalnumber attempt from 1: " + goalNumber);
@@ -162,14 +167,12 @@ public class Game {
         int counter = 1;
         for (Coefficient coefficient : Coefficient.values()) {
             if (counter % 2 == 0) {
-                coefficients.put(coefficient, 1.0);
+                coefficients.put(coefficient, 1000.0);
             } else {
-                coefficients.put(coefficient, 1.0);
+                coefficients.put(coefficient, 1000.0);
             }
             counter++;
         }
-
-
 
         double luck0 = Math.random() + 0.3;
         double luck1 = Math.random() + 0.3;
@@ -179,7 +182,7 @@ public class Game {
         int goal0 = 0;
         int goal1 = 0;
 
-        for (int minute = 1; minute <= 90; minute++) {
+        for (int minute = 1; minute <= 9000; minute++) {
             System.out.println("minute: " + minute);
 
 
@@ -365,8 +368,11 @@ public class Game {
             minute++;
         } */
 
-        System.out.println("the final match result is " + goal0 + "-" + goal1);
+        int roundedGoal0 = Math.round(goal0 / 1000);
+        int roundedGoal1 = Math.round(goal1 / 1000);
 
-        return goal0 + "-" + goal1;
+        System.out.println("the final match result is " + roundedGoal0 + "-" + roundedGoal1);
+
+        return roundedGoal0 + "-" + roundedGoal1;
     }
 }
