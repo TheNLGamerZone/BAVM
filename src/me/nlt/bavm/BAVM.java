@@ -74,7 +74,13 @@ public class BAVM
      */
     private void initGame()
     {
-        display.appendText(Game.simulateGame());
+        Game gamer = new Game();
+
+        int amount = 20;
+
+        for (int i = 0; i < amount; i++) {
+            display.appendText(gamer.simulateGame());
+        }
 
         /*//ONE TEAM
         //amount of players to create (in multiples of 23)
