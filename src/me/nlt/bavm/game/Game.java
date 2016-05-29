@@ -11,9 +11,25 @@ public class Game {
 
     private HashMap<Coefficient, Double> coefficients = new HashMap<>();
 
+    public String getMatchResult() {
+
+        int goal0 = 0;
+        int goal1 = 0;
+
+        for (int i = 0; i < 5; i++) {
+            goal0 = goal0 + simulateGame()[0];
+            goal1 = goal1 + simulateGame()[1];
+        }
+
+        goal0 = Math.round(goal0 / 5);
+        goal1 = Math.round(goal1 / 5);
+
+        return goal0 + "-" + goal1;
+    }
+
     public enum Coefficient {
         AFMCOEF0(0), AFMCOEF1(1), ATTCOEF0(2), ATTCOEF1(3), POSCOEF0(4), POSCOEF1(5),
-        DEFCOEF0(6), DEFCOEF1(7), CNDCOEF0(8), CNDCOEF1(9), KEP0(10), KEP1(11);
+        DEFCOEF0(6), DEFCOEF1(7), KEP0(8), KEP1(9), CNDCOEF0(10), CNDCOEF1(11);
         private int index;
 
         /**
@@ -53,9 +69,9 @@ public class Game {
                 case 3 : quarterNumber = 0.85;
                     break;
             }
-            double forwardNumber =  1.3 * quarterNumber * (luck0 + (rnd.nextInt(2))) * coefficients.get(Coefficient.ATTCOEF0);
-            double pressureNumber =  1 * (luck1 + (rnd.nextInt(2))) * coefficients.get(Coefficient.DEFCOEF1);
-            double possessionNumber = 0.6 * coefficients.get(Coefficient.POSCOEF0);
+            double forwardNumber =  1.3 * quarterNumber * ((luck0 + (rnd.nextInt(2)))) * coefficients.get(Coefficient.ATTCOEF0);
+            double pressureNumber =  1 * ((luck1 + (rnd.nextInt(2)))) * coefficients.get(Coefficient.DEFCOEF1);
+            double possessionNumber = 0.25 * coefficients.get(Coefficient.POSCOEF0);
 
             double forwardResult = forwardNumber - pressureNumber;
 
@@ -88,9 +104,9 @@ public class Game {
                 case 0 : quarterNumber = 0.850;
                     break;
             }
-            double forwardNumber = 1.3 * quarterNumber * (luck1 + (rnd.nextInt(2))) * coefficients.get(Coefficient.ATTCOEF1);
-            double pressureNumber = 1 * (luck0 + (rnd.nextInt(2)) * coefficients.get(Coefficient.DEFCOEF0));
-            double possessionNumber = 0.5 * coefficients.get(Coefficient.POSCOEF1);
+            double forwardNumber = 1.3 * quarterNumber * ((luck1 + (rnd.nextInt(2))) * coefficients.get(Coefficient.ATTCOEF1));
+            double pressureNumber = 1 * ((luck0 + (rnd.nextInt(2))) * coefficients.get(Coefficient.DEFCOEF0));
+            double possessionNumber = 0.25 * coefficients.get(Coefficient.POSCOEF1);
 
             double forwardResult = forwardNumber - pressureNumber;
 
@@ -156,8 +172,10 @@ public class Game {
         }
     }
 
-    public String simulateGame() {
+    public int[] simulateGame() {
         //TODO base coefficients on team stats
+
+        Random rnd = new Random();
 
         int ballQuarter = 0;
 
@@ -166,27 +184,53 @@ public class Game {
 
         int counter = 1;
         for (Coefficient coefficient : Coefficient.values()) {
-            if (counter % 2 == 0) {
-                coefficients.put(coefficient, 1000.0);
+            if (counter % 2 != 0) {
+                //team0
+                coefficients.put(coefficient, 100.0);
             } else {
+                //team1
                 coefficients.put(coefficient, 1000.0);
             }
             counter++;
         }
 
-        double luck0 = Math.random() + 0.3;
-        double luck1 = Math.random() + 0.3;
+        double luck0 = rnd.nextInt(3) - 0.5;
+        double luck1 = rnd.nextInt(3) - 0.5;
 
         System.out.println("luck0: " + luck0 + " and luck1: " + luck1);
 
         int goal0 = 0;
         int goal1 = 0;
 
-        for (int minute = 1; minute <= 9000; minute++) {
+        double cndPart = (coefficients.get(Coefficient.CNDCOEF0) + coefficients.get(Coefficient.CNDCOEF1)) / 1.95;
+
+        double cndModifier0 = 0.95 * (coefficients.get(Coefficient.CNDCOEF0) / cndPart);
+        double cndModifier1 = 0.95 * (coefficients.get(Coefficient.CNDCOEF1) / cndPart);
+
+        for (int minute = 1; minute <= 900; minute++) {
             System.out.println("minute: " + minute);
 
+            if (minute % 150 == 0) {
+                counter = 1;
 
-            //TODO make counter system
+                for (Coefficient coef : Coefficient.values()) {
+                    if (counter % 2 != 0) {
+                        if (counter < 11) {
+                            coefficients.put(coef, coefficients.get(coef) * cndModifier0);
+                        } else {
+                            coefficients.put(coef, coefficients.get(coef));
+                        }
+                    } else {
+                        if (counter < 11) {
+                            coefficients.put(coef, coefficients.get(coef) * cndModifier1);
+                        } else {
+                            coefficients.put(coef, coefficients.get(coef));
+                        }
+                    }
+                    counter++;
+                }
+            }
+
             if (ballPossession == -2) {
                 ballPossession = 0;
             } else if (ballPossession == -1) {
@@ -368,11 +412,13 @@ public class Game {
             minute++;
         } */
 
-        int roundedGoal0 = Math.round(goal0 / 1000);
-        int roundedGoal1 = Math.round(goal1 / 1000);
+        int roundedGoal0 = Math.round(goal0 / 100);
+        int roundedGoal1 = Math.round(goal1 / 100);
 
         System.out.println("the final match result is " + roundedGoal0 + "-" + roundedGoal1);
 
-        return roundedGoal0 + "-" + roundedGoal1;
+        int goals[] = {roundedGoal0, roundedGoal1};
+
+        return goals;
     }
 }

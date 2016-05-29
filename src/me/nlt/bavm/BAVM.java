@@ -1,17 +1,23 @@
 package me.nlt.bavm;
 
-import me.nlt.bavm.teams.player.Player;
-import me.nlt.bavm.teams.player.PlayerManager;
+import me.nlt.bavm.game.Game;
+import me.nlt.bavm.league.RandomPlayer;
+import me.nlt.bavm.league.RandomTeam;
+import me.nlt.bavm.teams.Coach;
+import me.nlt.bavm.teams.Player;
+import me.nlt.bavm.teams.PlayerFactory;
+import me.nlt.bavm.teams.Team;
+import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
 
 import java.awt.*;
 
 public class BAVM
 {
-    private static Display display;
+    private static BAVM mainInstance;
+    private Display display;
 
     private final Object lockObject;
 
-    private PlayerManager playerManager;
 
     /**
      * Main method
@@ -21,7 +27,7 @@ public class BAVM
     public static void main(String[] args)
     {
         // Zo snel mogelijk weg van static
-        new BAVM();
+        mainInstance = new BAVM();
     }
 
     /**
@@ -57,16 +63,9 @@ public class BAVM
         }
 
         // Eigenlijk lieg ik bij het eerste bericht maar anders kan het niet
-        display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked\n");
-
-        //TODO Bestanden regelen
-        //TODO Boolean 'firstStart' checken met bestanden
-        boolean firstStatup = true;
-
-        this.playerManager = new PlayerManager(firstStatup);
+        display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked\n", "BAVM is gereed om te worden gebruikt!\n\n----");
 
         // Zorgen dat de rest laad
-        display.appendText("BAVM is gereed om te worden gebruikt!\n\n----");
         this.initGame();
     }
 
@@ -75,32 +74,17 @@ public class BAVM
      */
     private void initGame()
     {
-        while (true)
-        {
-            display.appendText("Welke speler wil je bekijken?", "Typ -1 om te stoppen");
+        Game gamer = new Game();
 
-            int id = (int) display.readDouble();
-            Player player = playerManager.getPlayer(id);
+        int amount = 20;
 
-            if (id == -1)
-            {
-                break;
-            } else if (player == null)
-            {
-                display.appendText("Bij dat ID hoort geen speler!");
-            } else
-            {
-                display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Stats: " + player.getPlayerStats().toString(), " ");
-            }
+        for (int i = 0; i < 10; i++) {
+            display.appendText(gamer.getMatchResult());
         }
 
-        /*Game gamer = new Game();
 
-        for (int i = 0; i < 20; i++) {
-            display.appendText(gamer.simulateGame());
-        }
 
-        //ONE TEAM
+        /*//ONE TEAM
         //amount of players to create (in multiples of 23)
         int amount23s = 23;
         //the place ratio's (goalkeeper 3/23, defender 8/23 etc., midfielder, attacker)
@@ -115,13 +99,13 @@ public class BAVM
 
         String PlayerTeamName = display.readLine("Welcome to BAVM, please enter your team name.");
         Team team = new Team(PlayerTeamName, 19, RandomTeam.generatePlayerIDList(0.5), 19);
-        display.appendText(team.toString());
+        display.appendText(team.toString());*/
 
-    	Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5});
+    	/*Player player = new Player("Tim Anema", 0, new double[]{0, 1, 2, 3, 4, 5});
         Player playerCopy = null;
 
         try {
-			playerCopy = PlayerFactory.createPlayer(player.toString());
+			playerCopy = PlayerFactory.createPlayer("Player{name=Tim_Anema,id=0,playerstats=PlayerStats{afmaken:0.0>aanval:4.0>balbezit:2.0>verdedigen:3.0>conditie:4.0>geluk:5.0>doelman:6.0%130.0}}");
 		} catch (InvalidPlayerException e) {
 			e.printStackTrace();
 			return;
@@ -131,13 +115,8 @@ public class BAVM
         System.out.println("Van playerCopy: " + playerCopy.toString());*/
     }
 
-    public static Display getDisplay()
+    public static BAVM getMainInstance()
     {
-        return display;
-    }
-
-    public PlayerManager getPlayerManager()
-    {
-        return this.playerManager;
+        return mainInstance;
     }
 }
