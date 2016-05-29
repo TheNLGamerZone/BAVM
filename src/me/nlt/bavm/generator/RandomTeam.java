@@ -1,8 +1,8 @@
-package me.nlt.bavm.league;
+package me.nlt.bavm.generator;
 
 
-import me.nlt.bavm.teams.Coach;
-import me.nlt.bavm.teams.Team;
+import me.nlt.bavm.teams.coach.Coach;
+import me.nlt.bavm.teams.team.Team;
 
 public class RandomTeam {
     public static void createRandomTeams (int amount) {

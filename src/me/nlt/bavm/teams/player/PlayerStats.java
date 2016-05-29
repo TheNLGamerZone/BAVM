@@ -2,29 +2,32 @@ package me.nlt.bavm.teams;
 
 import java.util.HashMap;
 
-public class CoachStats {
-    private HashMap<CStat, Double> coachSkills = new HashMap<>();
-
-    public enum CStat {
-        MOTIVATIE(0), INZICHT(1), TEAMBUILDING(2);
-        private int index;
+public class PlayerStats
+{
+    private HashMap<Stat, Double> playerSkills = new HashMap<>();
+    private double checkSum;
+    
+    public enum Stat
+    {
+        AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), CONDITIE(4), DOELMAN(5);
+        private int location;
 
         /**
          * Stat constructor
-         * @param index Index
+         * @param location Location
          */
-        private CStat(int index)
+        private Stat(int location)
         {
-            this.index = index;
+            this.location = location;
         }
 
         /**
          * Stuurt een int terug die staat voor de standaard plek in arrays voor deze skill
          * @return Standaard plek voor deze skill
          */
-        public int getIndex()
+        public int getLocation()
         {
-            return this.index;
+            return this.location;
         }
     }
 
@@ -32,41 +35,61 @@ public class CoachStats {
      * PlayerStats constructor
      * @param skillValues SkillValues
      */
-    public CoachStats(double[] skillValues)
+    public PlayerStats(double[] skillValues)
     {
         // Skills in de array zetten
-        for (CStat stat : CStat.values())
+        for (Stat stat : Stat.values())
         {
             // Skills in hashmap zetten
-            coachSkills.put(stat, skillValues[stat.getIndex()]);
+            playerSkills.put(stat, skillValues[stat.getLocation()]);
+        }
+        
+        // Checksum maken
+        this.checkSum = 0;
+        
+        // Checksum 'vullen'
+        for (int i = 0; i < playerSkills.size(); i++)
+        {
+        	//DEBUG
+        	//System.out.println(this.getValue(i));
+        	checkSum += (this.getValue(i) * (i * 2) + this.getValue(i));
         }
     }
 
     /**
      * Geeft de waarde van de skill op de plek van de gegeven locatie
-     * @param index De index/plek van de skill
+     * @param location De locatie van de skill
      * @return De waarde van de skill
      */
-    public double getValue(int index)
+    public double getValue(int location)
     {
-        // Checken of de gegeven waarde bestaat in de hashmap
-        if (index < 0 || index > coachSkills.size())
-        {
-            return -1;
-        }
-
-
-        return (double) coachSkills.values().toArray()[index];
+    	// Checken of de gegeven waarde bestaat in de hashmap
+    	if (location < 0 || location > playerSkills.size())
+    	{
+    		return -1;
+    	}
+    	
+    	
+    	return (double) playerSkills.values().toArray()[location];
     }
-
+    
+    /**
+     * Geeft de waarde van de checksum
+     * @return Checksum
+     */
+    public double getCheckSum()
+    {
+    	return this.checkSum;
+    }
+    
     /**
      * Hiermee kan een stat verhoogd of verlaagd worden
      * @param stat De stat die verhoogd/verlaagd moet worden
      * @param increment De verhoging/verlaging
      */
-    public void increaseSkill(CStat stat, double increment)
+    public void increaseSkill(Stat stat, double increment)
     {
-        coachSkills.put(stat, coachSkills.get(stat) + increment);
+        playerSkills.put(stat, playerSkills.get(stat) + increment);
     }
 
     /**
@@ -74,10 +97,10 @@ public class CoachStats {
      * @param skillName Mogelijke naam voor een stat
      * @return De stat met die naam
      */
-    public static CStat getSkill(String skillName)
+    public static Stat getSkill(String skillName)
     {
         // Door alle stats loopen en kijken of er een naam overeenkomt
-        for (CStat stat : CStat.values())
+        for (Stat stat : Stat.values())
         {
             if (stat.name().equals(skillName))
             {
@@ -101,9 +124,9 @@ public class CoachStats {
         String statString;
 
         // String maken met stats
-        for (CStat stat : CStat.values())
+        for (Stat stat : Stat.values())
         {
-            stringBuilder.append(stat.name().toLowerCase() + ":" + coachSkills.get(stat) + ">");
+            stringBuilder.append(stat.name().toLowerCase() + ":" + playerSkills.get(stat) + ">");
         }
 
         // Laatste komma weghalen
@@ -112,8 +135,10 @@ public class CoachStats {
         // String maken van stringbuilder
         statString = stringBuilder.toString();
 
-        return "CoachStats{" +
+        return "PlayerStats{" +
                 statString +
+                "%" +
+                this.checkSum +
                 "}";
     }
 }

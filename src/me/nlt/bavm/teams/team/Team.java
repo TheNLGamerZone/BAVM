@@ -1,26 +1,31 @@
-package me.nlt.bavm.teams;
+package me.nlt.bavm.teams.team;
 
-public class Team {
+public class Team
+{
     private String teamName;
     private int teamID;
 
     private TeamInfo teamInfo;
 
-    public Team(String teamName, int teamID, int[] playerIDList, int coachID) {
+    public Team(String teamName, int teamID, int[] playerIDList, int coachID)
+    {
         this.teamName = teamName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDList, coachID);
     }
 
-    public String getTeamName() {
+    public String getTeamName()
+    {
         return this.teamName;
     }
 
-    public int getTeamID() {
+    public int getTeamID()
+    {
         return this.teamID;
     }
 
-    public TeamInfo getTeamInfo() {
+    public TeamInfo getTeamInfo()
+    {
         return this.teamInfo;
     }
 

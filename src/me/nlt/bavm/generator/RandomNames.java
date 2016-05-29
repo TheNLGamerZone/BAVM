@@ -1,4 +1,4 @@
-package me.nlt.bavm.league;
+package me.nlt.bavm.generator;
 
 import java.util.Random;
 

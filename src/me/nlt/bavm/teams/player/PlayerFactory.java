@@ -1,5 +1,6 @@
-package me.nlt.bavm.teams;
+package me.nlt.bavm.teams.player;
 
+import me.nlt.bavm.teams.PlayerStats;
 import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
 
 public class PlayerFactory
@@ -96,6 +97,8 @@ public class PlayerFactory
         if (player.getPlayerStats().getCheckSum() != checkSum)
         {
         	// Controlegetallen kloppen niet, er zijn dus waarschijnlijk handmatig stats aangepast
+
+            System.out.println("CK: " + checkSum + ", CCK: " + player.getPlayerStats().getCheckSum());
         	throw new InvalidPlayerException(playerName, checkSum);
         }
         

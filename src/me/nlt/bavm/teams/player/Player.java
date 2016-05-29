@@ -1,4 +1,6 @@
-package me.nlt.bavm.teams;
+package me.nlt.bavm.teams.player;
+
+import me.nlt.bavm.teams.PlayerStats;
 
 public class Player
 {
