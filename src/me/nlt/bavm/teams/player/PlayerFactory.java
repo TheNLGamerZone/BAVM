@@ -13,6 +13,11 @@ public class PlayerFactory
      */
     public static Player createPlayer(String playerString) throws InvalidPlayerException
     {
+        if (playerString.equals("NULL <-> PH"))
+        {
+            return null;
+        }
+
         String playerName = "";
         int playerID = 0;
         Position position = null;

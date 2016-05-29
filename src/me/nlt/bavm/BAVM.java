@@ -1,5 +1,6 @@
 package me.nlt.bavm;
 
+import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerManager;
 import me.nlt.bavm.teams.team.Team;
@@ -10,11 +11,10 @@ import java.awt.*;
 public class BAVM
 {
     private static Display display;
-
     private final Object lockObject;
 
+    private static FileManager fileManager;
     private static PlayerManager playerManager;
-
     private static TeamManager teamManager;
 
     /**
@@ -63,12 +63,9 @@ public class BAVM
         // Eigenlijk lieg ik bij het eerste bericht maar anders kan het niet
         display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked\n");
 
-        //TODO Bestanden regelen
-        //TODO Boolean 'firstStart' checken met bestanden
-        boolean firstStartup = true;
-
-        playerManager = new PlayerManager(firstStartup);
-        teamManager = new TeamManager(firstStartup);
+        fileManager = new FileManager();
+        playerManager = new PlayerManager(fileManager.firstStart);
+        teamManager = new TeamManager(fileManager.firstStart);
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!\n\n----");
