@@ -2,6 +2,7 @@ package me.nlt.bavm;
 
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerManager;
 import me.nlt.bavm.teams.team.Team;
@@ -18,6 +19,7 @@ public class BAVM
     private static PlayerManager playerManager;
     private static TeamManager teamManager;
     private static MatchManager matchManager;
+    private static CoachManager coachManager;
 
     /**
      * Main method
@@ -68,6 +70,7 @@ public class BAVM
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
         playerManager = new PlayerManager(true);
+        coachManager= new CoachManager(true);
         teamManager = new TeamManager(true);
         matchManager = new MatchManager();
 
@@ -191,5 +194,10 @@ public class BAVM
     public static MatchManager getMatchManager()
     {
         return matchManager;
+    }
+
+    public static CoachManager getCoachManager()
+    {
+        return coachManager;
     }
 }

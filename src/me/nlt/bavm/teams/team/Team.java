@@ -13,7 +13,6 @@ public class Team
         this.teamName = teamName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDList, coachID);
-        this.teamCoefficients = new TeamCoefficients(playerIDList, coachID);
     }
 
     public String getTeamName()

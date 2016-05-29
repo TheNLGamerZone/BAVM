@@ -9,11 +9,9 @@ import java.util.ArrayList;
 
 public class TeamManager {
     private ArrayList<Team> loadedTeams;
-    private ArrayList<Coach> loadedCoaches;
 
     public TeamManager(boolean generateTeamsCoaches) {
         this.loadedTeams = new ArrayList<>();
-        this.loadedCoaches = new ArrayList<>();
 
         int teamsCoachesToGenerate = 20;
 
@@ -41,7 +39,6 @@ public class TeamManager {
         {
             double teamTalent = Math.random();
 
-            loadedCoaches.add(new Coach(RandomNames.getPeopleName(), i, RandomStats.randomCStats(teamTalent)));
             loadedTeams.add(new Team(RandomNames.getTeamName(), i, generatePlayerIDList(i), i));
         }
 
@@ -62,16 +59,6 @@ public class TeamManager {
         for (Team team : loadedTeams) {
             if (team.getTeamID() == teamID) {
                 return team;
-            }
-        }
-
-        return null;
-    }
-
-    public Coach getCoach(int coachID) {
-        for (Coach coach : loadedCoaches) {
-            if (coach.getCoachID() == coachID) {
-                return coach;
             }
         }
 

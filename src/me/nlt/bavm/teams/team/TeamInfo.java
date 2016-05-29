@@ -16,7 +16,7 @@ public class TeamInfo {
         }
 
         System.out.println(coachID);
-        this.teamCoach = BAVM.getTeamManager().getCoach(coachID);
+        this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
     }
 
     public ArrayList<Player> getTeamPlayerList() {
