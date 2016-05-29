@@ -3,15 +3,19 @@ package me.nlt.bavm.teams.team;
 import java.util.ArrayList;
 
 public class TeamInfo {
-    private ArrayList<Integer> playerIDSet = new ArrayList<>();
+    private ArrayList<Integer> playerIDList = new ArrayList<>();
     private int coachID;
 
-    public TeamInfo(int[] playerIDList, int coachID) {
-        for (int i : playerIDList) {
-            playerIDSet.add(i);
+    public TeamInfo(int[] playerIDs, int coachID) {
+        for (int i : playerIDs) {
+            playerIDList.add(i);
         }
 
         this.coachID = coachID;
+    }
+
+    public ArrayList<Integer> getPlayerIDList() {
+        return this.playerIDList;
     }
 
     @Override
@@ -22,7 +26,7 @@ public class TeamInfo {
         String infoString;
 
         // String maken met stats
-        for (int i : playerIDSet)
+        for (int i : playerIDList)
         {
             stringBuilder.append(i + ">");
         }

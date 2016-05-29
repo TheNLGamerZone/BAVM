@@ -6,6 +6,7 @@ import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class BAVM
 {
@@ -122,6 +123,9 @@ public class BAVM
                         } else
                         {
                             display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
+                            for (int playerID : team.getTeamInfo().getPlayerIDList()) {
+                                display.appendText(playerManager.getPlayer(playerID).toString());
+                            }
                         }
                     }
                 }
