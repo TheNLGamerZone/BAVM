@@ -68,8 +68,8 @@ public class BAVM
         //TODO Boolean 'firstStart' checken met bestanden
         boolean firstStartup = true;
 
-        this.playerManager = new PlayerManager(firstStartup);
-        this.teamManager = new TeamManager(firstStartup);
+        playerManager = new PlayerManager(firstStartup);
+        teamManager = new TeamManager(firstStartup);
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!\n\n----");
@@ -109,26 +109,25 @@ public class BAVM
                 }
             } else if (readInt == -3) {
                 while (true) {
-                    while (true) {
-                        display.appendText("Typ een id in om een team te bekijken", "Typ -1 om iets anders te doen");
-                        int id = (int) display.readDouble();
-                        Team team = teamManager.getTeam(id);
+                    display.appendText("Typ een id in om een team te bekijken", "Typ -1 om iets anders te doen");
+                    int id = (int) display.readDouble();
+                    Team team = teamManager.getTeam(id);
 
-                        if (id == -1)
-                        {
-                            break;
-                        } else if (team == null)
-                        {
-                            display.appendText("Bij dat ID hoort geen team!");
-                        } else
-                        {
-                            display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
-                            for (int playerID : team.getTeamInfo().getPlayerIDList()) {
-                                display.appendText(playerManager.getPlayer(playerID).toString());
-                            }
+                    if (id == -1)
+                    {
+                        break;
+                    } else if (team == null)
+                    {
+                        display.appendText("Bij dat ID hoort geen team!");
+                    } else
+                    {
+                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
+                        for (int playerID : team.getTeamInfo().getPlayerIDList()) {
+                            display.appendText(playerManager.getPlayer(playerID).toString());
                         }
                     }
                 }
+
             } else {
                 display.appendText("Foute input!");
             }

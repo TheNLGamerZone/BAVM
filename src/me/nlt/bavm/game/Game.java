@@ -9,7 +9,7 @@ public class Game {
         //TODO get teams from teamID (Tim jij moet een teammanager maken)
     }*/
 
-    private HashMap<Coefficient, Double> coefficients = new HashMap<>();
+    private static HashMap<Coefficient, Double> coefficients = new HashMap<>();
 
     public String getMatchResult() {
 
@@ -52,7 +52,7 @@ public class Game {
     }
 
     //0=next minute, same status, 1=change possession, 2=next quarter
-    public int getConflictResult(HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballQuarter, int ballPossession) {
+    public static int getConflictResult(HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballQuarter, int ballPossession) {
         Random rnd = new Random();
 
         if (ballPossession == 0) {
@@ -129,7 +129,7 @@ public class Game {
     }
 
     //0=new goal chance, 1=fail, 2=goal, 3=back to final ball quarter
-    public int getGoalChanceResult (HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballPossession) {
+    public static int getGoalChanceResult (HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballPossession) {
         Random rnd = new Random();
 
         if (ballPossession == 0) {
@@ -172,7 +172,7 @@ public class Game {
         }
     }
 
-    public int[] simulateGame() {
+    public static int[] simulateGame() {
         //TODO base coefficients on team stats
 
         Random rnd = new Random();
