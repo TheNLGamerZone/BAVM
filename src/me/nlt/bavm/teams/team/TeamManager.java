@@ -1,5 +1,6 @@
 package me.nlt.bavm.teams.team;
 
+import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
 import me.nlt.bavm.teams.coach.Coach;
@@ -10,13 +11,15 @@ public class TeamManager {
     private ArrayList<Team> loadedTeams;
     private ArrayList<Coach> loadedCoaches;
 
-    public TeamManager(boolean generateTeams) {
+    public TeamManager(boolean generateTeamsCoaches) {
         this.loadedTeams = new ArrayList<>();
         this.loadedCoaches = new ArrayList<>();
 
-        if (generateTeams)
+        int teamsCoachesToGenerate = 20;
+
+        if (generateTeamsCoaches)
         {
-            this.generateTeams();
+            this.generateTeamsCoaches(teamsCoachesToGenerate);
         }
 
         // Spelers laden
@@ -31,16 +34,18 @@ public class TeamManager {
         //TODO teams en coaches saven in txt
     }
 
-    private void generateTeams() {
-        //aantal teams
-        int amount = 20;
+    private void generateTeamsCoaches(int teamsToGenerate)
+    {
 
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < teamsToGenerate; i++)
+        {
             double teamTalent = Math.random();
 
             loadedCoaches.add(new Coach(RandomNames.getPeopleName(), i, RandomStats.randomCStats(teamTalent)));
             loadedTeams.add(new Team(RandomNames.getTeamName(), i, generatePlayerIDList(i), i));
         }
+
+        BAVM.getDisplay().appendText(teamsToGenerate + " teams gegenereerd!");
     }
 
     private int[] generatePlayerIDList(int teamNR) {

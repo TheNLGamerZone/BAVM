@@ -1,6 +1,7 @@
 package me.nlt.bavm;
 
 import me.nlt.bavm.files.FileManager;
+import me.nlt.bavm.game.MatchManager;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerManager;
 import me.nlt.bavm.teams.team.Team;
@@ -16,6 +17,7 @@ public class BAVM
     private static FileManager fileManager;
     private static PlayerManager playerManager;
     private static TeamManager teamManager;
+    private static MatchManager matchManager;
 
     /**
      * Main method
@@ -63,9 +65,11 @@ public class BAVM
         // Eigenlijk lieg ik bij het eerste bericht maar anders kan het niet
         display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked\n");
 
+        //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
-        playerManager = new PlayerManager(fileManager.firstStart);
-        teamManager = new TeamManager(fileManager.firstStart);
+        playerManager = new PlayerManager(true);
+        teamManager = new TeamManager(true);
+        matchManager = new MatchManager();
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!\n\n----");
@@ -123,10 +127,6 @@ public class BAVM
                     } else
                     {
                         display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
-                        for (int playerID : team.getTeamInfo().getPlayerIDList())
-                        {
-                            display.appendText(playerManager.getPlayer(playerID).toString());
-                        }
                     }
                 }
             } else
@@ -186,5 +186,10 @@ public class BAVM
     public static TeamManager getTeamManager()
     {
         return teamManager;
+    }
+
+    public static MatchManager getMatchManager()
+    {
+        return matchManager;
     }
 }

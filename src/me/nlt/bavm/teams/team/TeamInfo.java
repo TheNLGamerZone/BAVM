@@ -1,21 +1,30 @@
 package me.nlt.bavm.teams.team;
 
+import me.nlt.bavm.BAVM;
+import me.nlt.bavm.teams.coach.Coach;
+import me.nlt.bavm.teams.player.Player;
+
 import java.util.ArrayList;
 
 public class TeamInfo {
-    private ArrayList<Integer> playerIDList = new ArrayList<>();
-    private int coachID;
+    private ArrayList<Player> teamPlayerList = new ArrayList<>();
+    private Coach teamCoach;
 
     public TeamInfo(int[] playerIDs, int coachID) {
         for (int i : playerIDs) {
-            playerIDList.add(i);
+            teamPlayerList.add(BAVM.getPlayerManager().getPlayer(i));
         }
 
-        this.coachID = coachID;
+        System.out.println(coachID);
+        this.teamCoach = BAVM.getTeamManager().getCoach(coachID);
     }
 
-    public ArrayList<Integer> getPlayerIDList() {
-        return this.playerIDList;
+    public ArrayList<Player> getTeamPlayerList() {
+        return this.teamPlayerList;
+    }
+
+    public Coach getTeamCoach() {
+        return this.teamCoach;
     }
 
     @Override
@@ -26,9 +35,9 @@ public class TeamInfo {
         String infoString;
 
         // String maken met stats
-        for (int i : playerIDList)
+        for (Player player : teamPlayerList)
         {
-            stringBuilder.append(i + ">");
+            stringBuilder.append(player.toString() + ">");
         }
 
         // Laatste komma weghalen
@@ -41,9 +50,7 @@ public class TeamInfo {
                 infoString +
                 "}";
 
-        String coachString = "CoachID{" +
-                coachID +
-                "}";
+        String coachString = teamCoach.toString();
 
         return playerString + "," + coachString;
     }

@@ -6,12 +6,14 @@ public class Team
     private int teamID;
 
     private TeamInfo teamInfo;
+    private TeamCoefficients teamCoefficients;
 
     public Team(String teamName, int teamID, int[] playerIDList, int coachID)
     {
         this.teamName = teamName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDList, coachID);
+        this.teamCoefficients = new TeamCoefficients(playerIDList, coachID);
     }
 
     public String getTeamName()
@@ -27,6 +29,11 @@ public class Team
     public TeamInfo getTeamInfo()
     {
         return this.teamInfo;
+    }
+
+    public TeamCoefficients getTeamCoefficients()
+    {
+        return this.teamCoefficients;
     }
 
     @Override

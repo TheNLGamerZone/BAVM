@@ -65,9 +65,9 @@ public class RandomStats
     }
 
     /**
-     * Deze methode genereert willekeurige stats voor de spelers, gebaseerd op hun positie (0=keeper, 1=defender, 2=midfielder, 3=attacker)
+     * Deze methode genereert willekeurige stats voor de coach
      *
-     * @param teamTalent Spelerspositie
+     * @param teamTalent Teamtalent, oftewel hoe goed het team is
      */
     public static double[] randomCStats(double teamTalent)
     {
