@@ -14,9 +14,9 @@ public class BAVM
 
     private final Object lockObject;
 
-    private PlayerManager playerManager;
+    private static PlayerManager playerManager;
 
-    private TeamManager teamManager;
+    private static TeamManager teamManager;
 
     /**
      * Main method
@@ -177,8 +177,13 @@ public class BAVM
         return display;
     }
 
-    public PlayerManager getPlayerManager()
+    public static PlayerManager getPlayerManager()
     {
-        return this.playerManager;
+        return playerManager;
+    }
+
+    public static TeamManager getTeamManager()
+    {
+        return teamManager;
     }
 }
