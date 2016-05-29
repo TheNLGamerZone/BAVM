@@ -36,18 +36,18 @@ public class PlayerManager
     private void generatePlayers()
     {
         //DEBUG
-        //System.out.println("15% kans op keeper, 25% kans op defender, 50% kans op attacker en 10% kans op midfielder");
+        System.out.println("15% kans op keeper, 25% kans op defender, 50% kans op attacker en 10% kans op midfielder");
 
-        //int keeper = 0, defender = 0, attacker = 0, midfielder = 0, total = 0;
+        int keeper = 0, defender = 0, attacker = 0, midfielder = 0, total = 0;
 
         //amount of players to generate
         int playersToGenerate = 512;
 
         for (Position position : generatePositions(playersToGenerate, new int[]{15, 25, 50, 10}))
         {
-            loadedPlayers.add(new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), RandomStats.randomStats(position)));
+            loadedPlayers.add(new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), position, RandomStats.randomStats(position)));
 
-                /*switch (position)
+                switch (position)
                 {
                     case KEEPER:
                         keeper++;
@@ -63,11 +63,11 @@ public class PlayerManager
                         break;
                 }
 
-                total++;*/
+                total++;
         }
 
         //DEBUG
-        //System.out.printf("%d keepers, %d defenders, %d attackers and %d midfielders (%d total)%n", keeper, defender, attacker, midfielder, total);
+        System.out.printf("%d keepers, %d defenders, %d attackers and %d midfielders (%d total)%n", keeper, defender, attacker, midfielder, total);
 
 
         //DEBUG
@@ -76,7 +76,7 @@ public class PlayerManager
             System.out.println(player.toString());
         }*/
 
-        BAVM.getDisplay().appendText("512 spelers gegenereerd!");
+        BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
 
         // Save players
         this.savePlayers();

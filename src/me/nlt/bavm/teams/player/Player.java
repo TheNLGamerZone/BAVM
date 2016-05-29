@@ -6,7 +6,8 @@ public class Player
 {
     private String playerName;
     private int playerID;
-    
+    private Position position;
+
     private PlayerStats playerStats;
 
     /**
@@ -15,10 +16,11 @@ public class Player
      * @param playerID PlayerID
      * @param stats Stats
      */
-    public Player(String playerName, int playerID, double[] stats)
+    public Player(String playerName, int playerID, Position position, double[] stats)
     {
         this.playerName = playerName;
         this.playerID = playerID;
+        this.position = position;
         this.playerStats = new PlayerStats(stats);
     }
 
@@ -41,6 +43,14 @@ public class Player
     }
 
     /**
+     * Stuurt de aangerade positie van de speler terug
+     * @return Positie van de speler
+     */
+    public Position getPosition()
+    {
+        return this.position;
+    }
+    /**
      * Stuurt de stats van de speler terug
      * @return Stats van de speler
      */
@@ -59,6 +69,7 @@ public class Player
         return "Player{" +
                 "name=" + this.playerName.replaceAll(" ", "_") +
                 ",id=" + this.playerID +
+                ",position=" + this.position.name() +
                 ",playerstats=" + this.playerStats.toString() +
                 "}";
     }

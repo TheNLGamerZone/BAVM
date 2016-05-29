@@ -15,6 +15,7 @@ public class PlayerFactory
     {
         String playerName = "";
         int playerID = 0;
+        Position position = null;
         double[] playerStats = new double[PlayerStats.Stat.values().length];
         double checkSum = 0;
 
@@ -85,24 +86,30 @@ public class PlayerFactory
 
                     playerID = value;
                     break;
+                case "position":
+                    for (Position positions : Position.values())
+                    {
+                        if (positions.name().equalsIgnoreCase(data))
+                        {
+                            position = positions;
+                        }
+                    }
                 default:
                     break;
             }
         }
 
         // Speler met de verkregen gegevens maken
-        Player player = new Player(playerName, playerID, playerStats);
+        Player player = new Player(playerName, playerID, position, playerStats);
         
         // Controlegetallen vergelijken
         if (player.getPlayerStats().getCheckSum() != checkSum)
         {
         	// Controlegetallen kloppen niet, er zijn dus waarschijnlijk handmatig stats aangepast
-
-            System.out.println("CK: " + checkSum + ", CCK: " + player.getPlayerStats().getCheckSum());
         	throw new InvalidPlayerException(playerName, checkSum);
         }
         
         // Controlegetallen kloppen
-        return new Player(playerName, playerID, playerStats);
+        return player;
     }
 }

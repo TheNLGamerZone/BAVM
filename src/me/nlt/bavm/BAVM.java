@@ -6,7 +6,6 @@ import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class BAVM
 {
@@ -87,11 +86,14 @@ public class BAVM
 
             int readInt = (int) display.readDouble();
 
-            if (readInt == -1) {
+            if (readInt == -1)
+            {
                 display.appendText("Gestopt.");
                 break;
-            } else if (readInt == -2) {
-                while (true) {
+            } else if (readInt == -2)
+            {
+                while (true)
+                {
                     display.appendText("Typ een id in om een speler te bekijken", "Typ -1 om iets anders te doen");
                     int id = (int) display.readDouble();
                     Player player = playerManager.getPlayer(id);
@@ -104,11 +106,13 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen speler!");
                     } else
                     {
-                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Stats: " + player.getPlayerStats().toString(), " ");
+                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition() ,"Stats: " + player.getPlayerStats().toString(), " ");
                     }
                 }
-            } else if (readInt == -3) {
-                while (true) {
+            } else if (readInt == -3)
+            {
+                while (true)
+                {
                     display.appendText("Typ een id in om een team te bekijken", "Typ -1 om iets anders te doen");
                     int id = (int) display.readDouble();
                     Team team = teamManager.getTeam(id);
@@ -122,13 +126,14 @@ public class BAVM
                     } else
                     {
                         display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
-                        for (int playerID : team.getTeamInfo().getPlayerIDList()) {
+                        for (int playerID : team.getTeamInfo().getPlayerIDList())
+                        {
                             display.appendText(playerManager.getPlayer(playerID).toString());
                         }
                     }
                 }
-
-            } else {
+            } else
+            {
                 display.appendText("Foute input!");
             }
 
