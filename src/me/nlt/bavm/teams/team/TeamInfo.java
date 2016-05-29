@@ -14,7 +14,6 @@ public class TeamInfo {
         this.coachID = coachID;
     }
 
-
     @Override
     public String toString()
     {
@@ -34,11 +33,11 @@ public class TeamInfo {
         // String maken van stringbuilder
         infoString = stringBuilder.toString();
 
-        String playerString = "PlayerStats{" +
+        String playerString = "PlayerIDs{" +
                 infoString +
                 "}";
 
-        String coachString = "Coach{" +
+        String coachString = "CoachID{" +
                 coachID +
                 "}";
 

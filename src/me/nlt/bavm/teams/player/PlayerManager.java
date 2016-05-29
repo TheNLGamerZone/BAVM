@@ -40,7 +40,10 @@ public class PlayerManager
 
         //int keeper = 0, defender = 0, attacker = 0, midfielder = 0, total = 0;
 
-        for (Position position : generatePositions(100, new int[]{15, 25, 50, 10}))
+        //amount of players to generate
+        int playersToGenerate = 512;
+
+        for (Position position : generatePositions(playersToGenerate, new int[]{15, 25, 50, 10}))
         {
             loadedPlayers.add(new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), RandomStats.randomStats(position)));
 
@@ -73,7 +76,7 @@ public class PlayerManager
             System.out.println(player.toString());
         }*/
 
-        BAVM.getDisplay().appendText("100 spelers gegenereerd!");
+        BAVM.getDisplay().appendText("512 spelers gegenereerd!");
 
         // Save players
         this.savePlayers();

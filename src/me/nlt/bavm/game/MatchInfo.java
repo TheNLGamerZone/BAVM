@@ -1,6 +1,6 @@
 package me.nlt.bavm.game;
 
-import me.nlt.bavm.teams.Team;
+import me.nlt.bavm.teams.team.Team;
 
 public class MatchInfo {
     private Team team0;
