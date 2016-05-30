@@ -2,15 +2,18 @@ package me.nlt.bavm.teams.coach;
 
 import java.util.HashMap;
 
-public class CoachStats {
+public class CoachStats
+{
     private HashMap<CStat, Double> coachSkills = new HashMap<>();
 
-    public enum CStat {
+    public enum CStat
+    {
         MOTIVATIE(0), INZICHT(1), TEAMBUILDING(2);
         private int index;
 
         /**
          * Stat constructor
+         *
          * @param index Index
          */
         private CStat(int index)
@@ -20,6 +23,7 @@ public class CoachStats {
 
         /**
          * Stuurt een int terug die staat voor de standaard plek in arrays voor deze skill
+         *
          * @return Standaard plek voor deze skill
          */
         public int getIndex()
@@ -30,6 +34,7 @@ public class CoachStats {
 
     /**
      * PlayerStats constructor
+     *
      * @param skillValues SkillValues
      */
     public CoachStats(double[] skillValues)
@@ -44,6 +49,7 @@ public class CoachStats {
 
     /**
      * Geeft de waarde van de skill op de plek van de gegeven locatie
+     *
      * @param index De index/plek van de skill
      * @return De waarde van de skill
      */
@@ -61,7 +67,8 @@ public class CoachStats {
 
     /**
      * Hiermee kan een stat verhoogd of verlaagd worden
-     * @param stat De stat die verhoogd/verlaagd moet worden
+     *
+     * @param stat      De stat die verhoogd/verlaagd moet worden
      * @param increment De verhoging/verlaging
      */
     public void increaseSkill(CStat stat, double increment)
@@ -71,6 +78,7 @@ public class CoachStats {
 
     /**
      * Zoekt de stat bij de string
+     *
      * @param skillName Mogelijke naam voor een stat
      * @return De stat met die naam
      */
@@ -91,6 +99,7 @@ public class CoachStats {
 
     /**
      * Maakt en antwoord een string waar alle data voor playerStats in staat
+     *
      * @return
      */
     @Override

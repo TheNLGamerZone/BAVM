@@ -4,25 +4,30 @@ import me.nlt.bavm.BAVM;
 
 import java.util.ArrayList;
 
-public class MatchManager {
+public class MatchManager
+{
 
     private ArrayList<Match> playedMatches;
 
-    public MatchManager() {
+    public MatchManager()
+    {
         this.playedMatches = new ArrayList<>();
 
         this.loadMatches();
     }
 
-    private void loadMatches() {
+    private void loadMatches()
+    {
 
     }
 
-    private void saveMatches() {
+    private void saveMatches()
+    {
 
     }
 
-    public void simulateMatch(int team0ID, int team1ID) {
+    public void simulateMatch(int team0ID, int team1ID)
+    {
 
         //TODO let game simulate an actual game with actual coefficients
         int matchResult[] = Game.simulateGame();

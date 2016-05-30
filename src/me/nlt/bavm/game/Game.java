@@ -4,19 +4,22 @@ package me.nlt.bavm.game;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Game {
+public class Game
+{
     /*public static void initSim(int teamID0, int teamID1) {
         //TODO get teams from teamID (Tim jij moet een teammanager maken)
     }*/
 
     private static HashMap<Coefficient, Double> coefficients = new HashMap<>();
 
-    public String getMatchResult() {
+    public String getMatchResult()
+    {
 
         int goal0 = 0;
         int goal1 = 0;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             goal0 = goal0 + simulateGame()[0];
             goal1 = goal1 + simulateGame()[1];
         }
@@ -27,13 +30,15 @@ public class Game {
         return goal0 + "-" + goal1;
     }
 
-    public enum Coefficient {
+    public enum Coefficient
+    {
         AFMCOEF0(0), AFMCOEF1(1), ATTCOEF0(2), ATTCOEF1(3), POSCOEF0(4), POSCOEF1(5),
         DEFCOEF0(6), DEFCOEF1(7), KEP0(8), KEP1(9), CNDCOEF0(10), CNDCOEF1(11);
         private int index;
 
         /**
          * Stat constructor
+         *
          * @param index Index
          */
         private Coefficient(int index)
@@ -43,6 +48,7 @@ public class Game {
 
         /**
          * Stuurt een int terug die staat voor de standaard plek in arrays voor deze skill
+         *
          * @return Standaard plek voor deze skill
          */
         public int getIndex()
@@ -52,56 +58,74 @@ public class Game {
     }
 
     //0=next minute, same status, 1=change possession, 2=next quarter
-    public static int getConflictResult(HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballQuarter, int ballPossession) {
+    public static int getConflictResult(HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballQuarter, int ballPossession)
+    {
         Random rnd = new Random();
 
-        if (ballPossession == 0) {
+        if (ballPossession == 0)
+        {
 
             double quarterNumber = 0;
 
-            switch (ballQuarter) {
-                case 0 : quarterNumber = 1;
+            switch (ballQuarter)
+            {
+                case 0:
+                    quarterNumber = 1;
                     break;
-                case 1 : quarterNumber = 0.975;
+                case 1:
+                    quarterNumber = 0.975;
                     break;
-                case 2 : quarterNumber = 0.95;
+                case 2:
+                    quarterNumber = 0.95;
                     break;
-                case 3 : quarterNumber = 0.85;
+                case 3:
+                    quarterNumber = 0.85;
                     break;
             }
-            double forwardNumber =  1.3 * quarterNumber * ((luck0 + (rnd.nextInt(2)))) * coefficients.get(Coefficient.ATTCOEF0);
-            double pressureNumber =  1 * ((luck1 + (rnd.nextInt(2)))) * coefficients.get(Coefficient.DEFCOEF1);
+            double forwardNumber = 1.3 * quarterNumber * ((luck0 + (rnd.nextInt(2)))) * coefficients.get(Coefficient.ATTCOEF0);
+            double pressureNumber = 1 * ((luck1 + (rnd.nextInt(2)))) * coefficients.get(Coefficient.DEFCOEF1);
             double possessionNumber = 0.25 * coefficients.get(Coefficient.POSCOEF0);
 
             double forwardResult = forwardNumber - pressureNumber;
 
             System.out.println("forwardresult for team0: " + forwardResult);
 
-            if (forwardResult < 0) {
+            if (forwardResult < 0)
+            {
                 forwardResult = forwardResult + possessionNumber;
 
-                if (forwardResult < 0) {
+                if (forwardResult < 0)
+                {
                     return 1;
-                } else {
+                } else
+                {
                     return 0;
                 }
-            } else if (forwardResult < 1) {
+            } else if (forwardResult < 1)
+            {
                 return 0;
-            } else {
+            } else
+            {
                 return 2;
             }
-        } else {
+        } else
+        {
 
             double quarterNumber = 0;
 
-            switch (ballQuarter) {
-                case 3 : quarterNumber = 1;
+            switch (ballQuarter)
+            {
+                case 3:
+                    quarterNumber = 1;
                     break;
-                case 2 : quarterNumber = 0.975;
+                case 2:
+                    quarterNumber = 0.975;
                     break;
-                case 1 : quarterNumber = 0.950;
+                case 1:
+                    quarterNumber = 0.950;
                     break;
-                case 0 : quarterNumber = 0.850;
+                case 0:
+                    quarterNumber = 0.850;
                     break;
             }
             double forwardNumber = 1.3 * quarterNumber * ((luck1 + (rnd.nextInt(2))) * coefficients.get(Coefficient.ATTCOEF1));
@@ -112,67 +136,86 @@ public class Game {
 
             System.out.println("forwardresult for team1: " + forwardResult);
 
-            if (forwardResult < 0) {
+            if (forwardResult < 0)
+            {
                 forwardResult = forwardResult + possessionNumber;
 
-                if (forwardResult < 0) {
+                if (forwardResult < 0)
+                {
                     return 1;
-                } else {
+                } else
+                {
                     return 0;
                 }
-            } else if (forwardResult < 1) {
+            } else if (forwardResult < 1)
+            {
                 return 0;
-            } else {
+            } else
+            {
                 return 2;
             }
         }
     }
 
     //0=new goal chance, 1=fail, 2=goal, 3=back to final ball quarter
-    public static int getGoalChanceResult (HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballPossession) {
+    public static int getGoalChanceResult(HashMap<Coefficient, Double> coefficients, double luck0, double luck1, int ballPossession)
+    {
         Random rnd = new Random();
 
-        if (ballPossession == 0) {
+        if (ballPossession == 0)
+        {
 
             double goalNumber = coefficients.get(Coefficient.AFMCOEF0) * (luck0 + rnd.nextInt(2) + 0.5) - (coefficients.get(Coefficient.KEP1) * (luck1 + rnd.nextInt(2) + 0.5));
             double possessionNumber = 0.33 * coefficients.get(Coefficient.POSCOEF0);
 
             System.out.println("goalnumber attempt from 0: " + goalNumber);
 
-            if (goalNumber < 0) {
+            if (goalNumber < 0)
+            {
                 goalNumber = goalNumber + possessionNumber;
-                if (goalNumber < 0) {
+                if (goalNumber < 0)
+                {
                     return 1;
-                } else {
+                } else
+                {
                     return 3;
                 }
-            } else if (goalNumber < 1) {
+            } else if (goalNumber < 1)
+            {
                 return 0;
-            } else {
+            } else
+            {
                 return 2;
             }
-        } else  {
+        } else
+        {
             double goalNumber = coefficients.get(Coefficient.AFMCOEF1) * (luck1 + rnd.nextInt(2) + 0.5) - (coefficients.get(Coefficient.KEP0) * (luck0 + rnd.nextInt(2) + 0.5));
             double possessionNumber = 0.33 * coefficients.get(Coefficient.POSCOEF1);
 
             System.out.println("goalnumber attempt from 1: " + goalNumber);
 
-            if (goalNumber < 0) {
+            if (goalNumber < 0)
+            {
                 goalNumber = goalNumber + possessionNumber;
-                if (goalNumber < 0) {
+                if (goalNumber < 0)
+                {
                     return 1;
-                } else {
+                } else
+                {
                     return 3;
                 }
-            } else if (goalNumber < 1) {
+            } else if (goalNumber < 1)
+            {
                 return 0;
-            } else {
+            } else
+            {
                 return 2;
             }
         }
     }
 
-    public static int[] simulateGame() {
+    public static int[] simulateGame()
+    {
         //TODO base coefficients on team stats
 
         Random rnd = new Random();
@@ -183,11 +226,14 @@ public class Game {
         int ballPossession = 0;
 
         int counter = 1;
-        for (Coefficient coefficient : Coefficient.values()) {
-            if (counter % 2 != 0) {
+        for (Coefficient coefficient : Coefficient.values())
+        {
+            if (counter % 2 != 0)
+            {
                 //team0
                 coefficients.put(coefficient, 100.0);
-            } else {
+            } else
+            {
                 //team1
                 coefficients.put(coefficient, 1000.0);
             }
@@ -207,23 +253,32 @@ public class Game {
         double cndModifier0 = 0.95 * (coefficients.get(Coefficient.CNDCOEF0) / cndPart);
         double cndModifier1 = 0.95 * (coefficients.get(Coefficient.CNDCOEF1) / cndPart);
 
-        for (int minute = 1; minute <= 900; minute++) {
+        for (int minute = 1; minute <= 900; minute++)
+        {
             System.out.println("minute: " + minute);
 
-            if (minute % 150 == 0) {
+            if (minute % 150 == 0)
+            {
                 counter = 1;
 
-                for (Coefficient coef : Coefficient.values()) {
-                    if (counter % 2 != 0) {
-                        if (counter < 11) {
+                for (Coefficient coef : Coefficient.values())
+                {
+                    if (counter % 2 != 0)
+                    {
+                        if (counter < 11)
+                        {
                             coefficients.put(coef, coefficients.get(coef) * cndModifier0);
-                        } else {
+                        } else
+                        {
                             coefficients.put(coef, coefficients.get(coef));
                         }
-                    } else {
-                        if (counter < 11) {
+                    } else
+                    {
+                        if (counter < 11)
+                        {
                             coefficients.put(coef, coefficients.get(coef) * cndModifier1);
-                        } else {
+                        } else
+                        {
                             coefficients.put(coef, coefficients.get(coef));
                         }
                     }
@@ -231,75 +286,95 @@ public class Game {
                 }
             }
 
-            if (ballPossession == -2) {
+            if (ballPossession == -2)
+            {
                 ballPossession = 0;
-            } else if (ballPossession == -1) {
+            } else if (ballPossession == -1)
+            {
                 ballPossession = 1;
             }
 
             System.out.println("ballquarter: " + ballQuarter + " and ball possesion is " + ballPossession);
 
-            while (ballPossession == 0) {
+            while (ballPossession == 0)
+            {
                 int conflictResult = getConflictResult(coefficients, luck0, luck1, ballQuarter, 0);
 
-                if (conflictResult == 1) {
+                if (conflictResult == 1)
+                {
                     ballPossession = 1;
-                } else if (conflictResult == 2) {
+                } else if (conflictResult == 2)
+                {
                     ballQuarter++;
                     System.out.println("ballquarter: " + ballQuarter);
-                } else {
+                } else
+                {
                     ballPossession = -2;
                 }
 
-                while (ballQuarter == 4) {
+                while (ballQuarter == 4)
+                {
                     System.out.println("team0 attempts to score");
 
                     int goalChanceResult = getGoalChanceResult(coefficients, luck0, luck1, 0);
 
-                    if (goalChanceResult == 2) {
+                    if (goalChanceResult == 2)
+                    {
                         goal0++;
                         System.out.println("team 0 has scored!");
                         System.out.println("the current stance is " + goal0 + "-" + goal1);
                         ballQuarter = 1;
                         ballPossession = 1;
-                    } else if (goalChanceResult == 1) {
+                    } else if (goalChanceResult == 1)
+                    {
                         ballQuarter = 3;
                         ballPossession = 1;
-                    } else if (goalChanceResult == 3) {
+                    } else if (goalChanceResult == 3)
+                    {
                         ballQuarter = 3;
-                    } else {
+                    } else
+                    {
                         ballQuarter = 4;
                     }
                 }
             }
 
-            while (ballPossession == 1) {
+            while (ballPossession == 1)
+            {
                 int conflictResult = getConflictResult(coefficients, luck0, luck1, ballQuarter, 1);
 
-                if (conflictResult == 1) {
+                if (conflictResult == 1)
+                {
                     ballPossession = 0;
-                } else if (conflictResult == 2) {
+                } else if (conflictResult == 2)
+                {
                     ballQuarter--;
                     System.out.println("ballquarter: " + ballQuarter);
-                } else {
+                } else
+                {
                     ballPossession = -1;
                 }
 
-                while (ballQuarter == -1) {
+                while (ballQuarter == -1)
+                {
                     System.out.println("team1 attempts to score");
 
                     int goalChanceResult = getGoalChanceResult(coefficients, luck0, luck1, 1);
 
-                    if (goalChanceResult == 2) {
+                    if (goalChanceResult == 2)
+                    {
                         goal1++;
                         ballQuarter = 2;
                         ballPossession = 0;
-                    } else if (goalChanceResult == 1) {
+                    } else if (goalChanceResult == 1)
+                    {
                         ballQuarter = 0;
                         ballPossession = 0;
-                    } else if (goalChanceResult == 3) {
+                    } else if (goalChanceResult == 3)
+                    {
                         ballQuarter = 0;
-                    } else {
+                    } else
+                    {
                         ballQuarter = -1;
                     }
                 }

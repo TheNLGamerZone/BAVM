@@ -1,6 +1,7 @@
 package me.nlt.bavm.teams.coach;
 
-public class Coach {
+public class Coach
+{
     private String coachName;
     private int coachID;
 
@@ -8,9 +9,10 @@ public class Coach {
 
     /**
      * Coach constructor
+     *
      * @param coachName CoachName
-     * @param coachID CoachID
-     * @param stats Stats
+     * @param coachID   CoachID
+     * @param stats     Stats
      */
     public Coach(String coachName, int coachID, double[] stats)
     {
@@ -21,6 +23,7 @@ public class Coach {
 
     /**
      * Stuurt de naam van de speler terug
+     *
      * @return Naam van de speler
      */
     public String getCoachName()
@@ -30,6 +33,7 @@ public class Coach {
 
     /**
      * Stuurt het ID van de speler terug
+     *
      * @return ID van de speler
      */
     public int getCoachID()
@@ -39,6 +43,7 @@ public class Coach {
 
     /**
      * Stuurt de stats van de speler terug
+     *
      * @return Stats van de speler
      */
     public CoachStats getCoachStats()
@@ -48,6 +53,7 @@ public class Coach {
 
     /**
      * Maakt en antwoord een string met alle data voor coaches
+     *
      * @return De string met alle data
      */
     @Override

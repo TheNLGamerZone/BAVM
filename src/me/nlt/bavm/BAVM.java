@@ -70,7 +70,7 @@ public class BAVM
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
         playerManager = new PlayerManager(true);
-        coachManager= new CoachManager(true);
+        coachManager = new CoachManager(true);
         teamManager = new TeamManager(true);
         matchManager = new MatchManager();
 
@@ -110,7 +110,7 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen speler!");
                     } else
                     {
-                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition() ,"Stats: " + player.getPlayerStats().toString(), " ");
+                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition(), "Stats: " + player.getPlayerStats().toString(), " ");
                     }
                 }
             } else if (readInt == -3)

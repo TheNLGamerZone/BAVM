@@ -2,15 +2,15 @@ package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
-import me.nlt.bavm.generator.RandomStats;
-import me.nlt.bavm.teams.coach.Coach;
 
 import java.util.ArrayList;
 
-public class TeamManager {
+public class TeamManager
+{
     private ArrayList<Team> loadedTeams;
 
-    public TeamManager(boolean generateTeamsCoaches) {
+    public TeamManager(boolean generateTeamsCoaches)
+    {
         this.loadedTeams = new ArrayList<>();
 
         int teamsCoachesToGenerate = 20;
@@ -24,11 +24,13 @@ public class TeamManager {
         this.loadTeamsCoaches();
     }
 
-    private void loadTeamsCoaches() {
+    private void loadTeamsCoaches()
+    {
         //TODO teams en coaches laden uit txt
     }
 
-    private void saveTeamsCoaches() {
+    private void saveTeamsCoaches()
+    {
         //TODO teams en coaches saven in txt
     }
 
@@ -45,19 +47,24 @@ public class TeamManager {
         BAVM.getDisplay().appendText(teamsToGenerate + " teams gegenereerd!");
     }
 
-    private int[] generatePlayerIDList(int teamNR) {
+    private int[] generatePlayerIDList(int teamNR)
+    {
         int playerIDList[] = new int[23];
 
-        for (int i = 0; i < 23; i++) {
+        for (int i = 0; i < 23; i++)
+        {
             playerIDList[i] = (teamNR * 23) + i;
         }
 
         return playerIDList;
     }
 
-    public Team getTeam(int teamID) {
-        for (Team team : loadedTeams) {
-            if (team.getTeamID() == teamID) {
+    public Team getTeam(int teamID)
+    {
+        for (Team team : loadedTeams)
+        {
+            if (team.getTeamID() == teamID)
+            {
                 return team;
             }
         }

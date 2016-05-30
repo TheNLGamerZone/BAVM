@@ -1,12 +1,14 @@
 package me.nlt.bavm.game;
 
-public class Match {
+public class Match
+{
     private String matchName;
     private int matchID;
     private int[] matchGoals;
     private int[] teamIDs;
 
-    public Match (String matchName, int matchID, int team0ID, int team1ID, int[] matchResult) {
+    public Match(String matchName, int matchID, int team0ID, int team1ID, int[] matchResult)
+    {
         this.matchName = matchName;
         this.matchID = matchID;
         this.matchGoals = matchResult;
@@ -14,19 +16,23 @@ public class Match {
         this.teamIDs[1] = team1ID;
     }
 
-    public String getMatchName() {
+    public String getMatchName()
+    {
         return matchName;
     }
 
-    public int getMatchID() {
+    public int getMatchID()
+    {
         return matchID;
     }
 
-    public int[] getMatchGoals() {
+    public int[] getMatchGoals()
+    {
         return matchGoals;
     }
 
-    public int[] getTeamIDs() {
+    public int[] getTeamIDs()
+    {
         return teamIDs;
     }
 }

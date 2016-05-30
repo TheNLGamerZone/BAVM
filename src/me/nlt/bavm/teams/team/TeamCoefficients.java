@@ -1,14 +1,13 @@
 package me.nlt.bavm.teams.team;
 
-import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.player.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TeamCoefficients {
+public class TeamCoefficients
+{
     private static HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
     public enum StatCoefficient
@@ -18,6 +17,7 @@ public class TeamCoefficients {
 
         /**
          * Stat constructor
+         *
          * @param index Index
          */
         private StatCoefficient(int index)
@@ -27,6 +27,7 @@ public class TeamCoefficients {
 
         /**
          * Stuurt een int terug die staat voor de standaard plek in arrays voor deze skill
+         *
          * @return Standaard plek voor deze skill
          */
         public int getIndex()
@@ -35,7 +36,8 @@ public class TeamCoefficients {
         }
     }
 
-    public TeamCoefficients(ArrayList<Player> teamPlayerList, Coach teamCoach) {
+    public TeamCoefficients(ArrayList<Player> teamPlayerList, Coach teamCoach)
+    {
         int afm = 0;
         int att = 0;
         int pos = 0;
@@ -43,16 +45,17 @@ public class TeamCoefficients {
         int kep = 0;
         int cnd = 0;
 
-        for (Player player : teamPlayerList) {
+        for (Player player : teamPlayerList)
+        {
             switch (player.getPosition().getId())
             {
-                case 0 :
+                case 0:
                     statCoefficients.put(StatCoefficient.KEP, (statCoefficients.get(StatCoefficient.KEP) + player.getPlayerStats().getValue(5)));
                     kep++;
                     statCoefficients.put(StatCoefficient.AFMCOEF, (statCoefficients.get(StatCoefficient.AFMCOEF) + player.getPlayerStats().getValue(0)));
                     afm++;
                     break;
-                case 1 :
+                case 1:
 
                     break;
             }
