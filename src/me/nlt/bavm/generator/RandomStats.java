@@ -35,10 +35,10 @@ public class RandomStats
             }
         }
 
-        int keeperBases[] = {20, 14, 30, 40, 30, 50};
-        int defenderBases[] = {30, 20, 30, 50, 30, 16};
-        int midfielderBases[] = {40, 40, 50, 30, 30, 12};
-        int attackerBases[] = {50, 50, 20, 20, 30, 8};
+        int keeperBases[] = {20, 20, 30, 40, 50, 50};
+        int defenderBases[] = {25, 20, 50, 50, 15, 50};
+        int midfielderBases[] = {20, 45, 50, 45, 10, 40};
+        int attackerBases[] = {50, 50, 25, 25, 10, 50};
 
         for (int i = 0; i < 6; i++)
         {

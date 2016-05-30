@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.team.Team;
-import me.nlt.bavm.teams.team.TeamCoefficients.StatCoefficient;
+import me.nlt.bavm.teams.team.TeamInfo.StatCoefficient;
 
 public class Game
 {
@@ -15,13 +15,18 @@ public class Game
     	Team home = BAVM.getTeamManager().getTeam(homeID);
     	Team visitor = BAVM.getTeamManager().getTeam(visitorID);
     	
-    	HashMap<StatCoefficient, Double> homeCoefficients = home.getTeamInfo().getTeamCoefficients().getStatCoefficients();
-    	HashMap<StatCoefficient, Double> visitorCoefficients = visitor.getTeamInfo().getTeamCoefficients().getStatCoefficients();
+    	HashMap<StatCoefficient, Double> homeCoefficients = home.getTeamInfo().getStatCoefficients();
+    	HashMap<StatCoefficient, Double> visitorCoefficients = visitor.getTeamInfo().getStatCoefficients();
     	
-    	for (StatCoefficient statCoeffcient : homeCoefficients.keySet()) 
+    	for (StatCoefficient statCoefficient : homeCoefficients.keySet())
     	{
-    		System.out.println(homeCoefficients.get(statCoeffcient));
+    		System.out.println(homeCoefficients.get(statCoefficient));
     	}
+
+        for (StatCoefficient statCoefficient : visitorCoefficients.keySet())
+        {
+            System.out.println(visitorCoefficients.get(statCoefficient));
+        }
     	
     	return goalResult;
     }

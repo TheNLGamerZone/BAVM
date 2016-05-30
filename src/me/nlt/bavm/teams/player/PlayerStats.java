@@ -73,8 +73,23 @@ public class PlayerStats
             return -1;
         }
 
+        switch (location) {
+            case 0 :
+                return playerSkills.get(Stat.AFMAKEN);
+            case 1 :
+                return playerSkills.get(Stat.AANVAL);
+            case 2 :
+                return playerSkills.get(Stat.BALBEZIT);
+            case 3 :
+                return playerSkills.get(Stat.VERDEDIGEN);
+            case 4 :
+                return playerSkills.get(Stat.DOELMAN);
+            case 5 :
+                return playerSkills.get(Stat.CONDITIE);
+        }
 
-        return (double) playerSkills.values().toArray()[location];
+        //(double) playerSkills.values().toArray()[location];
+        return 0.0;
     }
 
     /**
