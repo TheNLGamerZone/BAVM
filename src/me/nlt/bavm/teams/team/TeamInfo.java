@@ -19,7 +19,7 @@ public class TeamInfo {
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
     }
 
-    public ArrayList<Player> getTeamPlayerList() {
+    public ArrayList<Player> getPlayers() {
         return this.teamPlayerList;
     }
 

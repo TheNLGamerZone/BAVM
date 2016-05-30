@@ -129,7 +129,14 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen team!");
                     } else
                     {
-                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
+                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Spelers: ");
+
+                        for (Player player : team.getTeamInfo().getPlayers())
+                        {
+                            display.appendText(" - " + player.getPlayerName());
+                        }
+
+                        display.appendText("Coach: " + team.getTeamInfo().getTeamCoach().getCoachName(), " ");
                     }
                 }
             } else
