@@ -53,10 +53,10 @@ public class RandomStats
                     randomStats[i] = Math.round(((defenderBases[i] + rnd.nextInt((int) (defenderBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
                     break;
                 case 2:
-                    randomStats[i] = Math.round(((attackerBases[i] + rnd.nextInt((int) (attackerBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
+                    randomStats[i] = Math.round(((midfielderBases[i] + rnd.nextInt((int) (midfielderBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
                     break;
                 case 3:
-                    randomStats[i] = Math.round(((midfielderBases[i] + rnd.nextInt((int) (midfielderBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
+                    randomStats[i] = Math.round(((attackerBases[i] + rnd.nextInt((int) (attackerBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
                     break;
             }
         }

@@ -9,14 +9,16 @@ import java.util.ArrayList;
 public class TeamInfo {
     private ArrayList<Player> teamPlayerList = new ArrayList<>();
     private Coach teamCoach;
+    private TeamCoefficients teamCoefficients;
 
     public TeamInfo(int[] playerIDs, int coachID) {
         for (int i : playerIDs) {
             teamPlayerList.add(BAVM.getPlayerManager().getPlayer(i));
         }
 
-        System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
+
+        this.teamCoefficients = new TeamCoefficients(teamPlayerList, teamCoach);
     }
 
     public ArrayList<Player> getTeamPlayerList() {
@@ -25,6 +27,10 @@ public class TeamInfo {
 
     public Coach getTeamCoach() {
         return this.teamCoach;
+    }
+
+    public TeamCoefficients getTeamCoefficients() {
+        return teamCoefficients;
     }
 
     @Override
