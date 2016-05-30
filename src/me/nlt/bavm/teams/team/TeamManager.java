@@ -17,7 +17,7 @@ public class TeamManager
 
         if (generateTeamsCoaches)
         {
-            this.generateTeamsCoaches(teamsCoachesToGenerate);
+            this.generateTeams(teamsCoachesToGenerate);
         }
 
         // Spelers laden
@@ -32,6 +32,15 @@ public class TeamManager
     private void saveTeamsCoaches()
     {
         //TODO teams en coaches saven in txt
+    }
+    
+    private void generateTeams(int teamsToGenerate)
+    {
+    	for (int i = 0; i < teamsToGenerate; i++)
+    	{
+    		double teamTalent = Math.random();
+    		
+    	}
     }
 
     private void generateTeamsCoaches(int teamsToGenerate)

@@ -18,7 +18,8 @@ public class TeamInfo
             teamPlayerList.add(BAVM.getPlayerManager().getPlayer(i));
         }
 
-        System.out.println(coachID);
+        //DEBUG
+        //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
     }
 

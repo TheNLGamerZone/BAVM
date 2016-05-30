@@ -1,4 +1,4 @@
-package me.nlt.bavm.teams;
+package me.nlt.bavm.teams.player;
 
 import java.util.HashMap;
 
