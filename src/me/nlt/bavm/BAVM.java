@@ -72,7 +72,7 @@ public class BAVM
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
         playerManager = new PlayerManager(true);
-        coachManager= new CoachManager(true);
+        coachManager = new CoachManager(true);
         teamManager = new TeamManager(true);
         matchManager = new MatchManager();
 
@@ -118,7 +118,7 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen speler!");
                     } else
                     {
-                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition() ,"Stats: " + player.getPlayerStats().toString(), " ");
+                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition(), "Stats: " + player.getPlayerStats().toString(), " ");
                     }
                 }
             } else if (readInt == -3)
@@ -137,21 +137,29 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen team!");
                     } else
                     {
+                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Players:");
+
+                        for (Player player : team.getTeamInfo().getPlayers())
+                        {
+                            display.appendText(" - " + player.getPlayerName());
+                        }
+
                         while (true)
                         {
-                            display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
-
-                            display.appendText("Als je de teamcoëfficienten wilt bekijken, typ -4, zo niet, typ -5");
+                            display.appendText(" ", "Als je de teamcoëfficienten wilt bekijken, typ -4, zo niet, typ een ander getal");
 
                             int askCoefficient = (int) display.readDouble();
 
-                            if (askCoefficient == -4) {
+                            if (askCoefficient == -4)
+                            {
                                 TeamInfo teamInfo = team.getTeamInfo();
 
-                                for (TeamInfo.StatCoefficient statCoefficient : teamInfo.getStatCoefficients().keySet()) {
+                                for (TeamInfo.StatCoefficient statCoefficient : teamInfo.getStatCoefficients().keySet())
+                                {
                                     display.appendText("Coefficient " + statCoefficient.name() + ": " + teamInfo.getStatCoefficients().get(statCoefficient));
                                 }
-                            } else {
+                            } else
+                            {
                                 break;
                             }
                         }

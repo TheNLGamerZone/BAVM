@@ -33,14 +33,14 @@ public class TeamManager
     {
         //TODO teams en coaches saven in txt
     }
-    
+
     private void generateTeams(int teamsToGenerate)
     {
-    	for (int i = 0; i < teamsToGenerate; i++)
-    	{
-    		double teamTalent = Math.random();
-    		
-    	}
+        for (int i = 0; i < teamsToGenerate; i++)
+        {
+            double teamTalent = Math.random();
+
+        }
     }
 
     private void generateTeamsCoaches(int teamsToGenerate)

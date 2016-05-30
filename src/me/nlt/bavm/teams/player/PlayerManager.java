@@ -31,6 +31,9 @@ public class PlayerManager
     private void savePlayers()
     {
         //TODO Spelers opslaan in tekstbestanden
+
+        //for (Player player : getPlayers(Position.KEEPER))
+        //    System.out.printf("%s, %d", player.getPlayerName(), (int) player.getPlayerStats().getCheckSum());
     }
 
     private void generatePlayers()
@@ -69,13 +72,6 @@ public class PlayerManager
         //DEBUG
         System.out.printf("%d keepers, %d defenders, %d attackers and %d midfielders (%d total)%n", keeper, defender, attacker, midfielder, total);
 
-
-        //DEBUG
-        /*for (Player player : loadedPlayers)
-        {
-            System.out.println(player.toString());
-        }*/
-
         BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
 
         // Save players
@@ -84,52 +80,69 @@ public class PlayerManager
 
     public int[] getPlayerIDs(double teamTalent)
     {
-    	int percentage = (int) (teamTalent * 10);
-    	
-    	Player[] possibleKeepers = this.getPlayers(Position.KEEPER);
-    	Player[] possibleAttackers = this.getPlayers(Position.ATTACKER);
-    	Player[] possibleDefenders = this.getPlayers(Position.DEFENDER);
-    	Player[] possibleMidfielders = this.getPlayers(Position.MIDFIELDER);
+        int percentage = (int) (teamTalent * 10);
 
-    	return null;
+        Player[] possibleKeepers = this.getPlayers(Position.KEEPER);
+        Player[] possibleAttackers = this.getPlayers(Position.ATTACKER);
+        Player[] possibleDefenders = this.getPlayers(Position.DEFENDER);
+        Player[] possibleMidfielders = this.getPlayers(Position.MIDFIELDER);
+
+        return null;
     }
-    
+
     private Player[] getPlayers(Position position)
     {
-    	ArrayList<Player> players = new ArrayList<>();
-    	
-    	for (Player player : loadedPlayers)
-    	{
-    		if (player.getPosition() == position)
-    		{
-    			players.add(player);
-    		}
-    	}
-    	
-    	return players.toArray(new Player[players.size()]);
+        //TODO Werkt nog niet
+        ArrayList<Player> players = new ArrayList<>();
+
+        for (Player player : loadedPlayers)
+        {
+            if (player.getPosition() == position)
+            {
+                ArrayList<Player> playerCopy = new ArrayList<>();
+
+                for (int i = 0; i < players.size(); i++)
+                {
+                    if (players.get(i).getPlayerStats().getCheckSum() > player.getPlayerStats().getCheckSum())
+                    {
+                        for (int j = i; j < players.size() - i; j++)
+                        {
+                            playerCopy.add(players.get(j));
+                            players.remove(j);
+                        }
+
+                        players.add(player);
+
+                        players.addAll(playerCopy);
+                    }
+                }
+            }
+        }
+
+        System.out.println("Size: " + players.size() );
+        return players.toArray(new Player[players.size()]);
     }
-    
+
     private Position[] generatePositions(int amount, int[] percentages)
     {
         ArrayList<Position> positions = new ArrayList<>();
 
         for (int i = 0; i < amount; i++)
         {
-            int chanceNumer = 0;
+            int chanceNumber = 0;
             int previousValues = 0;
 
-            while (chanceNumer == 0)
+            while (chanceNumber == 0)
             {
-                chanceNumer = (int) (Math.random() * 100);
+                chanceNumber = (int) (Math.random() * 100);
             }
 
 
             for (int chance = 0; chance < percentages.length; chance++)
             {
-                int lastIndex = (chance - 1 == -1 ? 0 : percentages[chance - 1]);
                 int currentIndex = percentages[chance] + previousValues;
 
-                if (chanceNumer > previousValues && chanceNumer <= currentIndex)
+                if (chanceNumber > previousValues && chanceNumber <= currentIndex)
                 {
                     for (Position position : Position.values())
                     {
@@ -175,13 +188,6 @@ public class PlayerManager
 
     public int getNextAvailableID()
     {
-        int currentID = -1;
-
-        for (Player player : loadedPlayers)
-        {
-            currentID++;
-        }
-
-        return currentID + 1;
+        return loadedPlayers.size();
     }
 }

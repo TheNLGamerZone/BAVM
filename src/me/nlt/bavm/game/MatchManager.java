@@ -36,15 +36,18 @@ public class MatchManager
 
         playedMatches.add(new Match(matchName, getNextAvailableID(), homeID, visitorID, matchResult));
     }
-    
-    public Match getMatch(int matchID) {
-    	for (Match match : playedMatches) {
-    		if (match.getMatchID() == matchID) {
-    			return match;
-    		}
-    	}
-    	
-    	return null;
+
+    public Match getMatch(int matchID)
+    {
+        for (Match match : playedMatches)
+        {
+            if (match.getMatchID() == matchID)
+            {
+                return match;
+            }
+        }
+
+        return null;
     }
 
     public int getNextAvailableID()

@@ -32,6 +32,7 @@ public class TeamInfo
 
         /**
          * Stat constructor
+         *
          * @param index Index
          */
         private StatCoefficient(int index)
@@ -41,6 +42,7 @@ public class TeamInfo
 
         /**
          * Stuurt een int terug die staat voor de standaard plek in arrays voor deze skill
+         *
          * @return Standaard plek voor deze skill
          */
         public int getIndex()
@@ -70,17 +72,23 @@ public class TeamInfo
         int kep = 0;
         int cnd = 0;
 
-        for (StatCoefficient statCoefficient : StatCoefficient.values()) {
+        for (StatCoefficient statCoefficient : StatCoefficient.values())
+        {
             statCoefficients.put(statCoefficient, 0.0);
         }
 
 
-
         for (Player player : teamPlayerList)
         {
+            if (player == null)
+            {
+                System.out.println("Null player");
+                continue;
+            }
+
             switch (player.getPosition().getId())
             {
-                case 0 :
+                case 0:
                     //relevant keeper stats
 
                     statCoefficients.put(StatCoefficient.KEP, (statCoefficients.get(StatCoefficient.KEP) + player.getPlayerStats().getValue(4)));
@@ -88,7 +96,7 @@ public class TeamInfo
                     statCoefficients.put(StatCoefficient.CNDCOEF, (statCoefficients.get(StatCoefficient.CNDCOEF) + player.getPlayerStats().getValue(5)));
                     cnd++;
                     break;
-                case 1 :
+                case 1:
                     //relevant defender stats
 
                     statCoefficients.put(StatCoefficient.DEFCOEF, (statCoefficients.get(StatCoefficient.DEFCOEF) + player.getPlayerStats().getValue(3)));
@@ -98,7 +106,7 @@ public class TeamInfo
                     statCoefficients.put(StatCoefficient.POSCOEF, (statCoefficients.get(StatCoefficient.POSCOEF) + player.getPlayerStats().getValue(2)));
                     pos++;
                     break;
-                case 2 :
+                case 2:
                     //relevant midfielder stats
                     statCoefficients.put(StatCoefficient.ATTCOEF, (statCoefficients.get(StatCoefficient.ATTCOEF) + player.getPlayerStats().getValue(1)));
                     att++;
@@ -109,7 +117,7 @@ public class TeamInfo
                     statCoefficients.put(StatCoefficient.POSCOEF, (statCoefficients.get(StatCoefficient.POSCOEF) + player.getPlayerStats().getValue(2)));
                     pos++;
                     break;
-                case 3 :
+                case 3:
                     //relevant attacker stats
                     statCoefficients.put(StatCoefficient.ATTCOEF, (statCoefficients.get(StatCoefficient.ATTCOEF) + player.getPlayerStats().getValue(1)));
                     att++;
@@ -131,25 +139,27 @@ public class TeamInfo
         return statCoefficients;
     }
 
-    public double getCoefficientValue(int index) {
+    public double getCoefficientValue(int index)
+    {
         // Checken of de gegeven waarde bestaat in de hashmap
         if (index < 0 || index > statCoefficients.size())
         {
             return -1;
         }
 
-        switch (index) {
-            case 0 :
+        switch (index)
+        {
+            case 0:
                 return statCoefficients.get(StatCoefficient.AFMCOEF);
-            case 1 :
+            case 1:
                 return statCoefficients.get(StatCoefficient.ATTCOEF);
-            case 2 :
+            case 2:
                 return statCoefficients.get(StatCoefficient.POSCOEF);
-            case 3 :
+            case 3:
                 return statCoefficients.get(StatCoefficient.DEFCOEF);
-            case 4 :
+            case 4:
                 return statCoefficients.get(StatCoefficient.KEP);
-            case 5 :
+            case 5:
                 return statCoefficients.get(StatCoefficient.CNDCOEF);
         }
 
@@ -176,6 +186,11 @@ public class TeamInfo
         // String maken met stats
         for (Player player : teamPlayerList)
         {
+            if (player == null)
+            {
+                continue;
+            }
+
             stringBuilder.append(player.toString() + ">");
         }
 
