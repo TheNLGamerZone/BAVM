@@ -9,7 +9,7 @@ public class PlayerStats
 
     public enum Stat
     {
-        AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), CONDITIE(4), DOELMAN(5);
+        AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), DOELMAN(4), CONDITIE(5);
         private int location;
 
         /**

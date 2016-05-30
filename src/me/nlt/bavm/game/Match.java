@@ -5,15 +5,15 @@ public class Match
     private String matchName;
     private int matchID;
     private int[] matchGoals;
-    private int[] teamIDs;
+    private int[] teamIDs =  new int[2];
 
-    public Match(String matchName, int matchID, int team0ID, int team1ID, int[] matchResult)
+    public Match(String matchName, int matchID, int homeID, int visitorID, int[] matchResult)
     {
-        this.matchName = matchName;
+    	this.matchName = matchName;
         this.matchID = matchID;
         this.matchGoals = matchResult;
-        this.teamIDs[0] = team0ID;
-        this.teamIDs[1] = team1ID;
+        this.teamIDs[0] = homeID;
+        this.teamIDs[1] = visitorID;
     }
 
     public String getMatchName()
