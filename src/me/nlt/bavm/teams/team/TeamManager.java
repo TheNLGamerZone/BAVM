@@ -17,7 +17,7 @@ public class TeamManager
 
         if (generateTeamsCoaches)
         {
-            this.generateTeams(teamsCoachesToGenerate);
+            this.generateTeamsCoaches(teamsCoachesToGenerate);
         }
 
         // Spelers laden

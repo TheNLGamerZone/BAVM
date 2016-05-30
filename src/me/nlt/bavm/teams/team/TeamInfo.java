@@ -10,6 +10,8 @@ public class TeamInfo
 {
     private ArrayList<Player> teamPlayerList = new ArrayList<>();
     private Coach teamCoach;
+    
+    private TeamCoefficients teamCoefficients;
 
     public TeamInfo(int[] playerIDs, int coachID)
     {
@@ -21,6 +23,8 @@ public class TeamInfo
         //DEBUG
         //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
+        
+        this.teamCoefficients = new TeamCoefficients(teamPlayerList, teamCoach);
     }
 
     public ArrayList<Player> getPlayers()
@@ -31,6 +35,11 @@ public class TeamInfo
     public Coach getTeamCoach()
     {
         return this.teamCoach;
+    }
+    
+    public TeamCoefficients getTeamCoefficients()
+    {
+    	return this.teamCoefficients;
     }
 
     @Override

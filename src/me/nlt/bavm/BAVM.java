@@ -6,9 +6,11 @@ import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerManager;
 import me.nlt.bavm.teams.team.Team;
+import me.nlt.bavm.teams.team.TeamCoefficients;
 import me.nlt.bavm.teams.team.TeamManager;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class BAVM
 {
@@ -70,7 +72,7 @@ public class BAVM
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
         playerManager = new PlayerManager(true);
-        coachManager = new CoachManager(true);
+        coachManager= new CoachManager(true);
         teamManager = new TeamManager(true);
         matchManager = new MatchManager();
 
@@ -110,7 +112,7 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen speler!");
                     } else
                     {
-                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition(), "Stats: " + player.getPlayerStats().toString(), " ");
+                        display.appendText("Naam: " + player.getPlayerName(), "ID: " + player.getPlayerID(), "Aanbevolen positie: " + player.getPosition() ,"Stats: " + player.getPlayerStats().toString(), " ");
                     }
                 }
             } else if (readInt == -3)
@@ -129,14 +131,24 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen team!");
                     } else
                     {
-                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Spelers: ");
-
-                        for (Player player : team.getTeamInfo().getPlayers())
+                        while (true)
                         {
-                            display.appendText(" - " + player.getPlayerName());
-                        }
+                            display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
 
-                        display.appendText("Coach: " + team.getTeamInfo().getTeamCoach().getCoachName(), " ");
+                            display.appendText("Als je de teamcoëfficienten wilt bekijken, typ -4, zo niet, typ -5");
+
+                            int askCoefficient = (int) display.readDouble();
+
+                            if (askCoefficient == -4) {
+                                TeamCoefficients teamCoefficients = team.getTeamInfo().getTeamCoefficients();
+
+                                for (int i = 0; i < 6; i++) {
+                                    display.appendText("Coefficient " + i + ":" + teamCoefficients.getValue(i));
+                                }
+                            } else {
+                                break;
+                            }
+                        }
                     }
                 }
             } else
