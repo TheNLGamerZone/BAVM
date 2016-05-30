@@ -5,7 +5,8 @@ import me.nlt.bavm.generator.RandomStats;
 
 import java.util.ArrayList;
 
-public class CoachManager {
+public class CoachManager
+{
     private ArrayList<Coach> loadedCoaches;
 
     public CoachManager(boolean generateCoaches)
@@ -20,7 +21,8 @@ public class CoachManager {
         }
     }
 
-    private void generateCoaches(int coachesToGenerate) {
+    private void generateCoaches(int coachesToGenerate)
+    {
         for (int i = 0; i < coachesToGenerate; i++)
         {
             double teamTalent = Math.random();
@@ -29,9 +31,12 @@ public class CoachManager {
         }
     }
 
-    public Coach getCoach(int coachID) {
-        for (Coach coach : loadedCoaches) {
-            if (coach.getCoachID() == coachID) {
+    public Coach getCoach(int coachID)
+    {
+        for (Coach coach : loadedCoaches)
+        {
+            if (coach.getCoachID() == coachID)
+            {
                 return coach;
             }
         }

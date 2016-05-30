@@ -12,9 +12,10 @@ public class Player
 
     /**
      * Player constructor
+     *
      * @param playerName PlayerName
-     * @param playerID PlayerID
-     * @param stats Stats
+     * @param playerID   PlayerID
+     * @param stats      Stats
      */
     public Player(String playerName, int playerID, Position position, double[] stats)
     {
@@ -26,6 +27,7 @@ public class Player
 
     /**
      * Stuurt de naam van de speler terug
+     *
      * @return Naam van de speler
      */
     public String getPlayerName()
@@ -35,6 +37,7 @@ public class Player
 
     /**
      * Stuurt het ID van de speler terug
+     *
      * @return ID van de speler
      */
     public int getPlayerID()
@@ -44,14 +47,17 @@ public class Player
 
     /**
      * Stuurt de aangerade positie van de speler terug
+     *
      * @return Positie van de speler
      */
     public Position getPosition()
     {
         return this.position;
     }
+
     /**
      * Stuurt de stats van de speler terug
+     *
      * @return Stats van de speler
      */
     public PlayerStats getPlayerStats()
@@ -61,6 +67,7 @@ public class Player
 
     /**
      * Maakt en antwoord een string met alle data voor players
+     *
      * @return De string met alle data
      */
     @Override

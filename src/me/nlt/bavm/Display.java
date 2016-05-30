@@ -13,6 +13,9 @@ public class Display
     public JTextArea textArea;
     public JTextField jTextField;
 
+    private JScrollPane jScrollPane;
+    private DefaultCaret defaultCaret;
+
     private Object lockObject;
 
     /**
@@ -40,9 +43,8 @@ public class Display
 
         this.textArea = new JTextArea(width, height);
         this.jTextField = new JTextField();
-
-        JScrollPane jScrollPane = new JScrollPane(textArea);
-        DefaultCaret defaultCaret = (DefaultCaret) this.textArea.getCaret();
+        this.jScrollPane = new JScrollPane(textArea);
+        this.defaultCaret = (DefaultCaret) this.textArea.getCaret();
 
         // JPanel, JTextArea en JScrollPane 'configureren'
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
@@ -148,6 +150,9 @@ public class Display
             {
                 textArea.append((newLine ? "\n" : "") + string);
             }
+
+            jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            defaultCaret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         });
     }
 

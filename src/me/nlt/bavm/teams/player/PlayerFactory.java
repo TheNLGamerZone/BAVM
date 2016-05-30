@@ -7,6 +7,7 @@ public class PlayerFactory
 {
     /**
      * Deze methode maakt een speler-object uit een string met data
+     *
      * @param playerString String met data
      * @return Gemaakte speler
      * @throws InvalidPlayerException Als een speler onjuiste gegevens of een onjuist controlegetal heeft
@@ -50,28 +51,30 @@ public class PlayerFactory
                         double value = 0;
 
                         // Double proberen maken uit string
-                        try {
+                        try
+                        {
                             value = Double.parseDouble(stats.split(":")[1].split("%", 2)[0].replaceAll("}", ""));
                         } catch (NumberFormatException e)
                         {
-                        	throw new InvalidPlayerException(playerName);
+                            throw new InvalidPlayerException(playerName);
                         }
 
                         // Juiste waarde in de array zetten mits de huidige stat een bestaande is
                         if (playerStat == null)
                         {
-                        	throw new InvalidPlayerException(playerName);
+                            throw new InvalidPlayerException(playerName);
                         }
 
                         playerStats[playerStat.getLocation()] = value;
                     }
-                    
+
                     // Proberen het controlegetal te parsen
-                    try {
-                    	checkSum = Double.parseDouble(data.split("%")[1].replace("}", ""));
+                    try
+                    {
+                        checkSum = Double.parseDouble(data.split("%")[1].replace("}", ""));
                     } catch (NumberFormatException e)
                     {
-                    	throw new InvalidPlayerException(playerName);
+                        throw new InvalidPlayerException(playerName);
                     }
                     break;
                 case "name":
@@ -82,7 +85,8 @@ public class PlayerFactory
                     int value = 0;
 
                     // Integer proberen maken uit string
-                    try {
+                    try
+                    {
                         value = Integer.parseInt(data);
                     } catch (NumberFormatException e)
                     {
@@ -106,14 +110,14 @@ public class PlayerFactory
 
         // Speler met de verkregen gegevens maken
         Player player = new Player(playerName, playerID, position, playerStats);
-        
+
         // Controlegetallen vergelijken
         if (player.getPlayerStats().getCheckSum() != checkSum)
         {
-        	// Controlegetallen kloppen niet, er zijn dus waarschijnlijk handmatig stats aangepast
-        	throw new InvalidPlayerException(playerName, checkSum);
+            // Controlegetallen kloppen niet, er zijn dus waarschijnlijk handmatig stats aangepast
+            throw new InvalidPlayerException(playerName, checkSum);
         }
-        
+
         // Controlegetallen kloppen
         return player;
     }

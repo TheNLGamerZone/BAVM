@@ -6,7 +6,7 @@ public class PlayerStats
 {
     private HashMap<Stat, Double> playerSkills = new HashMap<>();
     private double checkSum;
-    
+
     public enum Stat
     {
         AFMAKEN(0), AANVAL(1), BALBEZIT(2), VERDEDIGEN(3), DOELMAN(4), CONDITIE(5);
@@ -14,6 +14,7 @@ public class PlayerStats
 
         /**
          * Stat constructor
+         *
          * @param location Location
          */
         private Stat(int location)
@@ -23,6 +24,7 @@ public class PlayerStats
 
         /**
          * Stuurt een int terug die staat voor de standaard plek in arrays voor deze skill
+         *
          * @return Standaard plek voor deze skill
          */
         public int getLocation()
@@ -33,6 +35,7 @@ public class PlayerStats
 
     /**
      * PlayerStats constructor
+     *
      * @param skillValues SkillValues
      */
     public PlayerStats(double[] skillValues)
@@ -43,48 +46,51 @@ public class PlayerStats
             // Skills in hashmap zetten
             playerSkills.put(stat, skillValues[stat.getLocation()]);
         }
-        
+
         // Checksum maken
         this.checkSum = 0;
-        
+
         // Checksum 'vullen'
         for (int i = 0; i < playerSkills.size(); i++)
         {
-        	//DEBUG
-        	//System.out.println(this.getValue(i));
-        	checkSum += (this.getValue(i) * (i * 2) + this.getValue(i));
+            //DEBUG
+            //System.out.println(this.getValue(i));
+            checkSum += (this.getValue(i) * (i * 2) + this.getValue(i));
         }
     }
 
     /**
      * Geeft de waarde van de skill op de plek van de gegeven locatie
+     *
      * @param location De locatie van de skill
      * @return De waarde van de skill
      */
     public double getValue(int location)
     {
-    	// Checken of de gegeven waarde bestaat in de hashmap
-    	if (location < 0 || location > playerSkills.size())
-    	{
-    		return -1;
-    	}
-    	
-    	
-    	return (double) playerSkills.values().toArray()[location];
+        // Checken of de gegeven waarde bestaat in de hashmap
+        if (location < 0 || location > playerSkills.size())
+        {
+            return -1;
+        }
+
+
+        return (double) playerSkills.values().toArray()[location];
     }
-    
+
     /**
      * Geeft de waarde van de checksum
+     *
      * @return Checksum
      */
     public double getCheckSum()
     {
-    	return this.checkSum;
+        return this.checkSum;
     }
-    
+
     /**
      * Hiermee kan een stat verhoogd of verlaagd worden
-     * @param stat De stat die verhoogd/verlaagd moet worden
+     *
+     * @param stat      De stat die verhoogd/verlaagd moet worden
      * @param increment De verhoging/verlaging
      */
     public void increaseSkill(Stat stat, double increment)
@@ -94,6 +100,7 @@ public class PlayerStats
 
     /**
      * Zoekt de stat bij de string
+     *
      * @param skillName Mogelijke naam voor een stat
      * @return De stat met die naam
      */
@@ -114,6 +121,7 @@ public class PlayerStats
 
     /**
      * Maakt en antwoord een string waar alle data voor playerStats in staat
+     *
      * @return
      */
     @Override

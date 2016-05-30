@@ -28,9 +28,8 @@ public class RandomStats
 
             if (playerTalent < 0.657)
             {
-               playerTalent += Math.random();
-            }
-            else
+                playerTalent += Math.random();
+            } else
             {
                 playerTalent -= Math.random();
             }

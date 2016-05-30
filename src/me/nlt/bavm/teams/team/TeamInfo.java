@@ -6,13 +6,16 @@ import me.nlt.bavm.teams.player.Player;
 
 import java.util.ArrayList;
 
-public class TeamInfo {
+public class TeamInfo
+{
     private ArrayList<Player> teamPlayerList = new ArrayList<>();
     private Coach teamCoach;
     private TeamCoefficients teamCoefficients;
 
-    public TeamInfo(int[] playerIDs, int coachID) {
-        for (int i : playerIDs) {
+    public TeamInfo(int[] playerIDs, int coachID)
+    {
+        for (int i : playerIDs)
+        {
             teamPlayerList.add(BAVM.getPlayerManager().getPlayer(i));
         }
 
@@ -21,11 +24,13 @@ public class TeamInfo {
         this.teamCoefficients = new TeamCoefficients(teamPlayerList, teamCoach);
     }
 
-    public ArrayList<Player> getTeamPlayerList() {
+    public ArrayList<Player> getPlayers()
+    {
         return this.teamPlayerList;
     }
 
-    public Coach getTeamCoach() {
+    public Coach getTeamCoach()
+    {
         return this.teamCoach;
     }
 

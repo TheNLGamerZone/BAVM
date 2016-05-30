@@ -47,23 +47,23 @@ public class PlayerManager
         {
             loadedPlayers.add(new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), position, RandomStats.randomStats(position)));
 
-                switch (position)
-                {
-                    case KEEPER:
-                        keeper++;
-                        break;
-                    case DEFENDER:
-                        defender++;
-                        break;
-                    case ATTACKER:
-                        attacker++;
-                        break;
-                    case MIDFIELDER:
-                        midfielder++;
-                        break;
-                }
+            switch (position)
+            {
+                case KEEPER:
+                    keeper++;
+                    break;
+                case DEFENDER:
+                    defender++;
+                    break;
+                case ATTACKER:
+                    attacker++;
+                    break;
+                case MIDFIELDER:
+                    midfielder++;
+                    break;
+            }
 
-                total++;
+            total++;
         }
 
         //DEBUG
