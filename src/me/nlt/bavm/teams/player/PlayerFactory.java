@@ -1,6 +1,6 @@
 package me.nlt.bavm.teams.player;
 
-import me.nlt.bavm.teams.PlayerStats;
+import me.nlt.bavm.teams.player.PlayerStats;
 import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
 
 public class PlayerFactory

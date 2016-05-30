@@ -1,6 +1,8 @@
 package me.nlt.bavm;
 
 import me.nlt.bavm.files.FileManager;
+import me.nlt.bavm.game.Game;
+import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -86,7 +88,7 @@ public class BAVM
      */
     private void initGame()
     {
-        while (true)
+        /*while (true)
         {
             display.appendText("Wil je een speler (-2) of een team bekijken (-3)?", "Typ -1 om te stoppen");
 
@@ -135,7 +137,7 @@ public class BAVM
                         {
                             display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Info: " + team.getTeamInfo().toString(), " ");
 
-                            display.appendText("Als je de teamcoÃ«fficienten wilt bekijken, typ -4, zo niet, typ -5");
+                            display.appendText("Als je de teamcoëfficienten wilt bekijken, typ -4, zo niet, typ -5");
 
                             int askCoefficient = (int) display.readDouble();
 
@@ -156,14 +158,14 @@ public class BAVM
                 display.appendText("Foute input!");
             }
 
-        }
+        }*/
 
-        /*Game gamer = new Game();
+        matchManager.simulateMatch(0, 1);
+        Match match = matchManager.getMatch(0);
+        
+        display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1]);
 
-        for (int i = 0; i < 20; i++) {
-            display.appendText(gamer.simulateGame());
-        }
-
+        /*
         //ONE TEAM
         //amount of players to create (in multiples of 23)
         int amount23s = 23;

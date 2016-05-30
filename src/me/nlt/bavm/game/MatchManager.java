@@ -26,15 +26,25 @@ public class MatchManager
 
     }
 
-    public void simulateMatch(int team0ID, int team1ID)
+    public void simulateMatch(int homeID, int visitorID)
     {
 
         //TODO let game simulate an actual game with actual coefficients
-        int matchResult[] = Game.simulateGame();
+        int matchResult[] = Game.simulateGame(homeID, visitorID);
 
-        String matchName = BAVM.getTeamManager().getTeam(team0ID).getTeamName() + BAVM.getTeamManager().getTeam(team1ID).getTeamName();
+        String matchName = BAVM.getTeamManager().getTeam(homeID).getTeamName() + BAVM.getTeamManager().getTeam(visitorID).getTeamName();
 
-        playedMatches.add(new Match(matchName, getNextAvailableID(), team0ID, team1ID, matchResult));
+        playedMatches.add(new Match(matchName, getNextAvailableID(), homeID, visitorID, matchResult));
+    }
+    
+    public Match getMatch(int matchID) {
+    	for (Match match : playedMatches) {
+    		if (match.getMatchID() == matchID) {
+    			return match;
+    		}
+    	}
+    	
+    	return null;
     }
 
     public int getNextAvailableID()

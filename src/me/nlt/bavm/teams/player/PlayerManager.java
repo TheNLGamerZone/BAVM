@@ -82,6 +82,33 @@ public class PlayerManager
         this.savePlayers();
     }
 
+    public int[] getPlayerIDs(double teamTalent)
+    {
+    	int percentage = (int) (teamTalent * 10);
+    	
+    	Player[] possibleKeepers = this.getPlayers(Position.KEEPER);
+    	Player[] possibleAttackers = this.getPlayers(Position.ATTACKER);
+    	Player[] possibleDefenders = this.getPlayers(Position.DEFENDER);
+    	Player[] possibleMidfielders = this.getPlayers(Position.MIDFIELDER);
+
+    	return null;
+    }
+    
+    private Player[] getPlayers(Position position)
+    {
+    	ArrayList<Player> players = new ArrayList<>();
+    	
+    	for (Player player : loadedPlayers)
+    	{
+    		if (player.getPosition() == position)
+    		{
+    			players.add(player);
+    		}
+    	}
+    	
+    	return players.toArray(new Player[players.size()]);
+    }
+    
     private Position[] generatePositions(int amount, int[] percentages)
     {
         ArrayList<Position> positions = new ArrayList<>();
