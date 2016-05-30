@@ -131,6 +131,31 @@ public class TeamInfo
         return statCoefficients;
     }
 
+    public double getCoefficientValue(int index) {
+        // Checken of de gegeven waarde bestaat in de hashmap
+        if (index < 0 || index > statCoefficients.size())
+        {
+            return -1;
+        }
+
+        switch (index) {
+            case 0 :
+                return statCoefficients.get(StatCoefficient.AFMCOEF);
+            case 1 :
+                return statCoefficients.get(StatCoefficient.ATTCOEF);
+            case 2 :
+                return statCoefficients.get(StatCoefficient.POSCOEF);
+            case 3 :
+                return statCoefficients.get(StatCoefficient.DEFCOEF);
+            case 4 :
+                return statCoefficients.get(StatCoefficient.KEP);
+            case 5 :
+                return statCoefficients.get(StatCoefficient.CNDCOEF);
+        }
+
+        return 0.0;
+    }
+
     public ArrayList<Player> getPlayers()
     {
         return this.teamPlayerList;
