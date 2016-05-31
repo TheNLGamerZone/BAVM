@@ -140,7 +140,7 @@ public class BAVM
 
                         for (Player player : team.getTeamInfo().getPlayers())
                         {
-                            display.appendText(" - " + player.getPlayerName());
+                            display.appendText(" - " + player.getPlayerName() + " (" + player.getPosition() + ")");
                         }
 
                         while (true)

@@ -9,6 +9,10 @@ public class Team
 
     public Team(String teamName, int teamID, int[] playerIDs, int coachID)
     {
+        if (playerIDs.length != 21)
+        {
+            System.out.println("RIP: " + playerIDs.length + " (" + teamID + ")");
+        }
         this.teamName = teamName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDs, coachID);

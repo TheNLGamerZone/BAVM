@@ -9,15 +9,15 @@ public class TeamManager
 {
     private ArrayList<Team> loadedTeams;
 
-    public TeamManager(boolean generateTeamsCoaches)
+    public TeamManager(boolean generateTeams)
     {
         this.loadedTeams = new ArrayList<>();
 
-        int teamsCoachesToGenerate = 20;
+        int teamsToGenerate = 20;
 
-        if (generateTeamsCoaches)
+        if (generateTeams)
         {
-            this.generateTeamsCoaches(teamsCoachesToGenerate);
+            this.generateTeams(teamsToGenerate);
         }
 
         // Spelers laden
@@ -36,21 +36,14 @@ public class TeamManager
 
     private void generateTeams(int teamsToGenerate)
     {
-        for (int i = 0; i < teamsToGenerate; i++)
-        {
-            double teamTalent = Math.random();
-
-        }
-    }
-
-    private void generateTeamsCoaches(int teamsToGenerate)
-    {
 
         for (int i = 0; i < teamsToGenerate; i++)
         {
             double teamTalent = Math.random();
+            String name = RandomNames.getTeamName();
+            int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, teamTalent);
 
-            loadedTeams.add(new Team(RandomNames.getTeamName(), i, generatePlayerIDList(i), i));
+            loadedTeams.add(new Team(name, i, playerIDs , i));
         }
 
         BAVM.getDisplay().appendText(teamsToGenerate + " teams gegenereerd!");
@@ -79,5 +72,10 @@ public class TeamManager
         }
 
         return null;
+    }
+
+    public ArrayList<Team> getLoadedTeams()
+    {
+        return this.loadedTeams;
     }
 }

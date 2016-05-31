@@ -3,6 +3,8 @@ package me.nlt.bavm.teams.player;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
+import me.nlt.bavm.teams.team.Team;
+import me.nlt.bavm.teams.team.TeamManager;
 
 import java.util.ArrayList;
 
@@ -31,9 +33,6 @@ public class PlayerManager
     private void savePlayers()
     {
         //TODO Spelers opslaan in tekstbestanden
-
-        for (Player player : getPlayers(Position.KEEPER))
-            System.out.printf("%s, %d (%d)%n", player.getPlayerName(), (int) player.getPlayerStats().getCheckSum(), (int) player.getPlayerStats().getValue(PlayerStats.Stat.DOELMAN.getLocation()));
     }
 
     private void generatePlayers()
@@ -78,25 +77,82 @@ public class PlayerManager
         this.savePlayers();
     }
 
-    public int[] getPlayerIDs(double teamTalent)
+    public int[] getPlayerIDs(TeamManager teamManager, double teamTalent)
     {
-        int percentage = (int) (teamTalent * 10);
+        int percentage = (int) (teamTalent * 10000);
 
-        Player[] possibleKeepers = this.getPlayers(Position.KEEPER);
-        Player[] possibleAttackers = this.getPlayers(Position.ATTACKER);
-        Player[] possibleDefenders = this.getPlayers(Position.DEFENDER);
-        Player[] possibleMidfielders = this.getPlayers(Position.MIDFIELDER);
+        ArrayList<Player> newTeam = new ArrayList<>();
+        Player[][] possiblePlayers = new Player[][]{getPlayers(teamManager, Position.KEEPER, true),
+                getPlayers(teamManager, Position.ATTACKER, true),
+                getPlayers(teamManager, Position.DEFENDER, true),
+                getPlayers(teamManager, Position.MIDFIELDER, true)};
 
-        return null;
+        for (Player[] players : possiblePlayers)
+        {
+            if (players.length == 0)
+            {
+                continue;
+            }
+
+            double stepSize = 10000 / players.length;
+            int playersLeft = (players[0].getPosition() == Position.MIDFIELDER ? 21 - newTeam.size() : players[0].getPosition().getStartPlayers());
+
+            for (int i = 1; i <= players.length; i++)
+            {
+                double currentDiff = Math.abs(percentage - stepSize * i);
+                double nextDiff = (i + 1 == players.length ? Double.MAX_VALUE : Math.abs(percentage - stepSize * (i + 1)));
+
+                if (currentDiff < nextDiff)
+                {
+                    newTeam.add(players[i - 1]);
+                    playersLeft--;
+                }
+
+                if (playersLeft <= 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        int[] playerIDs = new int[newTeam.size()];
+
+        for (int i = 0; i < newTeam.size(); i++)
+        {
+            playerIDs[i] = newTeam.get(i).getPlayerID();
+        }
+
+        return playerIDs;
     }
 
-    private Player[] getPlayers(Position position)
+    private boolean playerInTeam(TeamManager teamManager, int playerID)
+    {
+        if (teamManager.getLoadedTeams().isEmpty())
+        {
+            return false;
+        }
+
+        for (Team team : teamManager.getLoadedTeams())
+        {
+            for (Player player : team.getTeamInfo().getPlayers())
+            {
+                if (player.getPlayerID() == playerID)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private Player[] getPlayers(TeamManager teamManager, Position position, boolean onlyAvailablePlayers)
     {
         ArrayList<Player> players = new ArrayList<>();
 
         for (Player player : loadedPlayers)
         {
-            if (player.getPosition() == position)
+            if (player.getPosition() == position && (onlyAvailablePlayers ? !playerInTeam(teamManager, player.getPlayerID()) : true))
             {
                 if (players.isEmpty())
                 {
