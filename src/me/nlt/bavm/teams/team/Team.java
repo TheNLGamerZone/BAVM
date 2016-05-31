@@ -1,5 +1,7 @@
 package me.nlt.bavm.teams.team;
 
+import me.nlt.bavm.BAVM;
+
 public class Team
 {
     private String teamName;
@@ -11,7 +13,7 @@ public class Team
     {
         if (playerIDs.length != 21)
         {
-            System.out.println("RIP: " + playerIDs.length + " (" + teamID + ")");
+            BAVM.getDisplay().appendText("RIP: " + playerIDs.length + " (" + teamID + ")");
         }
         this.teamName = teamName;
         this.teamID = teamID;

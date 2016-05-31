@@ -38,14 +38,14 @@ public class PlayerManager
     private void generatePlayers()
     {
         //DEBUG
-        System.out.println("15% kans op keeper, 25% kans op defender, 50% kans op attacker en 10% kans op midfielder");
+        System.out.println("15% kans op keeper, 25% kans op defender, 30% kans op attacker en 30% kans op midfielder");
 
         int keeper = 0, defender = 0, attacker = 0, midfielder = 0, total = 0;
 
         //amount of players to generate
-        int playersToGenerate = 512;
+        int playersToGenerate = 1028;
 
-        for (Position position : generatePositions(playersToGenerate, new int[]{15, 25, 50, 10}))
+        for (Position position : generatePositions(playersToGenerate, new int[]{15, 25, 30, 30}))
         {
             loadedPlayers.add(new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), position, RandomStats.randomStats(position)));
 
@@ -79,13 +79,16 @@ public class PlayerManager
 
     public int[] getPlayerIDs(TeamManager teamManager, double teamTalent)
     {
+        //System.out.println("----------------");
         int percentage = (int) (teamTalent * 10000);
 
         ArrayList<Player> newTeam = new ArrayList<>();
-        Player[][] possiblePlayers = new Player[][]{getPlayers(teamManager, Position.KEEPER, true),
+        Player[][] possiblePlayers = new Player[][]{
+                getPlayers(teamManager, Position.KEEPER, true),
                 getPlayers(teamManager, Position.ATTACKER, true),
                 getPlayers(teamManager, Position.DEFENDER, true),
-                getPlayers(teamManager, Position.MIDFIELDER, true)};
+                getPlayers(teamManager, Position.MIDFIELDER, true)
+        };
 
         for (Player[] players : possiblePlayers)
         {
@@ -99,21 +102,30 @@ public class PlayerManager
 
             for (int i = 1; i <= players.length; i++)
             {
-                double currentDiff = Math.abs(percentage - stepSize * i);
-                double nextDiff = (i + 1 == players.length ? Double.MAX_VALUE : Math.abs(percentage - stepSize * (i + 1)));
+                double currentDiff = Math.abs(stepSize * i);
+                double nextDiff = (i + 1 == players.length ? Double.MAX_VALUE : Math.abs(stepSize * (i + 1)));
 
-                if (currentDiff < nextDiff)
+                //System.out.println("CD: " + currentDiff + ", ND: " + nextDiff);
+
+                if (currentDiff < nextDiff || currentDiff == nextDiff)
                 {
                     newTeam.add(players[i - 1]);
                     playersLeft--;
                 }
 
+
                 if (playersLeft <= 0)
                 {
+                    //System.out.println("BRK: " + playersLeft);
                     break;
                 }
             }
+
+            //System.out.println("NULL: " + playersLeft);
+
         }
+        //System.out.println("----------------");
+
 
         int[] playerIDs = new int[newTeam.size()];
 
@@ -122,6 +134,7 @@ public class PlayerManager
             playerIDs[i] = newTeam.get(i).getPlayerID();
         }
 
+        //System.out.println("Size: " + newTeam.size() + " _ " + playerIDs.length);
         return playerIDs;
     }
 
