@@ -36,8 +36,8 @@ public class Game
 
         for (int i = 0; i < homeCoefficients.size(); i++)
         {
-            homeValues[i] = (1.2 * home.getTeamInfo().getCoefficientValue(i) / 100) + (0.8 * homeLuck + 0.5);
-            visitValues[i] = (1.2 * visitor.getTeamInfo().getCoefficientValue(i) / 100) + (0.8 * visitorLuck + 0.5);
+            homeValues[i] = 10 * ((1.2 * home.getTeamInfo().getCoefficientValue(i) / 100) + (0.8 * homeLuck + 0.5));
+            visitValues[i] = 10 * ((1.2 * visitor.getTeamInfo().getCoefficientValue(i) / 100) + (0.8 * visitorLuck + 0.5));
         }
 
         int time = 0;
@@ -46,14 +46,38 @@ public class Game
 
         while (time < 2000)
         {
+
             int conflictResult = getConflictResult(homeValues, visitValues, ballPossession);
 
             switch (conflictResult)
             {
-
+                case -1 :
+                    time++;
+                    break;
+                case 0 :
+                    if (ballPossession == 0) {
+                        ballPossession = 1;
+                    } else {
+                        ballPossession = 0;
+                    }
+                    break;
+                case 1 :
+                    if (ballPossession == 0) {
+                        ballQuarter++;
+                    } else {
+                        ballQuarter--;
+                    }
+                    break;
+                case 2 :
+                    time++;
+                    break;
             }
 
-            time++;
+            if (ballPossession == 0 && ballQuarter == 4) {
+                int isGoal = getGoalResult(homeValues, visitValues, ballPossession);
+            } else if (ballPossession == 1 && ballQuarter == -1) {
+                int isGoal = getGoalResult(homeValues, visitValues, ballPossession);
+            }
 
         }
 
@@ -62,8 +86,6 @@ public class Game
     }
 
     public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {
-        int conflictResult = 0;
-
         double attValues[] = new double[homeValues.length];
         double defValues[] = new double[homeValues.length];
 
@@ -80,16 +102,33 @@ public class Game
             return -1;
         }
 
-        for (int i = 0; i < attValues.length; i++) {
-            attValues[i] = attValues[i] * 10;
-            defValues[i] = defValues[i] * 10;
+        //nextQuarter formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd (AKA THE MOST IMPORTANT ONE)
+        double attackResult = Math.round((attValues[1] * (1 + Math.random())) - (defValues[3] * (1 + Math.random())));
+        System.out.println("ATTACKRESULT: " + attackResult);
+
+        if (attackResult < 0)
+        {
+            //if possession coef is high enough the team has a chance to keep the ball anyway
+            attackResult = Math.round(attackResult + (0.25 * (defValues[2] * (1 + Math.random()))));
+            System.out.println("ATTACKRESULT2: " + attackResult);
         }
 
-        //nextQuarter formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd
-        int attackResult = (int) attValues[1] + (int) (500 * Math.random()) - (int) defValues[3] - (int) (500 * Math.random());
+        if (attackResult < 0)
+        {
+            //lose possession
+            return 0;
+        } else if (attackResult > 2.5)
+        {
+            //next quarter
+            return 1;
+        } else
+        {
+            //try again
+            return 2;
+        }
+    }
 
-
-
-        return conflictResult;
+    public static int getGoalResult(double[] homeValues, double[] visitValues, int ballPossession) {
+        return 0;
     }
 }
