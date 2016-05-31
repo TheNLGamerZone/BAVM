@@ -32,8 +32,8 @@ public class PlayerManager
     {
         //TODO Spelers opslaan in tekstbestanden
 
-        //for (Player player : getPlayers(Position.KEEPER))
-        //    System.out.printf("%s, %d", player.getPlayerName(), (int) player.getPlayerStats().getCheckSum());
+        for (Player player : getPlayers(Position.KEEPER))
+            System.out.printf("%s, %d (%d)%n", player.getPlayerName(), (int) player.getPlayerStats().getCheckSum(), (int) player.getPlayerStats().getValue(PlayerStats.Stat.DOELMAN.getLocation()));
     }
 
     private void generatePlayers()
@@ -92,34 +92,93 @@ public class PlayerManager
 
     private Player[] getPlayers(Position position)
     {
-        //TODO Werkt nog niet
         ArrayList<Player> players = new ArrayList<>();
 
         for (Player player : loadedPlayers)
         {
             if (player.getPosition() == position)
             {
+                if (players.isEmpty())
+                {
+                    //System.out.println("Added first player: " + player.getPlayerStats().getCheckSum());
+                    players.add(player);
+                    continue;
+                }
+
                 ArrayList<Player> playerCopy = new ArrayList<>();
+
+                //System.out.println("Loop: " + player.getPlayerStats().getCheckSum());
 
                 for (int i = 0; i < players.size(); i++)
                 {
+                    //System.out.println("    Checking: " + player.getPlayerStats().getCheckSum() + " < " + players.get(i).getPlayerStats().getCheckSum());
+
                     if (players.get(i).getPlayerStats().getCheckSum() > player.getPlayerStats().getCheckSum())
                     {
-                        for (int j = i; j < players.size() - i; j++)
+                        /*System.out.println("    true -> copying array from index " + i + " to " + (players.size() - 1));
+                        StringBuilder sb = new StringBuilder();
+
+                        for (Player player1 : players)
+                            sb.append(player1.getPlayerStats().getCheckSum() + ", ");
+
+                        System.out.println("    Old array: " + sb.toString());
+                        sb.setLength(0);*/
+
+                        int size = players.size();
+                        int cuts = 0;
+
+                        for (int j = i; j < size; j++)
                         {
                             playerCopy.add(players.get(j));
-                            players.remove(j);
+
+                           /* for (Player player1 : playerCopy)
+                                sb.append(player1.getPlayerStats().getCheckSum() + ", ");
+
+                            System.out.println("        Copy array: " + sb.toString() + " (j=" + j + ", m=" + (size) + ")");
+                            sb.setLength(0);*/
+                            cuts++;
+                        }
+                        //System.out.println("        Size copy array: " + playerCopy.size());
+
+                        for (int j = 0; j < cuts; j++)
+                        {
+                            int index = (players.size() == 1 ? 0 : players.size() - 1);
+
+                            //System.out.println("        Removed value: " + players.get(index).getPlayerStats().getCheckSum() + " (i=" + index + ")");
+                            players.remove(index);
                         }
 
                         players.add(player);
 
                         players.addAll(playerCopy);
+
+                        /*for (Player player1 : players)
+                            sb.append(player1.getPlayerStats().getCheckSum() + ", ");
+
+                        System.out.println("    New array: " + sb.toString());
+                        sb.setLength(0);*/
+                        break;
                     }
+
+                    if (i + 1 == players.size())
+                    {
+                        //System.out.println("    highest number -> player added");
+                        players.add(player);
+
+                        /*StringBuilder sb = new StringBuilder();
+                        for (Player player1 : players)
+                            sb.append(player1.getPlayerStats().getCheckSum() + ", ");
+
+                        System.out.println("    New array: " + sb.toString());*/
+                        break;
+                    }
+
+                    //System.out.println("    false -> checking next player");
                 }
             }
         }
 
-        System.out.println("Size: " + players.size() );
+        //System.out.println("Size: " + players.size() );
         return players.toArray(new Player[players.size()]);
     }
 
