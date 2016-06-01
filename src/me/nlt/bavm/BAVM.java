@@ -88,10 +88,13 @@ public class BAVM
     private void initGame()
     {
 
-        matchManager.simulateMatch(0, 1);
-        Match match = matchManager.getMatch(0);
+        for (int i = 0; i < 25; i++)
+        {
+            matchManager.simulateMatch(0, 1);
+            Match match = matchManager.getMatch(i);
 
-        display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1]);
+            display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1] + " -> " + (match.getMatchGoals()[0] > match.getMatchGoals()[1] ? "Team 0" : (match.getMatchGoals()[0] == match.getMatchGoals()[1] ? "Gelijk" : "Team 1")));
+        }
 
         while (true)
         {

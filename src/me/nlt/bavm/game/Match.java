@@ -1,6 +1,8 @@
 package me.nlt.bavm.game;
 
-public class Match
+import me.nlt.bavm.teams.Manageable;
+
+public class Match implements Manageable
 {
     private String matchName;
     private int matchID;
@@ -34,5 +36,11 @@ public class Match
     public int[] getTeamIDs()
     {
         return teamIDs;
+    }
+
+    @Override
+    public int getID()
+    {
+        return this.matchID;
     }
 }

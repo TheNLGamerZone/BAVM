@@ -1,64 +1,53 @@
 package me.nlt.bavm.game;
 
 import me.nlt.bavm.BAVM;
+import me.nlt.bavm.teams.Manageable;
+import me.nlt.bavm.teams.Manager;
 
-import java.util.ArrayList;
-
-public class MatchManager
+public class MatchManager<T extends Manageable> extends Manager<T>
 {
-
-    private ArrayList<Match> playedMatches;
-
     public MatchManager()
     {
-        this.playedMatches = new ArrayList<>();
+        super();
 
-        this.loadMatches();
+        this.loadManageables();
     }
 
-    private void loadMatches()
+    @Override
+    public void loadManageables()
     {
 
     }
 
-    private void saveMatches()
+    @Override
+    public void saveManageables()
     {
 
     }
+
+    @Override
+    public void generateManageables()
+    {}
 
     public void simulateMatch(int homeID, int visitorID)
     {
-
         //TODO let game simulate an actual game with actual coefficients
         int matchResult[] = Game.simulateGame(homeID, visitorID);
 
         String matchName = BAVM.getTeamManager().getTeam(homeID).getTeamName() + BAVM.getTeamManager().getTeam(visitorID).getTeamName();
 
-        playedMatches.add(new Match(matchName, getNextAvailableID(), homeID, visitorID, matchResult));
+        manageables.add((T) new Match(matchName, getNextAvailableID(), homeID, visitorID, matchResult));
     }
 
     public Match getMatch(int matchID)
     {
-        for (Match match : playedMatches)
-        {
-            if (match.getMatchID() == matchID)
-            {
-                return match;
-            }
-        }
+        T match = super.getManageable(matchID);
 
-        return null;
+        return match == null ? null : (Match) match;
     }
 
     public int getNextAvailableID()
     {
-        int currentID = -1;
-
-        for (Match match : playedMatches)
-        {
-            currentID++;
-        }
-
-        return currentID + 1;
+        return manageables.size();
     }
 }

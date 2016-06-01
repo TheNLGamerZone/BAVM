@@ -25,12 +25,12 @@ public class Game
 
         for (StatCoefficient statCoefficient : homeCoefficients.keySet())
         {
-            System.out.println("HOME - " + statCoefficient.name() + ": " + homeCoefficients.get(statCoefficient));
+            //System.out.println("HOME - " + statCoefficient.name() + ": " + homeCoefficients.get(statCoefficient));
         }
 
         for (StatCoefficient statCoefficient : visitorCoefficients.keySet())
         {
-            System.out.println("VISITOR - " + statCoefficient.name() + ": " + visitorCoefficients.get(statCoefficient));
+            //System.out.println("VISITOR - " + statCoefficient.name() + ": " + visitorCoefficients.get(statCoefficient));
         }
 
         double luck1 = (rnd.nextDouble() * 0.5) + 0.35;
@@ -51,8 +51,8 @@ public class Game
         }
 
 
-        System.out.println(homeLuck);
-        System.out.println(visitorLuck);
+        //System.out.println(homeLuck);
+        //System.out.println(visitorLuck);
 
 
         double homeValues[] = new double[homeCoefficients.size()];
@@ -73,12 +73,12 @@ public class Game
 
         while (time < 90)
         {
-            BAVM.getDisplay().appendText("time: " + time);
+            //BAVM.getDisplay().appendText("time: " + time);
 
-            if (modifyCoefficients == true && ballPossession == 0) {
+            if (modifyCoefficients && ballPossession == 0) {
                 visitValues[0] = visitValues[0] * 0.9;
                 modifyCoefficients = false;
-            } else if (modifyCoefficients == true && ballPossession == 1) {
+            } else if (modifyCoefficients && ballPossession == 1) {
                 homeValues[0] = homeValues[0] * 0.9;
                 modifyCoefficients = false;
             }
@@ -162,8 +162,8 @@ public class Game
     }
 
     public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {
-        double attValues[] = new double[homeValues.length];
-        double defValues[] = new double[homeValues.length];
+        double attValues[];
+        double defValues[];
 
         if (ballPossession == 0)
         {
@@ -189,7 +189,7 @@ public class Game
             attackResult = Math.round(attackResult + (0.25 * (defValues[2] * (1 + Math.random()))));
         }
 
-        BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", conflictResult: " + attackResult);
+        //BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", conflictResult: " + attackResult);
 
         if (attackResult < 0)
         {
@@ -207,8 +207,8 @@ public class Game
     }
 
     public static int getAttemptResult(double[] homeValues, double[] visitValues, int ballPossession) {
-        double attValues[] = new double[homeValues.length];
-        double defValues[] = new double[homeValues.length];
+        double attValues[];
+        double defValues[];
 
         if (ballPossession == 0)
         {
@@ -232,7 +232,7 @@ public class Game
             attemptResult = Math.round(attemptResult + (0.3 * (defValues[2] * (1 + Math.random()))));
         }
 
-        BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", attemptResult: " + attemptResult);
+        //BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", attemptResult: " + attemptResult);
 
         if (attemptResult < 0)
         {
@@ -241,7 +241,7 @@ public class Game
         } else if (attemptResult > 10)
         {
             //goal
-            BAVM.getDisplay().appendText("Team " + ballPossession + " has scored!");
+            //BAVM.getDisplay().appendText("Team " + ballPossession + " has scored!");
             return 1;
         } else
         {
