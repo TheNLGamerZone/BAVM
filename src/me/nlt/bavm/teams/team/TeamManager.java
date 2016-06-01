@@ -2,80 +2,62 @@ package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
+import me.nlt.bavm.teams.Manageable;
+import me.nlt.bavm.teams.Manager;
 
 import java.util.ArrayList;
 
-public class TeamManager
+public class TeamManager<T extends Manageable> extends Manager<T>
 {
-    private ArrayList<Team> loadedTeams;
-
     public TeamManager(boolean generateTeams)
     {
-        this.loadedTeams = new ArrayList<>();
-
-        int teamsToGenerate = 20;
+        super();
 
         if (generateTeams)
         {
-            this.generateTeams(teamsToGenerate);
+            this.generateManageables();
         }
 
         // Spelers laden
-        this.loadTeamsCoaches();
+        this.loadManageables();
     }
 
-    private void loadTeamsCoaches()
+    public Team getTeam(int teamID)
     {
-        //TODO teams en coaches laden uit txt
+        T team = super.getManageable(teamID);
+
+        return team == null ? null : (Team) team;
     }
 
-    private void saveTeamsCoaches()
+    public ArrayList<T> getLoadedTeams()
     {
-        //TODO teams en coaches saven in txt
+        return manageables;
     }
 
-    private void generateTeams(int teamsToGenerate)
+    @Override
+    public void loadManageables()
     {
 
-        for (int i = 0; i < teamsToGenerate; i++)
+    }
+
+    @Override
+    public void saveManageables()
+    {
+
+    }
+
+    @Override
+    public void generateManageables()
+    {
+        for (int i = 0; i < 20; i++)
         {
             double teamTalent = Math.random();
             String name = RandomNames.getTeamName();
             int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, teamTalent);
 
-            loadedTeams.add(new Team(name, i, playerIDs , i));
+            manageables.add((T) new Team(name, i, playerIDs, i));
         }
 
-        BAVM.getDisplay().appendText(teamsToGenerate + " teams gegenereerd!");
-    }
-
-    private int[] generatePlayerIDList(int teamNR)
-    {
-        int playerIDList[] = new int[23];
-
-        for (int i = 0; i < 23; i++)
-        {
-            playerIDList[i] = (teamNR * 23) + i;
-        }
-
-        return playerIDList;
-    }
-
-    public Team getTeam(int teamID)
-    {
-        for (Team team : loadedTeams)
-        {
-            if (team.getTeamID() == teamID)
-            {
-                return team;
-            }
-        }
-
-        return null;
-    }
-
-    public ArrayList<Team> getLoadedTeams()
-    {
-        return this.loadedTeams;
+        BAVM.getDisplay().appendText(20 + " teams gegenereerd!");
     }
 }

@@ -2,6 +2,7 @@ package me.nlt.bavm;
 
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerManager;
@@ -70,9 +71,9 @@ public class BAVM
 
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
-        playerManager = new PlayerManager(true);
-        coachManager = new CoachManager(true);
-        teamManager = new TeamManager(true);
+        playerManager = new PlayerManager<Player>(true);
+        coachManager = new CoachManager<Coach>(true);
+        teamManager = new TeamManager<Team>(true);
         matchManager = new MatchManager();
 
         // Zorgen dat de rest laad
@@ -136,7 +137,7 @@ public class BAVM
                         display.appendText("Bij dat ID hoort geen team!");
                     } else
                     {
-                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Players:");
+                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Coach: " + team.getTeamInfo().getTeamCoach().getCoachName() + " (" + team.getTeamInfo().getTeamCoach().getID() + ")","Players:");
 
                         for (Player player : team.getTeamInfo().getPlayers())
                         {

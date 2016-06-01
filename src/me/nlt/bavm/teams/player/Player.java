@@ -1,6 +1,8 @@
 package me.nlt.bavm.teams.player;
 
-public class Player
+import me.nlt.bavm.teams.Manageable;
+
+public class Player implements Manageable
 {
     private String playerName;
     private int playerID;
@@ -77,5 +79,11 @@ public class Player
                 ",position=" + this.position.name() +
                 ",playerstats=" + this.playerStats.toString() +
                 "}";
+    }
+
+    @Override
+    public int getID()
+    {
+        return this.playerID;
     }
 }

@@ -1,6 +1,8 @@
 package me.nlt.bavm.teams.coach;
 
-public class Coach
+import me.nlt.bavm.teams.Manageable;
+
+public class Coach implements Manageable
 {
     private String coachName;
     private int coachID;
@@ -64,5 +66,11 @@ public class Coach
                 ",id=" + this.coachID +
                 ",coachstats=" + this.coachStats.toString() +
                 "}";
+    }
+
+    @Override
+    public int getID()
+    {
+        return this.coachID;
     }
 }

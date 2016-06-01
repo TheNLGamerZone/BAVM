@@ -3,39 +3,42 @@ package me.nlt.bavm.teams.player;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
+import me.nlt.bavm.teams.Manageable;
+import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
 import java.util.ArrayList;
 
-public class PlayerManager
+public class PlayerManager<T extends Manageable> extends Manager<T>
 {
-    private ArrayList<Player> loadedPlayers;
-
     public PlayerManager(boolean generatePlayers)
     {
-        this.loadedPlayers = new ArrayList<>();
+        super();
 
         if (generatePlayers)
         {
-            this.generatePlayers();
+            this.generateManageables();
         }
 
         // Spelers laden
-        this.loadPlayers();
+        this.loadManageables();
     }
 
-    private void loadPlayers()
+    @Override
+    public void loadManageables()
     {
         //TODO Spelers laden uit tekstbestand
     }
 
-    private void savePlayers()
+    @Override
+    public void saveManageables()
     {
         //TODO Spelers opslaan in tekstbestanden
     }
 
-    private void generatePlayers()
+    @Override
+    public void generateManageables()
     {
         //DEBUG
         System.out.println("15% kans op keeper, 25% kans op defender, 30% kans op attacker en 30% kans op midfielder");
@@ -47,7 +50,7 @@ public class PlayerManager
 
         for (Position position : generatePositions(playersToGenerate, new int[]{15, 25, 30, 30}))
         {
-            loadedPlayers.add(new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), position, RandomStats.randomStats(position)));
+            manageables.add((T) new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), position, RandomStats.randomStats(position)));
 
             switch (position)
             {
@@ -74,7 +77,7 @@ public class PlayerManager
         BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
 
         // Save players
-        this.savePlayers();
+        this.saveManageables();
     }
 
     public int[] getPlayerIDs(TeamManager teamManager, double teamTalent)
@@ -145,8 +148,10 @@ public class PlayerManager
             return false;
         }
 
-        for (Team team : teamManager.getLoadedTeams())
+        for (Object object : teamManager.getLoadedTeams())
         {
+            Team team = (Team) object;
+
             for (Player player : team.getTeamInfo().getPlayers())
             {
                 if (player.getPlayerID() == playerID)
@@ -163,8 +168,10 @@ public class PlayerManager
     {
         ArrayList<Player> players = new ArrayList<>();
 
-        for (Player player : loadedPlayers)
+        for (Object manageable : manageables)
         {
+            Player player = (Player) manageable;
+
             if (player.getPosition() == position && (onlyAvailablePlayers ? !playerInTeam(teamManager, player.getPlayerID()) : true))
             {
                 if (players.isEmpty())
@@ -288,34 +295,15 @@ public class PlayerManager
         return positions.toArray(new Position[positions.size()]);
     }
 
-    public Player getPlayer(String playerName)
-    {
-        for (Player player : loadedPlayers)
-        {
-            if (player.getPlayerName().equals(playerName))
-            {
-                return player;
-            }
-        }
-
-        return null;
-    }
-
     public Player getPlayer(int playerID)
     {
-        for (Player player : loadedPlayers)
-        {
-            if (player.getPlayerID() == playerID)
-            {
-                return player;
-            }
-        }
+        T player = super.getManageable(playerID);
 
-        return null;
+        return player == null ? null : (Player) player;
     }
 
     public int getNextAvailableID()
     {
-        return loadedPlayers.size();
+        return manageables.size();
     }
 }

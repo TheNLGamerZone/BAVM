@@ -2,45 +2,48 @@ package me.nlt.bavm.teams.coach;
 
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
+import me.nlt.bavm.teams.Manageable;
+import me.nlt.bavm.teams.Manager;
 
-import java.util.ArrayList;
-
-public class CoachManager
+public class CoachManager<T extends Manageable> extends Manager<T>
 {
-    private ArrayList<Coach> loadedCoaches;
-
     public CoachManager(boolean generateCoaches)
     {
-        this.loadedCoaches = new ArrayList<>();
-
-        int coachesToGenerate = 24;
+        super();
 
         if (generateCoaches)
         {
-            this.generateCoaches(coachesToGenerate);
-        }
-    }
-
-    private void generateCoaches(int coachesToGenerate)
-    {
-        for (int i = 0; i < coachesToGenerate; i++)
-        {
-            double teamTalent = Math.random();
-
-            loadedCoaches.add(new Coach(RandomNames.getPeopleName(), i, RandomStats.randomCStats(teamTalent)));
+            this.generateManageables();
         }
     }
 
     public Coach getCoach(int coachID)
     {
-        for (Coach coach : loadedCoaches)
-        {
-            if (coach.getCoachID() == coachID)
-            {
-                return coach;
-            }
-        }
+        T coach = super.getManageable(coachID);
 
-        return null;
+        return coach == null ? null : (Coach) coach;
+    }
+
+    @Override
+    public void loadManageables()
+    {
+
+    }
+
+    @Override
+    public void saveManageables()
+    {
+
+    }
+
+    @Override
+    public void generateManageables()
+    {
+        for (int i = 0; i < 24; i++)
+        {
+            double teamTalent = Math.random();
+
+            manageables.add((T) new Coach(RandomNames.getPeopleName(), i, RandomStats.randomCStats(teamTalent)));
+        }
     }
 }

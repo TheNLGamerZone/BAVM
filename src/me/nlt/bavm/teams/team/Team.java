@@ -1,8 +1,9 @@
 package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.BAVM;
+import me.nlt.bavm.teams.Manageable;
 
-public class Team
+public class Team implements Manageable
 {
     private String teamName;
     private int teamID;
@@ -11,6 +12,8 @@ public class Team
 
     public Team(String teamName, int teamID, int[] playerIDs, int coachID)
     {
+        System.out.printf("Created team %s (p=%d, id=%d)%n", teamName, playerIDs.length, teamID);
+
         if (playerIDs.length != 21)
         {
             BAVM.getDisplay().appendText("RIP: " + playerIDs.length + " (" + teamID + ")");
@@ -43,5 +46,11 @@ public class Team
                 ",id=" + this.teamID +
                 ",info=" + this.teamInfo.toString() +
                 "}";
+    }
+
+    @Override
+    public int getID()
+    {
+        return this.teamID;
     }
 }
