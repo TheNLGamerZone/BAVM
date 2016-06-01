@@ -80,6 +80,34 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         this.saveManageables();
     }
 
+    public int[] getFreePlayers(TeamManager teamManager)
+    {
+        ArrayList<Player> players = new ArrayList<>();
+        int[] playerIDs;
+        for (Manageable manageable : manageables)
+        {
+            Player player = (Player) manageable;
+
+            players.add(player);
+        }
+
+        for(Object object : teamManager.getLoadedTeams())
+        {
+            Team team = (Team) object;
+
+            team.getTeamInfo().getPlayers().forEach(players::remove);
+        }
+
+        playerIDs = new int[players.size()];
+
+        for (int i = 0; i < players.size(); i++)
+        {
+            playerIDs[i] = players.get(i).getPlayerID();
+        }
+
+        return playerIDs;
+    }
+
     public int[] getPlayerIDs(TeamManager teamManager, double teamTalent)
     {
         //System.out.println("----------------");

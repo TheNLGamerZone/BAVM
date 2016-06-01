@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class TeamManager<T extends Manageable> extends Manager<T>
 {
+    public Team marketTeam;
+
     public TeamManager(boolean generateTeams)
     {
         super();
@@ -58,6 +60,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             manageables.add((T) new Team(name, i, playerIDs, i));
         }
 
+        marketTeam = new Team("marketTeam", -1, BAVM.getPlayerManager().getFreePlayers(this), -1);
         BAVM.getDisplay().appendText(20 + " teams gegenereerd!");
     }
 }

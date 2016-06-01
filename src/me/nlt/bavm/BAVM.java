@@ -19,10 +19,10 @@ public class BAVM
     private final Object lockObject;
 
     private static FileManager fileManager;
-    private static PlayerManager playerManager;
-    private static TeamManager teamManager;
-    private static MatchManager matchManager;
-    private static CoachManager coachManager;
+    private static PlayerManager<Player> playerManager;
+    private static TeamManager<Team> teamManager;
+    private static MatchManager<Match> matchManager;
+    private static CoachManager<Coach> coachManager;
 
     /**
      * Main method
@@ -75,7 +75,7 @@ public class BAVM
         playerManager = new PlayerManager<Player>(true);
         coachManager = new CoachManager<Coach>(true);
         teamManager = new TeamManager<Team>(true);
-        matchManager = new MatchManager();
+        matchManager = new MatchManager<Match>();
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!\n\n----");
@@ -136,12 +136,15 @@ public class BAVM
                     if (id == -1)
                     {
                         break;
+                    } else if (id == -666)
+                    {
+                        display.appendText("Naam: marketTeam", "Players: " + teamManager.marketTeam.getTeamInfo().getPlayers().size());
                     } else if (team == null)
                     {
                         display.appendText("Bij dat ID hoort geen team!");
                     } else
                     {
-                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Coach: " + team.getTeamInfo().getTeamCoach().getCoachName() + " (" + team.getTeamInfo().getTeamCoach().getID() + ")","Players:");
+                        display.appendText("Naam: " + team.getTeamName(), "ID: " + team.getTeamID(), "Coach: " + team.getTeamInfo().getTeamCoach().getCoachName() + " (" + team.getTeamInfo().getTeamCoach().getID() + ")", "Players:");
 
                         for (Player player : team.getTeamInfo().getPlayers())
                         {
