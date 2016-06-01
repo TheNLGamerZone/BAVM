@@ -1,6 +1,7 @@
 package me.nlt.bavm;
 
 import me.nlt.bavm.files.FileManager;
+import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
@@ -87,10 +88,10 @@ public class BAVM
     private void initGame()
     {
 
-        //matchManager.simulateMatch(0, 1);
-        //Match match = matchManager.getMatch(0);
+        matchManager.simulateMatch(0, 1);
+        Match match = matchManager.getMatch(0);
 
-        //display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1]);
+        display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1]);
 
         while (true)
         {
