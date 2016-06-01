@@ -6,6 +6,7 @@ public class PlayerStats
 {
     private HashMap<Stat, Double> playerSkills = new HashMap<>();
     private double checkSum;
+    private double totalSkill;
 
     public enum Stat
     {
@@ -49,6 +50,7 @@ public class PlayerStats
 
         // Checksum maken
         this.checkSum = 0;
+        this.totalSkill = 0;
 
         // Checksum 'vullen'
         for (int i = 0; i < playerSkills.size(); i++)
@@ -56,6 +58,7 @@ public class PlayerStats
             //DEBUG
             //System.out.println(this.getValue(i));
             checkSum += (this.getValue(i) * (i * 2) + this.getValue(i));
+            totalSkill += this.getValue(i);
         }
     }
 
