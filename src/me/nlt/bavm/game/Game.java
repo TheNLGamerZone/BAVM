@@ -13,26 +13,40 @@ public class Game
 {
     public static int[] simulateGame(int homeID, int visitorID)
     {
-        Random rnd = new Random();
-
+        /*
+         * simulateGame simuleert een voetbalwedstrijd met enkel de id van de twee teams, een home team en een visitor.
+         * Verder zijn er nog twee andere methodes die helpen bij het simuleren.
+         */
+    	
+    	//een instance van random wordt gemaakt voor willekeurige getallen en een array met als eerste waarde de goals van home en als tweede van visit
+    	Random rnd = new Random();
         int[] goalResult = new int[2];
 
+        //er worden twee team objecten geimporteerd op basis van de id's
         Team home = BAVM.getTeamManager().getTeam(homeID);
         Team visitor = BAVM.getTeamManager().getTeam(visitorID);
 
+        //de coefficienten worden geimporteerd, dus alle gemiddelde stats
         HashMap<StatCoefficient, Double> homeCoefficients = home.getTeamInfo().getStatCoefficients();
         HashMap<StatCoefficient, Double> visitorCoefficients = visitor.getTeamInfo().getStatCoefficients();
 
+        /* DEBUG
         for (StatCoefficient statCoefficient : homeCoefficients.keySet())
         {
-            //System.out.println("HOME - " + statCoefficient.name() + ": " + homeCoefficients.get(statCoefficient));
+            System.out.println("HOME - " + statCoefficient.name() + ": " + homeCoefficients.get(statCoefficient));
         }
 
         for (StatCoefficient statCoefficient : visitorCoefficients.keySet())
         {
-            //System.out.println("VISITOR - " + statCoefficient.name() + ": " + visitorCoefficients.get(statCoefficient));
-        }
+            System.out.println("VISITOR - " + statCoefficient.name() + ": " + visitorCoefficients.get(statCoefficient));
+        } */
 
+        
+        /*
+         * Geluk van de wedstrijd wordt hier aangemaakt. Er is altijd een team met minder geluk en een willekeruig getal voorspelt welke.
+         * Het verschil zit altijd tussen de 0.075 en 0.275
+         * De hoge gelukwaarde zit altijd tussen de 0.35 en 0.85.
+         */
         double luck1 = (rnd.nextDouble() * 0.5) + 0.35;
         double tst = (rnd.nextInt(200) + 75);
         double mdTst = tst / 1000;
@@ -42,6 +56,7 @@ public class Game
         double homeLuck;
         double visitorLuck;
 
+        //hier worden de gelukwaardes aan de teams gegeven
         if (chooser == 1) {
             homeLuck = luck1;
             visitorLuck = luck2;
@@ -55,6 +70,11 @@ public class Game
         //System.out.println(visitorLuck);
 
 
+        /*
+         * deze for loop geeft de waarde van de coefficienten aan een simpele array met enkel een index en geen key, zoals de hashmap waar de
+         * coefficienten in worden opgeslagen. De coefficienten worden ook *10 gedaan voor meer verschil in de formules en de geluksfactor wordt
+         * ingebracht, met de verhouding 0.6 deel stats en 0.4 deel geluk.
+         */
         double homeValues[] = new double[homeCoefficients.size()];
         double visitValues[] = new double[visitorCoefficients.size()];
 
@@ -64,6 +84,7 @@ public class Game
             visitValues[i] = 10 * ((1.2 * visitor.getTeamInfo().getCoefficientValue(i) / 100) + (0.8 * visitorLuck + 0.5));
         }
 
+        //variabelen initialyzen
         int time = 0;
         int ballQuarter = 0;
         int ballPossession = 0;
@@ -71,9 +92,14 @@ public class Game
         int attemptResult;
         boolean modifyCoefficients = false;
 
+        /*
+         * dit is de main while loop. Time is in dit geval de tijd in minuten, de loop kan echer ook teruggaan zonder dat de tijd meer wordt,
+         * in het echt kan namelijk een team ook binnen een minuut meerdere helften vooruit gaan.
+         */
         while (time < 90)
         {
-            //BAVM.getDisplay().appendText("time: " + time);
+            //DEBUG
+        	//BAVM.getDisplay().appendText("time: " + time);
 
             if (modifyCoefficients && ballPossession == 0) {
                 visitValues[0] = visitValues[0] * 0.9;
@@ -87,31 +113,43 @@ public class Game
                 conflictResult = getConflictResult(homeValues, visitValues, ballPossession);
             }
 
+            /*
+             * De simulator werkt op basis van een "conflict" tussen balbezitter en verdediger. Hiervoor wordt een int gemaakt die elk voor een
+             * ander scenario staan, die wordt gemaakt door de methode getConflictResult.
+             */
             switch (conflictResult)
             {
                 case -1 :
+                	//voor als er iets mis is
                     break;
                 case 0 :
-                    if (ballPossession == 0) {
+                    //balbezit wordt veranderd
+                	if (ballPossession == 0) {
                         ballPossession = 1;
                     } else {
                         ballPossession = 0;
                     }
                     break;
                 case 1 :
-                    if (ballPossession == 0) {
+                    //de ballquarter is absoluut, dus voor visit moeten ze op kwart 0 komen en voor home op kwart 3
+                	if (ballPossession == 0) {
                         ballQuarter++;
                     } else {
                         ballQuarter--;
                     }
                     break;
                 case 2 :
-                    time++;
+                    //tijd gaat verder en hij continued naar het einde van de loop, hij slaat goalberekening dus over
+                	time++;
                     continue;
             }
 
             conflictResult = 0;
 
+            /*
+             * als het programma verder gaat wordt er gekeken of ze kwart 0 of kwart 3 hebben verslagen en dus op de volgende "kwart" zijn.
+             * op basis daarvan wordt een attemptResult berekent door de methode getAttemptResult
+             */
             if (ballQuarter == 4 && ballPossession == 0) {
                 attemptResult = getAttemptResult(homeValues, visitValues, ballPossession);
             } else if (ballQuarter == -1 && ballPossession == 1) {
@@ -122,10 +160,12 @@ public class Game
 
             switch (attemptResult) {
                 case -1 :
-                    time++;
+                    //er moet geen goal berekent worden
+                	time++;
                     break;
                 case 0 :
-                    if (ballPossession == 0) {
+                    //goalkans gefaald, ander krijgt de bal op hun eigen kwart
+                	if (ballPossession == 0) {
                         ballPossession = 1;
                         ballQuarter = 3;
                     } else {
@@ -134,7 +174,8 @@ public class Game
                     }
                     break;
                 case 1 :
-                    if (ballPossession == 0) {
+                    //goal gelukt, modifyCoefficients zodat het volgende goal moeilijk wordt (om groot aantal goals tegen te werken)
+                	if (ballPossession == 0) {
                         goalResult[0]++;
                         ballQuarter = 1;
                         ballPossession = 1;
@@ -149,7 +190,8 @@ public class Game
                     }
                     break;
                 case 2 :
-                    conflictResult = -1;
+                    //opnieuw, nu skipt hij de conflict berekenaar en probeert ie opnieuw een goal totdat er een uitkomst is.
+                	conflictResult = -1;
                     break;
             }
 
@@ -162,7 +204,10 @@ public class Game
     public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {
         double attValues[];
         double defValues[];
-
+        
+        /*
+         * Hier kijkt de methode wie de bal heeft, en past daarop aan wie de aanvaller is en wie de verdediger.
+         */
         if (ballPossession == 0)
         {
             attValues = homeValues;
@@ -176,19 +221,26 @@ public class Game
             return -1;
         }
 
-        //nextQuarter formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd (AKA THE MOST IMPORTANT ONE)
+        /*
+         * nextQuarter formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd dit is de belangrijkste formule van de simulator.
+         * eerst wordt de aanvalsstat keer een willekeurig getal gedaan dat meer is dan 1 en dan min de verdedigingsstat.
+         */
         double attackResult = Math.round((attValues[1] * (1 + Math.random())) - (defValues[3] * (1 + Math.random())));
 
 
-
+        
         if (attackResult < 0)
         {
-            //if possession coef is high enough the team has a chance to keep the ball anyway
+            //als de balbezit hoog genoeg is hebben ze een kans om alsnog de bal te houden.
             attackResult = Math.round(attackResult + (0.25 * (defValues[2] * (1 + Math.random()))));
         }
 
+        //DEBUG
         //BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", conflictResult: " + attackResult);
 
+        /*
+         * de scenario's
+         */
         if (attackResult < 0)
         {
             //lose possession
@@ -205,7 +257,9 @@ public class Game
     }
 
     public static int getAttemptResult(double[] homeValues, double[] visitValues, int ballPossession) {
-        double attValues[];
+        //doet hetzelfde als conflictresult maar dan met andere stats (afmaken en keeper)
+    	
+    	double attValues[];
         double defValues[];
 
         if (ballPossession == 0)
@@ -226,10 +280,11 @@ public class Game
 
         if (attemptResult < 0)
         {
-            //if possession coef is high enough the team has a chance to keep the ball anyway
-            attemptResult = Math.round(attemptResult + (0.3 * (defValues[2] * (1 + Math.random()))));
+        	//als de balbezit hoog genoeg is hebben ze een kans om alsnog de bal te houden.
+            attemptResult = Math.round(attemptResult + (0.3 * (attValues[2] * (1 + Math.random()))));
         }
 
+        //DEBUG
         //BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", attemptResult: " + attemptResult);
 
         if (attemptResult < 0)
