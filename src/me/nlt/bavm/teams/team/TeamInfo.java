@@ -11,9 +11,11 @@ public class TeamInfo
 {
     private ArrayList<Player> teamPlayerList = new ArrayList<>();
     private Coach teamCoach;
+    private Geld teamGeld;
+
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
-    public TeamInfo(int[] playerIDs, int coachID)
+    public TeamInfo(int[] playerIDs, int coachID, double teamTalent)
     {
         for (int i : playerIDs)
         {
@@ -23,6 +25,7 @@ public class TeamInfo
         //DEBUG
         //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
+        this.teamGeld = new Geld(teamTalent);
     }
 
     public enum StatCoefficient
@@ -176,6 +179,11 @@ public class TeamInfo
         return this.teamCoach;
     }
 
+    public Geld getTeamGeld()
+    {
+        return this.teamGeld;
+    }
+
     @Override
     public String toString()
     {
@@ -206,6 +214,8 @@ public class TeamInfo
 
         String coachString = teamCoach.toString();
 
-        return playerString + "," + coachString;
+        String geldString = teamGeld.toString();
+
+        return playerString + "," + coachString + "," + geldString;
     }
 }

@@ -9,13 +9,13 @@ public class Team implements Manageable
 
     private TeamInfo teamInfo;
 
-    public Team(String teamName, int teamID, int[] playerIDs, int coachID)
+    public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent)
     {
         System.out.printf("Created team %s (p=%d, id=%d)%n", teamName, playerIDs.length, teamID);
 
         this.teamName = teamName;
         this.teamID = teamID;
-        this.teamInfo = new TeamInfo(playerIDs, coachID);
+        this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent);
     }
 
     public String getTeamName()
