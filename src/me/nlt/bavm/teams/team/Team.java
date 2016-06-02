@@ -1,5 +1,6 @@
 package me.nlt.bavm.teams.team;
 
+import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.Manageable;
 
 public class Team implements Manageable
@@ -16,6 +17,11 @@ public class Team implements Manageable
         this.teamName = teamName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent);
+
+        if (!teamName.equals("marketTeam") && playerIDs.length != 21)
+        {
+            BAVM.getDisplay().appendText("Invalid team: " + teamID + " (" + playerIDs.length + " players)");
+        }
     }
 
     public String getTeamName()

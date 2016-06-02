@@ -133,8 +133,8 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
 
             for (int i = 1; i <= players.length; i++)
             {
-                double currentDiff = Math.abs(stepSize * i);
-                double nextDiff = (i + 1 == players.length ? Double.MAX_VALUE : Math.abs(stepSize * (i + 1)));
+                double currentDiff = Math.abs(percentage - stepSize * i);
+                double nextDiff = (i + playersLeft >= players.length ? Double.MAX_VALUE : Math.abs(percentage - stepSize * (i + 1)));
 
                 //System.out.println("CD: " + currentDiff + ", ND: " + nextDiff);
 
