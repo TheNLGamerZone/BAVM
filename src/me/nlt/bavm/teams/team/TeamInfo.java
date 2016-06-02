@@ -12,6 +12,7 @@ public class TeamInfo
     private ArrayList<Player> teamPlayerList = new ArrayList<>();
     private Coach teamCoach;
     private Geld teamGeld;
+    private double teamTalent;
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
@@ -26,6 +27,7 @@ public class TeamInfo
         //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
         this.teamGeld = new Geld(teamTalent);
+        this.teamTalent = teamTalent;
     }
 
     public enum StatCoefficient
@@ -182,6 +184,11 @@ public class TeamInfo
     public Geld getTeamGeld()
     {
         return this.teamGeld;
+    }
+    
+    public double getTeamTalent()
+    {
+    	return this.teamTalent;
     }
 
     @Override

@@ -161,6 +161,8 @@ public class BAVM
                             if (askCoefficient == -4)
                             {
                                 TeamInfo teamInfo = team.getTeamInfo();
+                                
+                                display.appendText("teamtalent: " + teamInfo.getTeamTalent());
 
                                 for (TeamInfo.StatCoefficient statCoefficient : teamInfo.getStatCoefficients().keySet())
                                 {

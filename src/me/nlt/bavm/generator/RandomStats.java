@@ -21,12 +21,12 @@ public class RandomStats
 
         while (true)
         {
-            if (playerTalent > 0.657 && playerTalent < 0.957)
+            if (playerTalent > 0.475 && playerTalent < 1.123)
             {
                 break;
             }
 
-            if (playerTalent < 0.657)
+            if (playerTalent < 0.475)
             {
                 playerTalent += Math.random();
             } else
