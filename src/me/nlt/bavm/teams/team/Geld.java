@@ -22,6 +22,16 @@ public class Geld {
     {
         return this.currentGeldK;
     }
+    
+    public void removeGeld(int amount)
+    {
+    	this.currentGeldK -= amount;
+    }
+    
+    public void addGeld(int amount)
+    {
+    	this.currentGeldK += amount;
+    }
 
     @Override
     public String toString()
