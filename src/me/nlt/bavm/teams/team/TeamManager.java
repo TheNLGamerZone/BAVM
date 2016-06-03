@@ -88,8 +88,8 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     	}
     	
     	sendingTeam.getTeamInfo().getPlayers().remove(player);
-    	receivingTeam.getTeamInfo().getPlayers().add(player);
     	sendingTeam.getTeamInfo().getTeamGeld().removeGeld(price);
+    	receivingTeam.getTeamInfo().getPlayers().add(player);
     	receivingTeam.getTeamInfo().getTeamGeld().addGeld(price);
     	
     	return TransferResult.SUCCESS;
