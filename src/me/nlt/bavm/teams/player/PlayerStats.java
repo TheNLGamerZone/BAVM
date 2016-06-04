@@ -129,6 +129,11 @@ public class PlayerStats
         return null;
     }
 
+    public double getTotalSkill()
+    {
+        return this.totalSkill;
+    }
+
     /**
      * Maakt en antwoord een string waar alle data voor playerStats in staat
      *

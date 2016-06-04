@@ -3,6 +3,7 @@ package me.nlt.bavm;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.teams.Market;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -94,6 +95,8 @@ public class BAVM
 
         display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1] + " -> " + (match.getMatchGoals()[0] > match.getMatchGoals()[1] ? "Team 0" : (match.getMatchGoals()[0] == match.getMatchGoals()[1] ? "Gelijk" : "Team 1")));
 
+        display.appendText("\n---------------\nMarket (filter: POS_ATT, POS_DEF)\n");
+        display.appendText(Market.listPlayers(Market.MarketFilter.ATTACKER, Market.MarketFilter.DEFENDER));
 
         while (true)
         {
