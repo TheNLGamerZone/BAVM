@@ -2,11 +2,15 @@ package me.nlt.bavm.teams.player;
 
 import me.nlt.bavm.teams.Manageable;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Player implements Manageable
 {
     private String playerName;
     private int playerID;
     private Position position;
+    private double marketValue;
 
     private PlayerStats playerStats;
 
@@ -23,6 +27,8 @@ public class Player implements Manageable
         this.playerID = playerID;
         this.position = position;
         this.playerStats = new PlayerStats(stats);
+
+        this.marketValue = new BigDecimal(Math.random() * 100).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     /**
@@ -63,6 +69,11 @@ public class Player implements Manageable
     public PlayerStats getPlayerStats()
     {
         return this.playerStats;
+    }
+
+    public double getMarketValue()
+    {
+        return this.marketValue;
     }
 
     /**

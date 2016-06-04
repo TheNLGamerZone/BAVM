@@ -95,8 +95,8 @@ public class BAVM
 
         display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1] + " -> " + (match.getMatchGoals()[0] > match.getMatchGoals()[1] ? "Team 0" : (match.getMatchGoals()[0] == match.getMatchGoals()[1] ? "Gelijk" : "Team 1")));
 
-        display.appendText("\n---------------\nMarket (filter: POS_ATT, POS_DEF)\n");
-        display.appendText(Market.listPlayers(Market.MarketFilter.ATTACKER, Market.MarketFilter.DEFENDER));
+        display.appendText("\n---------------\nMarket (filters: POS_ATT, POS_DEF, SORT_STATS_HIGH_LOW)\n");
+        display.appendText(Market.listPlayers(Market.MarketFilter.ATTACKER, Market.MarketFilter.DEFENDER, Market.MarketFilter.STATS_HIGH_LOW));
 
         while (true)
         {

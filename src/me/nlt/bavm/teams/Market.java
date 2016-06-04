@@ -3,6 +3,7 @@ package me.nlt.bavm.teams;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.player.Player;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,7 @@ public class Market
         {
             Player player = sortedPlayers.get(i);
 
-            marketStrings.add((i + 1) + ": " + player.getPlayerName() + " - Position: " + player.getPosition().name().toLowerCase() + " - Skill: " + player.getPlayerStats().getTotalSkill() + " - Price: $100");
+            marketStrings.add((i + 1) + ": " + player.getPlayerName() + " - Position: " + player.getPosition().name().toLowerCase() + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill()) + " - Price: $" + player.getMarketValue());
         }
 
         return marketStrings.toArray(new String[marketStrings.size()]);
@@ -80,7 +81,6 @@ public class Market
     private static ArrayList<Player> sortPlayers(ArrayList<Player> players, MarketFilter marketFilter)
     {
         ArrayList<Player> playerList = new ArrayList<>();
-        ArrayList<Player> playerCopy = new ArrayList<>();
 
         if (marketFilter == null)
         {
@@ -89,9 +89,53 @@ public class Market
 
         for (Player player : players)
         {
+            double value = (marketFilter.name().contains("PRICE") ? player.getMarketValue() : player.getPlayerStats().getTotalSkill());
 
+            if (playerList.isEmpty())
+            {
+                playerList.add(player);
+                continue;
+            }
+
+            ArrayList<Player> playerCopy = new ArrayList<>();
+
+            for (int i = 0; i < playerList.size(); i++)
+            {
+                Player loopPlayer = playerList.get(i);
+                double loopValue = (marketFilter.name().contains("PRICE") ? loopPlayer.getMarketValue() : loopPlayer.getPlayerStats().getTotalSkill());
+
+                if ((marketFilter.name().contains("LOW_HIGH") ? loopValue > value : loopValue < value))
+                {
+                    int size = playerList.size();
+                    int cuts = 0;
+
+                    for (int j = i; j < size; j++)
+                    {
+                        playerCopy.add(playerList.get(j));
+                        cuts++;
+                    }
+
+                    for (int j = 0; j < cuts; j++)
+                    {
+                        int index = (playerList.size() == 1 ? 0 : playerList.size() - 1);
+                        playerList.remove(index);
+                    }
+
+                    playerList.add(player);
+                    playerList.addAll(playerCopy);
+                    break;
+                }
+
+                if (i + 1 == playerList.size())
+                {
+                    playerList.add(player);
+                    break;
+                }
+            }
         }
 
+        players.clear();
+        players.addAll(playerList);
         return players;
     }
 }

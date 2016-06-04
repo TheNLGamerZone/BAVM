@@ -2,6 +2,8 @@ package me.nlt.bavm.generator;
 
 import me.nlt.bavm.teams.player.Position;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Random;
 
 public class RandomStats
@@ -45,17 +47,18 @@ public class RandomStats
             //berekent de halfstat (helft van de stat)
             switch (position.getId())
             {
+                //.setScale(2, RoundingMode.HALF_EVEN)
                 case 0:
-                    randomStats[i] = Math.round(((keeperBases[i] + rnd.nextInt((int) (keeperBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
+                    randomStats[i] = new BigDecimal(String.valueOf((keeperBases[i] + rnd.nextInt((int) (keeperBases[i] * playerTalent) + 1)) * playerTalent), new MathContext(4)).doubleValue();
                     break;
                 case 1:
-                    randomStats[i] = Math.round(((defenderBases[i] + rnd.nextInt((int) (defenderBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
+                    randomStats[i] = new BigDecimal(String.valueOf((defenderBases[i] + rnd.nextInt((int) (defenderBases[i] * playerTalent) + 1)) * playerTalent), new MathContext(4)).doubleValue();
                     break;
                 case 2:
-                    randomStats[i] = Math.round(((midfielderBases[i] + rnd.nextInt((int) (midfielderBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
+                    randomStats[i] = new BigDecimal(String.valueOf((midfielderBases[i] + rnd.nextInt((int) (midfielderBases[i] * playerTalent) + 1)) * playerTalent), new MathContext(4)).doubleValue();
                     break;
                 case 3:
-                    randomStats[i] = Math.round(((attackerBases[i] + rnd.nextInt((int) (attackerBases[i] * playerTalent) + 1)) * playerTalent) * 100) / 100;
+                    randomStats[i] = new BigDecimal(String.valueOf((attackerBases[i] + rnd.nextInt((int) (attackerBases[i] * playerTalent) + 1)) * playerTalent), new MathContext(4)).doubleValue();
                     break;
             }
         }

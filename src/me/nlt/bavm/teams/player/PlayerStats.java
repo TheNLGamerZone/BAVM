@@ -108,6 +108,8 @@ public class PlayerStats
         playerSkills.put(stat, playerSkills.get(stat) + increment);
     }
 
+
+
     /**
      * Zoekt de stat bij de string
      *
