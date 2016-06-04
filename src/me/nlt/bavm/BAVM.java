@@ -1,9 +1,9 @@
 package me.nlt.bavm;
 
+import me.nlt.bavm.conversation.MarketConversation;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
-import me.nlt.bavm.teams.Market;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -89,14 +89,15 @@ public class BAVM
     private void initGame()
     {
 
+        new MarketConversation().startConversation(display);
 
         matchManager.simulateMatch(0, 1);
         Match match = matchManager.getMatch(0);
 
         display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1] + " -> " + (match.getMatchGoals()[0] > match.getMatchGoals()[1] ? "Team 0" : (match.getMatchGoals()[0] == match.getMatchGoals()[1] ? "Gelijk" : "Team 1")));
 
-        display.appendText("\n---------------\nMarket (filters: POS_ATT, POS_DEF, SORT_STATS_HIGH_LOW)\n");
-        display.appendText(Market.listPlayers(Market.MarketFilter.ATTACKER, Market.MarketFilter.DEFENDER, Market.MarketFilter.STATS_HIGH_LOW));
+        //display.appendText("\n---------------\nMarket (filters: POS_ATT, POS_DEF, SORT_STATS_HIGH_LOW)\n");
+        //display.appendText(Market.listPlayers(Market.MarketFilter.ATTACKER, Market.MarketFilter.DEFENDER, Market.MarketFilter.STATS_HIGH_LOW));
 
         while (true)
         {

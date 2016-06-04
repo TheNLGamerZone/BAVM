@@ -27,7 +27,7 @@ public class Market
         }
     }
 
-    public static String[] listPlayers(MarketFilter... marketFilters)
+    public static String[] listPlayers(ArrayList<MarketFilter> marketFilters)
     {
         ArrayList<MarketFilter> positionFilter = new ArrayList<>();
         MarketFilter sortingFilter = null;
@@ -44,6 +44,11 @@ public class Market
                     sortingFilter = filter;
                 }
             }
+        }
+
+        if (marketFilters.isEmpty())
+        {
+            positionFilter.add(MarketFilter.ALL);
         }
 
         ArrayList<Player> filteredPlayers = getFilteredPlayers(positionFilter.toArray(new MarketFilter[positionFilter.size()]));
