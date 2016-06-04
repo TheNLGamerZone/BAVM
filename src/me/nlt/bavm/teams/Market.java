@@ -29,7 +29,7 @@ public class Market
     public static String[] listPlayers(MarketFilter... marketFilters)
     {
         ArrayList<MarketFilter> positionFilter = new ArrayList<>();
-        ArrayList<MarketFilter> sortingFilter = new ArrayList<>();
+        MarketFilter sortingFilter = null;
 
         for (MarketFilter filter : marketFilters)
         {
@@ -38,19 +38,22 @@ public class Market
                 positionFilter.add(filter);
             } else
             {
-                sortingFilter.add(filter);
+                if (sortingFilter == null)
+                {
+                    sortingFilter = filter;
+                }
             }
         }
 
         ArrayList<Player> filteredPlayers = getFilteredPlayers(positionFilter.toArray(new MarketFilter[positionFilter.size()]));
-        ArrayList<Player> sortedPlayers = sortPlayers(filteredPlayers, sortingFilter.toArray(new MarketFilter[sortingFilter.size()]));
+        ArrayList<Player> sortedPlayers = sortPlayers(filteredPlayers, sortingFilter);
         ArrayList<String> marketStrings = new ArrayList<>();
 
         for (int i = 0; i < sortedPlayers.size(); i++)
         {
             Player player = sortedPlayers.get(i);
 
-            marketStrings.add((i + 1) + ": " +player.getPlayerName() + " - Position: " + player.getPosition().name().toLowerCase() + " - Skill: " + player.getPlayerStats().getTotalSkill() + " - Price: $100");
+            marketStrings.add((i + 1) + ": " + player.getPlayerName() + " - Position: " + player.getPosition().name().toLowerCase() + " - Skill: " + player.getPlayerStats().getTotalSkill() + " - Price: $100");
         }
 
         return marketStrings.toArray(new String[marketStrings.size()]);
@@ -74,11 +77,19 @@ public class Market
         return filteredPlayers;
     }
 
-    private static ArrayList<Player> sortPlayers(ArrayList<Player> players, MarketFilter... marketFilters)
+    private static ArrayList<Player> sortPlayers(ArrayList<Player> players, MarketFilter marketFilter)
     {
-        if (marketFilters == null || marketFilters.length == 0)
+        ArrayList<Player> playerList = new ArrayList<>();
+        ArrayList<Player> playerCopy = new ArrayList<>();
+
+        if (marketFilter == null)
         {
             return players;
+        }
+
+        for (Player player : players)
+        {
+
         }
 
         return players;
