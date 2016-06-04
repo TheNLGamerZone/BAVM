@@ -10,7 +10,7 @@ public class Geld {
         int teamIncomeVariance = (int) (Math.random() * 500);
 
         monthlyIncomeK = teamIncomeFactor + teamIncomeVariance;
-        currentGeldK = (int) (monthlyIncomeK * 1.5 * (Math.random() + 0.5));
+        currentGeldK = (int) (monthlyIncomeK * 0.5 * (Math.random() + 0.5));
     }
 
     public int getMonthlyIncomeK()

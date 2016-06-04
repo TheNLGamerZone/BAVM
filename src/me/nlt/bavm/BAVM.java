@@ -4,6 +4,7 @@ import me.nlt.bavm.conversation.MarketConversation;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.league.League;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -24,6 +25,7 @@ public class BAVM
     private static TeamManager<Team> teamManager;
     private static MatchManager<Match> matchManager;
     private static CoachManager<Coach> coachManager;
+    private static League league;
 
     /**
      * Main method
@@ -76,6 +78,7 @@ public class BAVM
         playerManager = new PlayerManager<Player>(true);
         coachManager = new CoachManager<Coach>(true);
         teamManager = new TeamManager<Team>(true);
+        league = new League(true);
         matchManager = new MatchManager<Match>();
 
         // Zorgen dat de rest laad
@@ -241,5 +244,9 @@ public class BAVM
     public static CoachManager getCoachManager()
     {
         return coachManager;
+    }
+
+    public static League getLeague() {
+        return league;
     }
 }
