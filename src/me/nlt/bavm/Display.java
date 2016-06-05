@@ -125,7 +125,7 @@ public class Display
 
         try
         {
-            Thread.sleep(785);
+            Thread.sleep(124);
         } catch (InterruptedException e)
         {
             e.printStackTrace();

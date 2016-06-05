@@ -85,9 +85,9 @@ public class Market
             Player player = sortedPlayers.get(i);
 
             marketStrings.add((i + 1) + ": " + player.getPlayerName()
-                    + " - Position: " + player.getPosition().name().toLowerCase()
+                    + " - Positie: " + player.getPosition().name().toLowerCase()
                     + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill())
-                    + " - Price: $" + new DecimalFormat("######.##").format(player.getMarketValue())
+                    + " - Prijs: $" + new DecimalFormat("######.##").format(player.getMarketValue())
                     + " - ID: " + player.getPlayerID());
         }
 

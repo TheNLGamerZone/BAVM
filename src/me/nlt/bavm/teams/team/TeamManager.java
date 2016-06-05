@@ -65,7 +65,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         }
 
         marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247);
-        playerTeam = new Team(RandomNames.getTeamName(), -1, BAVM.getPlayerManager().getPlayerIDs(this, 0.457), teams, 0.457, 250000);
+        playerTeam = new Team(RandomNames.getTeamName(), -1, BAVM.getPlayerManager().getPlayerIDs(this, 0.457), teams, 0.457, 27500);
         
         BAVM.getDisplay().appendText(teams + " teams gegenereerd!");
     }
@@ -87,7 +87,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     		return TransferResult.FAILED_NO_MONEY;
     	}
     	
-    	if (sendingTeam.getTeamInfo().getPlayers().size() - 1 < 21)
+    	if (sendingTeam.getTeamInfo().getPlayers().size() - 1 < 14)
     	{
     		return TransferResult.FAILED_NOT_ENOUGH_PLAYERS;
     	}

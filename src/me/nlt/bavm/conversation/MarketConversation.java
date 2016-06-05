@@ -34,7 +34,8 @@ public class MarketConversation implements Conversation
             display.appendText("\n\t\t- - - - - - - - - - - - - - - - [ De Markt ] - - - - - - - - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je filters aan te passen",
-                    "Typ '-4' om te zoeken"
+                    "Typ '-4' om te zoeken",
+                    "Typ '-5' om spelers te verkopen"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -162,10 +163,10 @@ public class MarketConversation implements Conversation
                     if (player == null)
                     {
                         display.appendText("Dat is geen speler!");
-                    }
-                    else
+                    } else
                     {
-                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te kopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de aankoop te bevestigen.");
+                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te kopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de aankoop te bevestigen."
+                                , "Saldo na aankoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() - player.getMarketValue()));
 
                         int confimationNumber = (int) display.readDouble(false);
 
@@ -177,6 +178,69 @@ public class MarketConversation implements Conversation
                         } else
                         {
                             display.appendText("Aankoop afgebroken.");
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (mainNumber == -5)
+            {
+                ArrayList<Player> players = BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayers();
+
+                display.appendText("\n\t\t- - - - - - - - - - - - [ Spelers verkopen ] - - - - - - - - - - - - ");
+
+                while (true)
+                {
+                    int counter = 1;
+                    for (Player player : players)
+                    {
+                        display.appendText(counter + ": " + player.getPlayerName()
+                                + " - Positie: " + player.getPosition().name().toLowerCase()
+                                + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill())
+                                + " - Waarde: $" + new DecimalFormat("######.##").format(player.getMarketValue())
+                                + " - ID: " + player.getPlayerID());
+                        counter++;
+                    }
+
+                    display.appendText("\nTyp het ID van de speler in om hem te verkopen.\n" +
+                            "Of typ '-1' om terug te gaan naar de markt.");
+
+                    int number = (int) display.readDouble(false);
+
+                    if (number == -1)
+                    {
+                        break;
+                    }
+
+                    if (number == -2)
+                    {
+                        break backToMain;
+                    }
+
+                    Player player = BAVM.getPlayerManager().getPlayer(number);
+
+                    if (player == null)
+                    {
+                        display.appendText("Dat is geen speler!");
+                    } else if (!BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayers().contains(player))
+                    {
+                        display.appendText("Deze speler zit niet in je team!");
+                    } else
+                    {
+                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te verkopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de verkoop te bevestigen."
+                                , "Saldo na verkoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() + player.getMarketValue()));
+
+                        int confimationNumber = (int) display.readDouble(false);
+
+                        if (confimationNumber == 123)
+                        {
+                            TransferResult transferResult = BAVM.getTeamManager().transferPlayer(BAVM.getTeamManager().playerTeam, BAVM.getTeamManager().marketTeam, player, (int) player.getMarketValue());
+
+                            display.appendText(transferResult.getMessage());
+                        } else
+                        {
+                            display.appendText("Verkoop afgebroken.");
                             break;
                         }
                     }

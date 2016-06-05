@@ -1,5 +1,6 @@
 package me.nlt.bavm;
 
+import me.nlt.bavm.conversation.InformationConversation;
 import me.nlt.bavm.conversation.MarketConversation;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
@@ -10,7 +11,6 @@ import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerManager;
 import me.nlt.bavm.teams.team.Team;
-import me.nlt.bavm.teams.team.TeamInfo;
 import me.nlt.bavm.teams.team.TeamManager;
 
 import java.awt.*;
@@ -91,10 +91,32 @@ public class BAVM
      */
     private void initGame()
     {
+        while (true)
+        {
+            display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
+                    , "    0 -> Stop het spel"
+                    , "    1 -> Ga naar de markt"
+                    , "    2 -> Ga naar het informatie menu");
 
-        new MarketConversation().startConversation(display);
+            int mainNumber = (int) display.readDouble(false);
 
-        matchManager.simulateMatch(0, 1);
+            if (mainNumber == 0)
+            {
+                display.onClose();
+            }
+
+            if (mainNumber == 1)
+            {
+                new MarketConversation().startConversation(display);
+            }
+
+            if (mainNumber == 2)
+            {
+                new InformationConversation().startConversation(display);
+            }
+        }
+
+        /*matchManager.simulateMatch(0, 1);
         Match match = matchManager.getMatch(0);
 
         display.appendText(match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1] + " -> " + (match.getMatchGoals()[0] > match.getMatchGoals()[1] ? "Team 0" : (match.getMatchGoals()[0] == match.getMatchGoals()[1] ? "Gelijk" : "Team 1")));
@@ -187,7 +209,7 @@ public class BAVM
             }
 
         }
-
+        */
         /*
         //ONE TEAM
         //amount of players to create (in multiples of 23)
@@ -245,7 +267,8 @@ public class BAVM
         return coachManager;
     }
 
-    public static League getLeague() {
+    public static League getLeague()
+    {
         return league;
     }
 }
