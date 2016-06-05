@@ -2,6 +2,7 @@ package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
+import me.nlt.bavm.teams.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.player.Player;
@@ -41,12 +42,29 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     @Override
     public void loadManageables()
     {
+        int amount = BAVM.getFileManager().readAmount("teams");
 
+        for (int i = 0; i < amount - 2; i++)
+        {
+            manageables.add((T) Factory.createTeam(BAVM.getFileManager().readData("team", i)));
+        }
+
+        marketTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 2));
+        playerTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 1));
     }
 
     @Override
     public void saveManageables()
     {
+        for (T type : manageables)
+        {
+            Team team = (Team) type;
+
+            BAVM.getFileManager().saveData("team", team.toString(), team.getID());
+        }
+
+        BAVM.getFileManager().saveData("team", marketTeam.toString(), BAVM.getFileManager().readAmount("teams"));
+        BAVM.getFileManager().saveData("team", playerTeam.toString(), BAVM.getFileManager().readAmount("teams"));
 
     }
 
@@ -68,7 +86,9 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 
         marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, "");
         playerTeam = new Team(RandomNames.getTeamName(), -1, playerIDs, teams, 0.457, 27500, BAVM.getPlayerManager().getPlacementString(playerIDs));
-        
+
+        this.saveManageables();
+
         BAVM.getDisplay().appendText(teams + " teams gegenereerd!");
     }
     

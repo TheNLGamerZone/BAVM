@@ -3,6 +3,9 @@ package me.nlt.bavm.files;
 import me.nlt.bavm.BAVM;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class FileManager
@@ -20,6 +24,10 @@ public class FileManager
     private String mainDir = "";
     private File mainDirectory = null;
     private File storageFile = null;
+
+    private Document document;
+    private Element players;
+    private Element teams;
 
     public boolean firstStart = false;
 
@@ -38,19 +46,20 @@ public class FileManager
 
             storageFile.getParentFile().mkdirs();
 
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
             if (!storageFile.exists())
             {
                 BAVM.getDisplay().appendText("Bestanden aan het maken ...");
                 firstStart = true;
 
-                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                Document document = docBuilder.newDocument();
+                document = docBuilder.newDocument();
 
                 // Elementen maken
                 Element rootElement = document.createElement("data");
-                Element players = document.createElement("players");
-                Element teams = document.createElement("teams");
+                players = document.createElement("players");
+                teams = document.createElement("teams");
                 Element player = document.createElement("player");
                 Element team = document.createElement("team");
 
@@ -59,7 +68,9 @@ public class FileManager
                 rootElement.appendChild(players);
                 rootElement.appendChild(teams);
                 players.appendChild(player);
+                players.setAttribute("amount", "0");
                 teams.appendChild(team);
+                teams.setAttribute("amount", "0");
                 player.setAttribute("id", "-1");
                 team.setAttribute("id", "-1");
 
@@ -79,15 +90,174 @@ public class FileManager
                 StreamResult result = new StreamResult(storageFile);
 
                 transformer.transform(source, result);
+            } else
+            {
+                document = docBuilder.parse(storageFile);
+
+                NodeList nodeList = document.getElementsByTagName("data");
+
+                for (int i = 0; i < nodeList.getLength(); i++)
+                {
+                    NodeList list = nodeList.item(i).getChildNodes();
+
+                    for (int j = 0; j < list.getLength(); j++)
+                    {
+                        Node node = list.item(j);
+
+                        if (node.getNodeType() == Node.ELEMENT_NODE)
+                        {
+                            Element element = (Element) node;
+
+                            switch (element.getNodeName())
+                            {
+                                case "players":
+                                    players = element;
+                                    break;
+                                case "teams":
+                                    teams = element;
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
-        } catch (URISyntaxException | ParserConfigurationException | TransformerException e)
+        } catch (URISyntaxException | ParserConfigurationException | TransformerException | SAXException | IOException e)
         {
             e.printStackTrace();
         }
     }
 
-    public String readPlayerData(int ID)
+    public void saveData(String tag, String dataString, int ID)
     {
-        return "";
+        try
+        {
+            NodeList nodeList = document.getElementsByTagName(tag);
+            Node node = null;
+
+            for (int i = 0; i < nodeList.getLength(); i++)
+            {
+                Node subNode = nodeList.item(i);
+
+                if (subNode.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element element = (Element) subNode;
+
+                    if (Integer.parseInt(element.getAttribute("id")) == ID)
+                    {
+                        node = subNode;
+                    }
+                }
+
+            }
+
+            if (node == null)
+            {
+                Element element = document.createElement(tag);
+                Element dataElement = document.createElement("dataString");
+
+                element.setAttribute("id", ID + "");
+                dataElement.appendChild(document.createTextNode(dataString));
+                element.appendChild(dataElement);
+
+                int newAmount = 0;
+                switch (tag)
+                {
+                    case "player":
+                        players.appendChild(element);
+
+                        newAmount = Integer.parseInt(players.getAttribute("amount")) + 1;
+                        players.removeAttribute("amount");
+                        players.setAttribute("amount", newAmount + "");
+                        break;
+                    case "team":
+                        teams.appendChild(element);
+
+                        newAmount = Integer.parseInt(teams.getAttribute("amount")) + 1;
+                        teams.removeAttribute("amount");
+                        teams.setAttribute("amount", newAmount + "");
+                        break;
+                }
+            } else
+            {
+                NodeList nodeChildren = node.getChildNodes();
+
+                for (int i = 0; i < nodeChildren.getLength(); i++)
+                {
+                    Node child = nodeChildren.item(i);
+
+                    if (child.getNodeName().equals("dataString"))
+                    {
+                        child.setTextContent(dataString);
+                    }
+                }
+            }
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(storageFile);
+            transformer.transform(source, result);
+        } catch (TransformerException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public int readAmount(String tag)
+    {
+        try
+        {
+            document.getDocumentElement().normalize();
+
+            NodeList nodeList = document.getElementsByTagName(tag);
+
+            for (int i = 0; i < nodeList.getLength(); i++)
+            {
+                Node node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element element = (Element) node;
+
+                    return Integer.parseInt(element.getAttribute("amount"));
+                }
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public String readData(String tag, int ID)
+    {
+        try
+        {
+            document.getDocumentElement().normalize();
+
+            NodeList nodeList = document.getElementsByTagName(tag);
+
+            for (int i = 0; i < nodeList.getLength(); i++)
+            {
+                Node node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element element = (Element) node;
+
+                    if (Integer.parseInt(element.getAttribute("id")) == ID)
+                    {
+                        return element.getElementsByTagName("dataString").item(0).getTextContent();
+                    }
+                }
+
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

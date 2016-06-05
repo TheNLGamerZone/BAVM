@@ -3,9 +3,11 @@ package me.nlt.bavm.teams.player;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
+import me.nlt.bavm.teams.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.Market;
+import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
@@ -19,6 +21,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
 
         if (generatePlayers)
         {
+            BAVM.getDisplay().appendText("All spelers en teams aan het generen en opslaan, dit kan even duren!");
             this.generateManageables();
         }
 
@@ -32,13 +35,29 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     @Override
     public void loadManageables()
     {
-        //TODO Spelers laden uit tekstbestand
+        int amount = BAVM.getFileManager().readAmount("players");
+
+        for (int i = 0; i < amount; i++)
+        {
+            try
+            {
+                manageables.add((T) Factory.createPlayer(BAVM.getFileManager().readData("player", i)));
+            } catch (InvalidPlayerException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void saveManageables()
     {
-        //TODO Spelers opslaan in tekstbestanden
+        for (T type : manageables)
+        {
+            Player player = (Player) type;
+
+            BAVM.getFileManager().saveData("player", player.toString(), player.getID());
+        }
     }
 
     @Override
@@ -78,10 +97,10 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         //DEBUG
         System.out.printf("%d keepers, %d defenders, %d attackers and %d midfielders (%d total)%n", keeper, defender, attacker, midfielder, total);
 
-        BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
-
         // Save players
         this.saveManageables();
+
+        BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
     }
 
     public String getPlacementString(int[] playerIDs)

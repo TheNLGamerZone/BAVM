@@ -35,7 +35,7 @@ public class TeamInfo
 
     private void createPlacement(String placement)
     {
-        if (placement.equals(""))
+        if (placement.equals("null") || placement.equals(""))
         {
             return;
         }
@@ -274,6 +274,6 @@ public class TeamInfo
         // Laatste komma weghalen
         stringBuilder.setLength(stringBuilder.length() - 1);
 
-        return "teamtalent;" + this.teamTalent + "<players;" + stringBuilder.toString() + "<coach;" + teamCoach.getCoachID() + "<money;" + teamGeld.toString() + "<placement;" + playerPlacement.toString();
+        return "teamtalent;" + this.teamTalent + "<players;" + stringBuilder.toString() + "<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") + "<money;" + teamGeld.toString() + "<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null");
     }
 }
