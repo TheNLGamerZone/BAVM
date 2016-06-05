@@ -127,6 +127,7 @@ public class Display
 
         BAVM.getTeamManager().saveManageables(false);
         BAVM.getPlayerManager().saveManageables(false);
+        BAVM.getCoachManager().saveManageables(false);
 
         System.exit(1);
     }

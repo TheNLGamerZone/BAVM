@@ -22,7 +22,7 @@ public class Coach implements Manageable
     {
         this.coachName = coachName;
         this.coachID = coachID;
-        this.coachStats = new CoachStats(stats);
+        this.coachStats = new CoachStats(coachID, stats);
         this.unsavedChanges = false;
     }
 

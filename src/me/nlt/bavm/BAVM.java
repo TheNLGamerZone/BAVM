@@ -76,13 +76,18 @@ public class BAVM
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
         playerManager = new PlayerManager<>(fileManager.firstStart);
-        coachManager = new CoachManager<>(true);
+        coachManager = new CoachManager<>(fileManager.firstStart);
         teamManager = new TeamManager<>(fileManager.firstStart);
         league = new League(true);
         matchManager = new MatchManager<>();
 
         // Zorgen dat de rest laad
-        display.appendText("BAVM is gereed om te worden gebruikt!\n\n----");
+        display.appendText("BAVM is gereed om te worden gebruikt!",
+                "Aantal spelers: " + fileManager.readAmount("players"),
+                "Aantal teams: " + fileManager.readAmount("teams"),
+                "Aantal coaches: " + fileManager.readAmount("coaches")
+        );
+
         this.initGame();
     }
 
@@ -91,9 +96,7 @@ public class BAVM
      */
     private void initGame()
     {
-        display.appendText("Aantal spelers: " + fileManager.readAmount("players"),
-                "Aantal teams: " + fileManager.readAmount("teams"),
-                "Geld: " + teamManager.playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK());
+
         while (true)
         {
             display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"

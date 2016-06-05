@@ -21,7 +21,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
 
         if (generatePlayers)
         {
-            BAVM.getDisplay().appendText("All spelers en teams aan het generen en opslaan, dit kan even duren!");
+            BAVM.getDisplay().appendText("Alle spelers, teams en coaches aan het generen en opslaan, dit kan even duren!");
             this.generateManageables();
         } else
         {

@@ -28,6 +28,7 @@ public class FileManager
     private Document document;
     private Element players;
     private Element teams;
+    private Element coaches;
 
     public boolean firstStart = false;
 
@@ -60,28 +61,38 @@ public class FileManager
                 Element rootElement = document.createElement("data");
                 players = document.createElement("players");
                 teams = document.createElement("teams");
+                coaches = document.createElement("coaches");
                 Element player = document.createElement("player");
                 Element team = document.createElement("team");
+                Element coach = document.createElement("coach");
 
                 // Elementen vullen
                 document.appendChild(rootElement);
                 rootElement.appendChild(players);
                 rootElement.appendChild(teams);
+                rootElement.appendChild(coaches);
                 players.appendChild(player);
                 players.setAttribute("amount", "0");
                 teams.appendChild(team);
                 teams.setAttribute("amount", "0");
+                coaches.setAttribute("amount", "0");
+                coaches.appendChild(coach);
                 player.setAttribute("id", "-1");
                 team.setAttribute("id", "-1");
+                coach.setAttribute("id", "-1");
 
                 // Placeholders neerzetten
                 Element playerString = document.createElement("dataString");
                 Element teamString = document.createElement("dataString");
+                Element coachString = document.createElement("dataString");
 
                 playerString.appendChild(document.createTextNode("NULL <-> PH"));
                 teamString.appendChild(document.createTextNode("NULL <-> PH"));
+                coachString.appendChild(document.createTextNode("NULL <-> PH"));
+
                 player.appendChild(playerString);
                 team.appendChild(teamString);
+                coach.appendChild(coachString);
 
                 // Naar XML bestand schrijven
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -115,6 +126,9 @@ public class FileManager
                                     break;
                                 case "teams":
                                     teams = element;
+                                    break;
+                                case "coaches":
+                                    coaches = element;
                                     break;
                             }
                         }
@@ -175,6 +189,13 @@ public class FileManager
                         newAmount = Integer.parseInt(teams.getAttribute("amount")) + 1;
                         teams.removeAttribute("amount");
                         teams.setAttribute("amount", newAmount + "");
+                        break;
+                    case "coach":
+                        coaches.appendChild(element);
+
+                        newAmount = Integer.parseInt(coaches.getAttribute("amount")) + 1;
+                        coaches.removeAttribute("amount");
+                        coaches.setAttribute("amount", newAmount + "");
                         break;
                 }
             } else

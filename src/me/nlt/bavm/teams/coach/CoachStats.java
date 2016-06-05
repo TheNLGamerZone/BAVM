@@ -1,10 +1,13 @@
 package me.nlt.bavm.teams.coach;
 
+import me.nlt.bavm.BAVM;
+
 import java.util.HashMap;
 
 public class CoachStats
 {
     private HashMap<CStat, Double> coachSkills = new HashMap<>();
+    private int coachID;
 
     public enum CStat
     {
@@ -37,7 +40,7 @@ public class CoachStats
      *
      * @param skillValues SkillValues
      */
-    public CoachStats(double[] skillValues)
+    public CoachStats(int coachID, double[] skillValues)
     {
         // Skills in de array zetten
         for (CStat stat : CStat.values())
@@ -62,7 +65,28 @@ public class CoachStats
         }
 
 
-        return (double) coachSkills.values().toArray()[index];
+        for (CStat stat : CStat.values())
+        {
+            if (stat.getIndex() == index)
+            {
+                return coachSkills.get(stat);
+            }
+        }
+
+        return 0.0;
+    }
+
+    public double getValue(CStat stat)
+    {
+        for (CStat skill : CStat.values())
+        {
+            if (stat == skill)
+            {
+                return coachSkills.get(stat);
+            }
+        }
+
+        return 0.0;
     }
 
     /**
@@ -74,6 +98,7 @@ public class CoachStats
     public void increaseSkill(CStat stat, double increment)
     {
         coachSkills.put(stat, coachSkills.get(stat) + increment);
+        BAVM.getCoachManager().getCoach(coachID).unsavedChanges = true;
     }
 
     /**
