@@ -54,6 +54,12 @@ public class Market
 
     public static String[] listPlayers(ArrayList<MarketFilter> marketFilters)
     {
+        if (statsChanged)
+        {
+            calculatePlayerValues(BAVM.getPlayerManager());
+            statsChanged = false;
+        }
+
         ArrayList<MarketFilter> positionFilter = new ArrayList<>();
         MarketFilter sortingFilter = null;
 

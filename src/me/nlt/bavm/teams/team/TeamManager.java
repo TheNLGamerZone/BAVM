@@ -61,11 +61,13 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             String name = RandomNames.getTeamName();
             int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, teamTalent);
 
-            manageables.add((T) new Team(name, i, playerIDs, i, teamTalent, 1000000));
+            manageables.add((T) new Team(name, i, playerIDs, i, teamTalent, 1000000, BAVM.getPlayerManager().getPlacementString(playerIDs)));
         }
 
-        marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247);
-        playerTeam = new Team(RandomNames.getTeamName(), -1, BAVM.getPlayerManager().getPlayerIDs(this, 0.457), teams, 0.457, 27500);
+        int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, 0.457);
+
+        marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, "");
+        playerTeam = new Team(RandomNames.getTeamName(), -1, playerIDs, teams, 0.457, 27500, BAVM.getPlayerManager().getPlacementString(playerIDs));
         
         BAVM.getDisplay().appendText(teams + " teams gegenereerd!");
     }

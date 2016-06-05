@@ -13,10 +13,11 @@ public class TeamInfo
     private Coach teamCoach;
     private Geld teamGeld;
     private double teamTalent;
+    private PlayerPlacement playerPlacement;
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
-    public TeamInfo(int[] playerIDs, int coachID, double teamTalent, int money)
+    public TeamInfo(int[] playerIDs, int coachID, double teamTalent, int money, String placement)
     {
         for (int i : playerIDs)
         {
@@ -28,7 +29,63 @@ public class TeamInfo
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
         this.teamGeld = new Geld(teamTalent, money);
         this.teamTalent = teamTalent;
+
+        this.createPlacement(placement);
     }
+
+    private void createPlacement(String placement)
+    {
+        if (placement.equals(""))
+        {
+            return;
+        }
+
+        Player keeper = null;
+        ArrayList<Player> attackers = new ArrayList<>();
+        ArrayList<Player> defenders = new ArrayList<>();
+        ArrayList<Player> midfielders = new ArrayList<>();
+
+        String[] positions = placement.split("@");
+
+        for (String position : positions)
+        {
+            String[] ids;
+
+            switch (position.split("!")[0])
+            {
+                case "keeper":
+                    keeper = BAVM.getPlayerManager().getPlayer(Integer.parseInt(position.split("!")[1]));
+                    break;
+                case "attackers":
+                    ids = position.split("!")[1].split("#");
+
+                    for (String id : ids)
+                    {
+                        attackers.add(BAVM.getPlayerManager().getPlayer(Integer.parseInt(id)));
+                    }
+                    break;
+                case "defenders":
+                    ids = position.split("!")[1].split("#");
+
+                    for (String id : ids)
+                    {
+                        defenders.add(BAVM.getPlayerManager().getPlayer(Integer.parseInt(id)));
+                    }
+                    break;
+                case "midfielders":
+                    ids = position.split("!")[1].split("#");
+
+                    for (String id : ids)
+                    {
+                        midfielders.add(BAVM.getPlayerManager().getPlayer(Integer.parseInt(id)));
+                    }
+                    break;
+            }
+        }
+
+        this.playerPlacement = new PlayerPlacement(keeper, defenders, attackers, midfielders);
+    }
+
 
     public enum StatCoefficient
     {
@@ -185,10 +242,15 @@ public class TeamInfo
     {
         return this.teamGeld;
     }
-    
+
     public double getTeamTalent()
     {
-    	return this.teamTalent;
+        return this.teamTalent;
+    }
+
+    public PlayerPlacement getPlayerPlacement()
+    {
+        return this.playerPlacement;
     }
 
     @Override
@@ -206,23 +268,12 @@ public class TeamInfo
                 continue;
             }
 
-            stringBuilder.append(player.toString() + ">");
+            stringBuilder.append(player.getPlayerID() + ">");
         }
 
         // Laatste komma weghalen
         stringBuilder.setLength(stringBuilder.length() - 1);
 
-        // String maken van stringbuilder
-        infoString = stringBuilder.toString();
-
-        String playerString = "PlayerIDs{" +
-                infoString +
-                "}";
-
-        String coachString = teamCoach.toString();
-
-        String geldString = teamGeld.toString();
-
-        return playerString + "," + coachString + "," + geldString;
+        return "teamtalent;" + this.teamTalent + "<players;" + stringBuilder.toString() + "<coach;" + teamCoach.getCoachID() + "<money;" + teamGeld.toString() + "<placement;" + playerPlacement.toString();
     }
 }

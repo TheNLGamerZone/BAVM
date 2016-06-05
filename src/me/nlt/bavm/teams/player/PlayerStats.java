@@ -1,5 +1,7 @@
 package me.nlt.bavm.teams.player;
 
+import me.nlt.bavm.teams.Market;
+
 import java.util.HashMap;
 
 public class PlayerStats
@@ -106,6 +108,7 @@ public class PlayerStats
     public void increaseSkill(Stat stat, double increment)
     {
         playerSkills.put(stat, playerSkills.get(stat) + increment);
+        Market.statsChanged = true;
     }
 
 

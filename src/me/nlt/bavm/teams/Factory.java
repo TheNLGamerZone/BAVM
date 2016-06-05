@@ -1,15 +1,23 @@
-package me.nlt.bavm.teams.player;
+package me.nlt.bavm.teams;
 
+import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.exceptions.InvalidPlayerException;
+import me.nlt.bavm.teams.player.Player;
+import me.nlt.bavm.teams.player.PlayerStats;
+import me.nlt.bavm.teams.player.Position;
+import me.nlt.bavm.teams.team.Team;
 
-public class PlayerFactory
+import java.util.ArrayList;
+import java.util.List;
+
+public class Factory
 {
     /**
      * Deze methode maakt een speler-object uit een string met data
      *
      * @param playerString String met data
      * @return Gemaakte speler
-     * @throws InvalidPlayerException Als een speler onjuiste gegevens of een onjuist controlegetal heeft
+     * @throws me.nlt.bavm.teams.exceptions.InvalidPlayerException Als een speler onjuiste gegevens of een onjuist controlegetal heeft
      */
     public static Player createPlayer(String playerString) throws InvalidPlayerException
     {
@@ -119,5 +127,112 @@ public class PlayerFactory
 
         // Controlegetallen kloppen
         return player;
+    }
+
+    public static Coach createCoach(String coachString)
+    {
+        String coachName = null;
+        int coachID = -1;
+        double[] coachStats = null;
+
+        coachString = coachString.substring(6).replaceAll("}", "");
+
+        for (String coachData : coachString.split(","))
+        {
+            switch (coachData.split("=")[0])
+            {
+                case "name":
+                    coachName = coachData.split("=")[1].replaceAll("_", " ");
+                    break;
+                case "id":
+                    coachID = Integer.parseInt(coachData.split("=")[1]);
+                    break;
+                case "coachstats":
+                    List<Double> cStats = new ArrayList<>();
+                    String[] stats = coachData.split("=")[1].substring(11).replaceAll("}", "").split(">");
+
+                    for (String stat : stats)
+                    {
+                        cStats.add(Double.parseDouble(stat.split(":")[1]));
+                    }
+
+                    coachStats = new double[cStats.size()];
+
+                    for (int i = 0; i < cStats.size(); i++)
+                    {
+                        coachStats[i] = cStats.get(i);
+                    }
+                    break;
+            }
+        }
+
+        return new Coach(coachName, coachID, coachStats);
+    }
+
+    public static Team createTeam(String teamString)
+    {
+        String teamName = null;
+        int teamID = -2;
+        int[] playerIDs = null;
+        int coachID = -1;
+        double teamTalent = -1;
+        int money = -1;
+        String placement = null;
+
+        teamString = teamString.substring(5).replaceAll("}", "");
+
+        for (String teamData : teamString.split(","))
+        {
+            String data = teamData.split("=")[1];
+
+            switch (teamData.split("=")[0])
+            {
+                case "name":
+                    teamName = data.replaceAll("_", " ");
+                    break;
+                case "id":
+                    teamID = Integer.parseInt(data);
+                    break;
+                case "info":
+                    for (String infoString : data.split("<"))
+                    {
+                        String infoData = infoString.split(";")[1];
+
+                        switch (infoString.split(";")[0])
+                        {
+                            case "teamtalent":
+                                teamTalent = Double.parseDouble(infoData);
+                                break;
+                            case "players":
+                                ArrayList<Integer> ids = new ArrayList<>();
+
+                                for (String id : infoData.split(">"))
+                                {
+                                    ids.add(Integer.parseInt(id));
+                                }
+
+                                playerIDs = new int[ids.size()];
+
+                                for (int i = 0; i < ids.size(); i++)
+                                {
+                                    playerIDs[i] = ids.get(i);
+                                }
+                                break;
+                            case "coach":
+                                coachID = Integer.parseInt(infoData);
+                                break;
+                            case "money":
+                                money = Integer.parseInt(infoData.split("!")[1]);
+                                break;
+                            case "placement":
+                                placement = infoData;
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        return new Team(teamName, teamID, playerIDs, coachID, teamTalent, money, placement);
     }
 }

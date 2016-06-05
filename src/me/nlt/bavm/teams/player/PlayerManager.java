@@ -84,6 +84,69 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         this.saveManageables();
     }
 
+    public String getPlacementString(int[] playerIDs)
+    {
+        ArrayList<Player> keepers = new ArrayList<>();
+        ArrayList<Player> attackers = new ArrayList<>();
+        ArrayList<Player> defenders = new ArrayList<>();
+        ArrayList<Player> midfielders = new ArrayList<>();
+
+        for (int playerID : playerIDs)
+        {
+            Player player = getPlayer(playerID);
+
+            if (player == null)
+            {
+                continue;
+            }
+
+            switch (player.getPosition())
+            {
+                case KEEPER:
+                    keepers.add(player);
+                    break;
+                case ATTACKER:
+                    attackers.add(player);
+                    break;
+                case DEFENDER:
+                    defenders.add(player);
+                    break;
+                case MIDFIELDER:
+                    midfielders.add(player);
+                    break;
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("keeper!" + keepers.get(0).getPlayerID() + "@attackers!");
+
+        for (int i = 0; i < 3; i++)
+        {
+            stringBuilder.append(attackers.get(i).getPlayerID() + "#");
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 1);
+        stringBuilder.append("@defenders!");
+
+        for (int i = 0; i < 3; i++)
+        {
+            stringBuilder.append(defenders.get(i).getPlayerID() + "#");
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 1);
+        stringBuilder.append("@midfielders!");
+
+        for (int i = 0; i < 4; i++)
+        {
+            stringBuilder.append(midfielders.get(i).getPlayerID() + "#");
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 1);
+
+        return stringBuilder.toString();
+    }
+
     public int[] getFreePlayers(TeamManager teamManager)
     {
         ArrayList<Player> players = new ArrayList<>();

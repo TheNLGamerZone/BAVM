@@ -36,6 +36,6 @@ public class Geld {
     @Override
     public String toString()
     {
-        return "TeamGeld{" + "current geld: " + currentGeldK + "k" + "<" + "montly income: " + monthlyIncomeK + "k" + "}";
+        return "money!" + currentGeldK;
     }
 }
