@@ -23,10 +23,11 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         {
             BAVM.getDisplay().appendText("All spelers en teams aan het generen en opslaan, dit kan even duren!");
             this.generateManageables();
+        } else
+        {
+            // Spelers laden
+            this.loadManageables();
         }
-
-        // Spelers laden
-        this.loadManageables();
 
         // Waarden berekenen
         Market.calculatePlayerValues(this);
@@ -50,14 +51,22 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
-    public void saveManageables()
+    public void saveManageables(boolean firstSave)
     {
+        int counter = 0;
+
         for (T type : manageables)
         {
             Player player = (Player) type;
 
-            BAVM.getFileManager().saveData("player", player.toString(), player.getID());
+            if ((firstSave || player.unsavedChanges()))
+            {
+                BAVM.getFileManager().saveData("player", player.toString(), player.getID());
+                counter++;
+            }
         }
+
+        System.out.println(counter + " veranderingen met spelers opgeslagen!");
     }
 
     @Override
@@ -98,7 +107,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         System.out.printf("%d keepers, %d defenders, %d attackers and %d midfielders (%d total)%n", keeper, defender, attacker, midfielder, total);
 
         // Save players
-        this.saveManageables();
+        this.saveManageables(true);
 
         BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
     }
@@ -170,6 +179,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     {
         ArrayList<Player> players = new ArrayList<>();
         int[] playerIDs;
+
         for (Manageable manageable : manageables)
         {
             Player player = (Player) manageable;

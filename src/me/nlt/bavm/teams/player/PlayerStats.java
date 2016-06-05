@@ -1,5 +1,6 @@
 package me.nlt.bavm.teams.player;
 
+import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.Market;
 
 import java.util.HashMap;
@@ -9,6 +10,8 @@ public class PlayerStats
     private HashMap<Stat, Double> playerSkills = new HashMap<>();
     private double checkSum;
     private double totalSkill;
+
+    private int playerID;
 
     public enum Stat
     {
@@ -41,7 +44,7 @@ public class PlayerStats
      *
      * @param skillValues SkillValues
      */
-    public PlayerStats(double[] skillValues)
+    public PlayerStats(int playerID, double[] skillValues)
     {
         // Skills in de array zetten
         for (Stat stat : Stat.values())
@@ -62,6 +65,8 @@ public class PlayerStats
             checkSum += (this.getValue(i) * (i * 2) + this.getValue(i));
             totalSkill += this.getValue(i);
         }
+
+        this.playerID = playerID;
     }
 
     /**
@@ -108,7 +113,9 @@ public class PlayerStats
     public void increaseSkill(Stat stat, double increment)
     {
         playerSkills.put(stat, playerSkills.get(stat) + increment);
+
         Market.statsChanged = true;
+        BAVM.getPlayerManager().getPlayer(playerID).unsavedChanges = true;
     }
 
 

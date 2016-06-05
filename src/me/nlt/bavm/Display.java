@@ -13,6 +13,7 @@ public class Display
     public JTextArea textArea;
     public JTextField jTextField;
 
+    private JFrame jFrame;
     private JScrollPane jScrollPane;
     private DefaultCaret defaultCaret;
 
@@ -38,7 +39,7 @@ public class Display
      */
     private void initDisplay()
     {
-        JFrame jFrame = new JFrame();
+        jFrame = new JFrame();
         JPanel jPanel = new JPanel();
 
         this.textArea = new JTextArea(width, height);
@@ -121,15 +122,12 @@ public class Display
      */
     public void onClose()
     {
+        System.out.println("Afsluiten ..");
         appendText("Afsluiten ..");
 
-        try
-        {
-            Thread.sleep(124);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+        BAVM.getTeamManager().saveManageables(false);
+        BAVM.getPlayerManager().saveManageables(false);
+
         System.exit(1);
     }
 

@@ -193,6 +193,7 @@ public class MarketConversation implements Conversation
                 while (true)
                 {
                     int counter = 1;
+
                     for (Player player : players)
                     {
                         display.appendText(counter + ": " + player.getPlayerName()

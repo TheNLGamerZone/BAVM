@@ -10,6 +10,8 @@ public class Team implements Manageable
 
     private TeamInfo teamInfo;
 
+    public boolean unsavedChanges;
+
     public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent, int money, String placement)
     {
         System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
@@ -18,10 +20,12 @@ public class Team implements Manageable
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent, money, placement);
 
-        if (!teamName.equals("marketTeam") && playerIDs.length != 21)
+        if (!teamName.equals("marketTeam") && teamID != -1 && playerIDs.length != 21)
         {
             BAVM.getDisplay().appendText("Invalid team: " + teamID + " (" + playerIDs.length + " players)");
         }
+
+        this.unsavedChanges = false;
     }
 
     public String getTeamName()
@@ -53,5 +57,11 @@ public class Team implements Manageable
     public int getID()
     {
         return this.teamID;
+    }
+
+    @Override
+    public boolean unsavedChanges()
+    {
+        return unsavedChanges;
     }
 }

@@ -31,7 +31,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
-    public void saveManageables()
+    public void saveManageables(boolean firstSave)
     {
 
     }

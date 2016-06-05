@@ -71,7 +71,7 @@ public class BAVM
         }
 
         // Eigenlijk lieg ik bij het eerste bericht maar anders kan het niet
-        display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked\n");
+        display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers en teams worden geladen\n");
 
         //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
@@ -92,7 +92,8 @@ public class BAVM
     private void initGame()
     {
         display.appendText("Aantal spelers: " + fileManager.readAmount("players"),
-                "Aantal teams: " + fileManager.readAmount("teams"));
+                "Aantal teams: " + fileManager.readAmount("teams"),
+                "Geld: " + teamManager.playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK());
         while (true)
         {
             display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"

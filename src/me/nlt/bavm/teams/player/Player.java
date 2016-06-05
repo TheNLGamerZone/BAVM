@@ -14,6 +14,8 @@ public class Player implements Manageable
 
     private PlayerStats playerStats;
 
+    public boolean unsavedChanges;
+
     /**
      * Player constructor
      *
@@ -26,9 +28,10 @@ public class Player implements Manageable
         this.playerName = playerName;
         this.playerID = playerID;
         this.position = position;
-        this.playerStats = new PlayerStats(stats);
+        this.playerStats = new PlayerStats(playerID, stats);
 
         this.marketValue = new BigDecimal(Math.random() * 100).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        this.unsavedChanges = false;
     }
 
     /**
@@ -101,5 +104,11 @@ public class Player implements Manageable
     public int getID()
     {
         return this.playerID;
+    }
+
+    @Override
+    public boolean unsavedChanges()
+    {
+        return unsavedChanges;
     }
 }

@@ -13,7 +13,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 {
     public Team marketTeam;
     public Team playerTeam;
-    
+
     public TeamManager(boolean generateTeams)
     {
         super();
@@ -21,10 +21,11 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         if (generateTeams)
         {
             this.generateManageables();
+        } else
+        {
+            // Teams laden
+            this.loadManageables();
         }
-
-        // Spelers laden
-        this.loadManageables();
     }
 
     public Team getTeam(int teamID)
@@ -54,25 +55,32 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
-    public void saveManageables()
+    public void saveManageables(boolean firstSave)
     {
+        int counter = 2;
+
         for (T type : manageables)
         {
             Team team = (Team) type;
 
-            BAVM.getFileManager().saveData("team", team.toString(), team.getID());
+            if ((firstSave || team.unsavedChanges()))
+            {
+                BAVM.getFileManager().saveData("team", team.toString(), team.getID());
+                counter++;
+            }
         }
 
-        BAVM.getFileManager().saveData("team", marketTeam.toString(), BAVM.getFileManager().readAmount("teams"));
-        BAVM.getFileManager().saveData("team", playerTeam.toString(), BAVM.getFileManager().readAmount("teams"));
+        BAVM.getFileManager().saveData("team", marketTeam.toString(), manageables.size());
+        BAVM.getFileManager().saveData("team", playerTeam.toString(), manageables.size() + 1);
 
+        System.out.println(counter + " veranderingen in teams opgeslagen!");
     }
 
     @Override
     public void generateManageables()
     {
-    	int teams = 20;
-    	
+        int teams = 20;
+
         for (int i = 0; i < teams; i++)
         {
             double teamTalent = Math.random();
@@ -87,11 +95,11 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, "");
         playerTeam = new Team(RandomNames.getTeamName(), -1, playerIDs, teams, 0.457, 27500, BAVM.getPlayerManager().getPlacementString(playerIDs));
 
-        this.saveManageables();
+        this.saveManageables(true);
 
         BAVM.getDisplay().appendText(teams + " teams gegenereerd!");
     }
-    
+
     public TransferResult transferPlayer(Team sendingTeam, Team receivingTeam, Player player, int price)
     {
         if (!sendingTeam.getTeamInfo().getPlayers().contains(player))
@@ -99,26 +107,29 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             return TransferResult.FAILED_NOT_IN_TEAM;
         }
 
-    	if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price && receivingTeam != this.playerTeam)
-    	{
-    		return TransferResult.FAILED_NO_MONEY_OTHER;
-    	}
-    	
-    	if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price && receivingTeam == this.playerTeam)
-    	{
-    		return TransferResult.FAILED_NO_MONEY;
-    	}
-    	
-    	if (sendingTeam.getTeamInfo().getPlayers().size() - 1 < 14)
-    	{
-    		return TransferResult.FAILED_NOT_ENOUGH_PLAYERS;
-    	}
-    	
-    	sendingTeam.getTeamInfo().getPlayers().remove(player);
-    	sendingTeam.getTeamInfo().getTeamGeld().removeGeld(price);
-    	receivingTeam.getTeamInfo().getPlayers().add(player);
-    	receivingTeam.getTeamInfo().getTeamGeld().addGeld(price);
-    	
-    	return TransferResult.SUCCESS;
+        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price && receivingTeam != this.playerTeam)
+        {
+            return TransferResult.FAILED_NO_MONEY_OTHER;
+        }
+
+        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price && receivingTeam == this.playerTeam)
+        {
+            return TransferResult.FAILED_NO_MONEY;
+        }
+
+        if (sendingTeam.getTeamInfo().getPlayers().size() - 1 < 14)
+        {
+            return TransferResult.FAILED_NOT_ENOUGH_PLAYERS;
+        }
+
+        sendingTeam.getTeamInfo().getPlayers().remove(player);
+        sendingTeam.getTeamInfo().getTeamGeld().addGeld(price);
+        sendingTeam.unsavedChanges = true;
+
+        receivingTeam.getTeamInfo().getPlayers().add(player);
+        receivingTeam.getTeamInfo().getTeamGeld().removeGeld(price);
+        receivingTeam.unsavedChanges = true;
+
+        return TransferResult.SUCCESS;
     }
 }

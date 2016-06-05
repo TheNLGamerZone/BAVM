@@ -20,7 +20,7 @@ public class MatchManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
-    public void saveManageables()
+    public void saveManageables(boolean firstSave)
     {
 
     }

@@ -9,6 +9,8 @@ public class Coach implements Manageable
 
     private CoachStats coachStats;
 
+    public boolean unsavedChanges;
+
     /**
      * Coach constructor
      *
@@ -21,6 +23,7 @@ public class Coach implements Manageable
         this.coachName = coachName;
         this.coachID = coachID;
         this.coachStats = new CoachStats(stats);
+        this.unsavedChanges = false;
     }
 
     /**
@@ -72,5 +75,11 @@ public class Coach implements Manageable
     public int getID()
     {
         return this.coachID;
+    }
+
+    @Override
+    public boolean unsavedChanges()
+    {
+        return unsavedChanges;
     }
 }

@@ -9,6 +9,8 @@ public class Match implements Manageable
     private int[] matchGoals;
     private int[] teamIDs = new int[2];
 
+    public boolean unsavedChanges;
+
     public Match(String matchName, int matchID, int homeID, int visitorID, int[] matchResult)
     {
         this.matchName = matchName;
@@ -16,6 +18,7 @@ public class Match implements Manageable
         this.matchGoals = matchResult;
         this.teamIDs[0] = homeID;
         this.teamIDs[1] = visitorID;
+        this.unsavedChanges = false;
     }
 
     public String getMatchName()
@@ -42,5 +45,11 @@ public class Match implements Manageable
     public int getID()
     {
         return this.matchID;
+    }
+
+    @Override
+    public boolean unsavedChanges()
+    {
+        return unsavedChanges;
     }
 }

@@ -13,7 +13,7 @@ public abstract class Manager<T extends Manageable>
 
     public abstract void loadManageables();
 
-    public abstract void saveManageables();
+    public abstract void saveManageables(boolean firstSave);
 
     public abstract void generateManageables();
 
