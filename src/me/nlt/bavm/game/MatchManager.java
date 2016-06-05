@@ -6,10 +6,11 @@ import me.nlt.bavm.teams.Manager;
 
 public class MatchManager<T extends Manageable> extends Manager<T>
 {
-    public MatchManager()
+    public MatchManager(boolean firstStart)
     {
         super();
 
+        //TODO: Deze nog opslaan
         this.loadManageables();
     }
 

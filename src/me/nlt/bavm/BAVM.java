@@ -79,7 +79,7 @@ public class BAVM
         coachManager = new CoachManager<>(fileManager.firstStart);
         teamManager = new TeamManager<>(fileManager.firstStart);
         league = new League(true);
-        matchManager = new MatchManager<>();
+        matchManager = new MatchManager<>(fileManager.firstStart);
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!",

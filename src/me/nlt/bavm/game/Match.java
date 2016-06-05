@@ -52,4 +52,11 @@ public class Match implements Manageable
     {
         return unsavedChanges;
     }
+
+    @Override
+    public String toString()
+    {
+        return "teams=" + teamIDs[0] + ":" + teamIDs[1] +
+                ",score=" + matchGoals[0] + ":" + matchGoals[1];
+    }
 }

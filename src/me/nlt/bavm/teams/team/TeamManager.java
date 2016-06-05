@@ -122,6 +122,11 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             return TransferResult.FAILED_NOT_ENOUGH_PLAYERS;
         }
 
+        if (sendingTeam.getTeamInfo().getPlayerPlacement().isPlaced(player))
+        {
+            return TransferResult.FAILED_IN_FORMATION;
+        }
+
         sendingTeam.getTeamInfo().getPlayers().remove(player);
         sendingTeam.getTeamInfo().getTeamGeld().addGeld(price);
         sendingTeam.unsavedChanges = true;
