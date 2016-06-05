@@ -94,6 +94,19 @@ public class PlayerStats
         return 0.0;
     }
 
+    public double getValue(Stat stat)
+    {
+        for (Stat skill : Stat.values())
+        {
+            if (stat == skill)
+            {
+                return playerSkills.get(stat);
+            }
+        }
+
+        return 0.0;
+    }
+
     /**
      * Geeft de waarde van de checksum
      *

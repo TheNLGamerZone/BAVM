@@ -1,6 +1,7 @@
 package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.teams.player.Player;
+import me.nlt.bavm.teams.player.Position;
 
 import java.util.ArrayList;
 
@@ -52,6 +53,38 @@ public class PlayerPlacement
     public int getSize()
     {
         return attackers.size() + defenders.size() + midfielders.size() + (keeper != null ? 1 : 0);
+    }
+
+    public String getPlacement(Position position)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        switch (position)
+        {
+            case KEEPER:
+                return keeper.getPlayerName();
+            case ATTACKER:
+                for (Player player : attackers)
+                {
+                    stringBuilder.append(player.getPlayerName() + ", ");
+                }
+                break;
+            case DEFENDER:
+                for (Player player : defenders)
+                {
+                    stringBuilder.append(player.getPlayerName() + ", ");
+                }
+                break;
+            case MIDFIELDER:
+                for (Player player : midfielders)
+                {
+                    stringBuilder.append(player.getPlayerName() + ", ");
+                }
+                break;
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 2);
+        return stringBuilder.toString();
     }
 
     @Override
