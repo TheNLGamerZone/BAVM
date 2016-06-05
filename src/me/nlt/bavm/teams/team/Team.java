@@ -10,13 +10,13 @@ public class Team implements Manageable
 
     private TeamInfo teamInfo;
 
-    public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent)
+    public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent, int money)
     {
         System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
 
         this.teamName = teamName;
         this.teamID = teamID;
-        this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent);
+        this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent, money);
 
         if (!teamName.equals("marketTeam") && playerIDs.length != 21)
         {

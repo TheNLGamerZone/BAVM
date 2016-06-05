@@ -76,6 +76,11 @@ public class Player implements Manageable
         return this.marketValue;
     }
 
+    public void setMarketValue(double newValue)
+    {
+        this.marketValue = newValue;
+    }
+
     /**
      * Maakt en antwoord een string met alle data voor players
      *

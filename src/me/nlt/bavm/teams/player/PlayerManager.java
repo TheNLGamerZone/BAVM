@@ -5,6 +5,7 @@ import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
+import me.nlt.bavm.teams.Market;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
@@ -23,6 +24,9 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
 
         // Spelers laden
         this.loadManageables();
+
+        // Waarden berekenen
+        Market.calculatePlayerValues(this);
     }
 
     @Override
@@ -333,5 +337,10 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     public int getNextAvailableID()
     {
         return manageables.size();
+    }
+
+    public ArrayList<T> getLoadedPlayers()
+    {
+        return manageables;
     }
 }

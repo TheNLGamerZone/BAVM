@@ -2,6 +2,7 @@ package me.nlt.bavm.teams;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.player.Player;
+import me.nlt.bavm.teams.player.PlayerManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class Market
 {
+    public static boolean statsChanged = true;
+
     public enum MarketFilter
     {
         ALL(0), KEEPER(0), ATTACKER(0), DEFENDER(0), MIDFIELDER(0),
@@ -24,6 +27,28 @@ public class Market
         public int getFilterType()
         {
             return this.filterType;
+        }
+    }
+
+    public static void calculatePlayerValues(PlayerManager playerManager)
+    {
+        int totalValue = 112341442;
+        double totalSkill = 0;
+
+        for (Object object : playerManager.getLoadedPlayers())
+        {
+            Player player = (Player) object;
+
+            totalSkill += player.getPlayerStats().getTotalSkill();
+        }
+
+        for (Object object : playerManager.getLoadedPlayers())
+        {
+            Player player = (Player) object;
+            double promille = player.getPlayerStats().getTotalSkill() / totalSkill * 1000;
+            double newValue = totalValue / 1000 * promille;
+
+            player.setMarketValue(newValue);
         }
     }
 
@@ -59,7 +84,11 @@ public class Market
         {
             Player player = sortedPlayers.get(i);
 
-            marketStrings.add((i + 1) + ": " + player.getPlayerName() + " - Position: " + player.getPosition().name().toLowerCase() + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill()) + " - Price: $" + player.getMarketValue());
+            marketStrings.add((i + 1) + ": " + player.getPlayerName()
+                    + " - Position: " + player.getPosition().name().toLowerCase()
+                    + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill())
+                    + " - Price: $" + new DecimalFormat("######.##").format(player.getMarketValue())
+                    + " - ID: " + player.getPlayerID());
         }
 
         return marketStrings.toArray(new String[marketStrings.size()]);

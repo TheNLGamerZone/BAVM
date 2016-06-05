@@ -119,9 +119,17 @@ public class Display
     /**
      * Wordt aangeroepen als de gebruiker het scherm wegklikt zodat we dingen kunnen opslaan
      */
-    private void onClose()
+    public void onClose()
     {
         appendText("Afsluiten ..");
+
+        try
+        {
+            Thread.sleep(785);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         System.exit(1);
     }
 
@@ -149,6 +157,7 @@ public class Display
             for (String string : strings)
             {
                 textArea.append((newLine ? "\n" : "") + string);
+                textArea.setCaretPosition(textArea.getDocument().getLength());
             }
 
             jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -166,13 +175,7 @@ public class Display
         return this.readLine("");
     }
 
-    /**
-     * Hiermee kan je de input van de gebruiker lezen
-     *
-     * @param questionString De vraag die wordt gesteld aan de gebruiker
-     * @return De input van de gebruiker
-     */
-    public String readLine(String questionString)
+    public String readLine(boolean printAnswer, String questionString)
     {
         final String[] inputLine = {null};
 
@@ -194,7 +197,10 @@ public class Display
                 inputLine[0] = jTextField.getText();
 
                 // De input van de gebruiker ook even 'printen'
-                appendText(false, "   --> " + inputLine[0]);
+                if (printAnswer)
+                {
+                    appendText(false, "   --> " + inputLine[0]);
+                }
 
                 // Unlock het lockObject weer zodat de Thread die deze methode aanvroeg weer verder kan met het resultaat
                 synchronized (inputLine)
@@ -231,13 +237,29 @@ public class Display
     }
 
     /**
+     * Hiermee kan je de input van de gebruiker lezen
+     *
+     * @param questionString De vraag die wordt gesteld aan de gebruiker
+     * @return De input van de gebruiker
+     */
+    public String readLine(String questionString)
+    {
+        return readLine(true, questionString);
+    }
+
+    /**
      * Hiermee kan je om een nummer vragen van de gebruiker zonder een vraag te stellen
      *
      * @return Het resultaat in de vorm van een double
      */
     public double readDouble()
     {
-        return this.readDouble("");
+        return this.readDouble(true, "");
+    }
+
+    public double readDouble(boolean printValue)
+    {
+        return this.readDouble(printValue, "");
     }
 
     /**
@@ -247,7 +269,7 @@ public class Display
      * @param questionString De vraag die er aan de gebruiker wordt gevraagd
      * @return Het resultaat in de vorm van een double
      */
-    public double readDouble(String questionString)
+    public double readDouble(boolean printValue, String questionString)
     {
         double result = Double.MIN_VALUE;
 
@@ -257,7 +279,7 @@ public class Display
             // Even kijken of de input wel een nummer is
             try
             {
-                result = Double.parseDouble(readLine(questionString));
+                result = Double.parseDouble(readLine(printValue, questionString));
             } catch (NumberFormatException e)
             {
                 appendText("Er wordt om een nummer gevraagd in het format '1.0' of '1'!");

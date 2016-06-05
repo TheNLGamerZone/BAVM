@@ -4,13 +4,13 @@ public class Geld {
     private int monthlyIncomeK;
     private int currentGeldK;
 
-    public Geld (double teamTalent)
+    public Geld (double teamTalent, int money)
     {
         int teamIncomeFactor = (int) (teamTalent * 1000);
         int teamIncomeVariance = (int) (Math.random() * 500);
 
         monthlyIncomeK = teamIncomeFactor + teamIncomeVariance;
-        currentGeldK = (int) (monthlyIncomeK * 0.5 * (Math.random() + 0.5));
+        currentGeldK = money;
     }
 
     public int getMonthlyIncomeK()

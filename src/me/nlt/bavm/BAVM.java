@@ -110,8 +110,7 @@ public class BAVM
 
             if (readInt == -1)
             {
-                display.appendText("Gestopt.");
-                break;
+                display.onClose();
             } else if (readInt == -2)
             {
                 while (true)

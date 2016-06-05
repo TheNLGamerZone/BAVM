@@ -16,7 +16,7 @@ public class TeamInfo
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
-    public TeamInfo(int[] playerIDs, int coachID, double teamTalent)
+    public TeamInfo(int[] playerIDs, int coachID, double teamTalent, int money)
     {
         for (int i : playerIDs)
         {
@@ -26,7 +26,7 @@ public class TeamInfo
         //DEBUG
         //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
-        this.teamGeld = new Geld(teamTalent);
+        this.teamGeld = new Geld(teamTalent, money);
         this.teamTalent = teamTalent;
     }
 
