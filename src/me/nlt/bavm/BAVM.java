@@ -1,6 +1,7 @@
 package me.nlt.bavm;
 
 import me.nlt.bavm.conversation.InformationConversation;
+import me.nlt.bavm.conversation.ManagementConversation;
 import me.nlt.bavm.conversation.MarketConversation;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
@@ -102,7 +103,9 @@ public class BAVM
             display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
                     , "    0 -> Stop het spel"
                     , "    1 -> Ga naar de markt"
-                    , "    2 -> Ga naar het informatiecentrum");
+                    , "    2 -> Ga naar het informatiecentrum"
+                    , "    3 -> Ga naar teammanagement"
+            );
 
             int mainNumber = (int) display.readDouble(false);
 
@@ -119,6 +122,11 @@ public class BAVM
             if (mainNumber == 2)
             {
                 new InformationConversation().startConversation(display);
+            }
+
+            if (mainNumber == 3)
+            {
+                new ManagementConversation().startConversation(display);
             }
         }
 
