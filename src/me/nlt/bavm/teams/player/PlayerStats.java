@@ -129,6 +129,15 @@ public class PlayerStats
 
         Market.statsChanged = true;
         BAVM.getPlayerManager().getPlayer(playerID).unsavedChanges = true;
+
+        this.checkSum = 0;
+        this.totalSkill = 0;
+
+        for (int i = 0; i < playerSkills.size(); i++)
+        {
+            checkSum += (this.getValue(i) * (i * 2) + this.getValue(i));
+            totalSkill += this.getValue(i);
+        }
     }
 
 

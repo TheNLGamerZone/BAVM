@@ -8,6 +8,7 @@ import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerStats;
 import me.nlt.bavm.teams.player.Position;
 import me.nlt.bavm.teams.team.Team;
+import me.nlt.bavm.teams.team.TeamInfo;
 
 import java.text.DecimalFormat;
 
@@ -76,6 +77,13 @@ public class InformationConversation implements Conversation
                 for (Player player : team.getTeamInfo().getPlayers())
                 {
                     display.appendText("   " + player.getPlayerName() + " (ID: " + player.getID() + ")");
+                }
+
+                display.appendText("Co\u00EBfficienten: ");
+
+                for (TeamInfo.StatCoefficient statCoefficient : team.getTeamInfo().getStatCoefficients().keySet())
+                {
+                    display.appendText("   " + statCoefficient.name().substring(0, 1) + statCoefficient.name().substring(1).toLowerCase() + ": " + team.getTeamInfo().getStatCoefficients().get(statCoefficient));
                 }
 
                 display.readLine("Typ iets om terug te keren naar het informatiecentrum.");
