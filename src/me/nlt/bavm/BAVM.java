@@ -3,6 +3,7 @@ package me.nlt.bavm;
 import me.nlt.bavm.conversation.InformationConversation;
 import me.nlt.bavm.conversation.ManagementConversation;
 import me.nlt.bavm.conversation.MarketConversation;
+import me.nlt.bavm.conversation.WeekendConversation;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
@@ -100,6 +101,9 @@ public class BAVM
      */
     private void initGame()
     {
+        //TODO laat hem de week uit een bestand laden
+        display.appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (1) + " ] - - - - - - - - - - - - - -\n");
+
         while (true)
         {
             display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
@@ -134,7 +138,7 @@ public class BAVM
 
             if (mainNumber == 4)
             {
-                Week.endWeek();
+                new WeekendConversation().startConversation(display);
             }
         }
 

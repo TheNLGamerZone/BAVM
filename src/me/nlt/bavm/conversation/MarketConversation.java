@@ -168,9 +168,9 @@ public class MarketConversation implements Conversation
                         display.appendText("Je staat op het punt " + player.getPlayerName() + " te kopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de aankoop te bevestigen."
                                 , "Saldo na aankoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() - player.getMarketValue()));
 
-                        int confimationNumber = (int) display.readDouble(false);
+                        int confirmationNumber = (int) display.readDouble(false);
 
-                        if (confimationNumber == 123)
+                        if (confirmationNumber == 123)
                         {
                             TransferResult transferResult = BAVM.getTeamManager().transferPlayer(BAVM.getTeamManager().marketTeam, BAVM.getTeamManager().playerTeam, player, (int) player.getMarketValue());
 
@@ -233,9 +233,9 @@ public class MarketConversation implements Conversation
                         display.appendText("Je staat op het punt " + player.getPlayerName() + " te verkopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de verkoop te bevestigen."
                                 , "Saldo na verkoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() + player.getMarketValue()));
 
-                        int confimationNumber = (int) display.readDouble(false);
+                        int confirmationNumber = (int) display.readDouble(false);
 
-                        if (confimationNumber == 123)
+                        if (confirmationNumber == 123)
                         {
                             TransferResult transferResult = BAVM.getTeamManager().transferPlayer(BAVM.getTeamManager().playerTeam, BAVM.getTeamManager().marketTeam, player, (int) player.getMarketValue());
 
