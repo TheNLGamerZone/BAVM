@@ -58,6 +58,7 @@ public class Display
         this.jTextField.setFont(new Font("Verdana", Font.ITALIC, 12));
         this.jTextField.setText("Input box");
         this.jTextField.setPreferredSize(new Dimension(500, 30));
+        this.jFrame.setResizable(false);
 
         // Focuslistener voor jTextField voor de input hint
         jTextField.addFocusListener(new FocusAdapter()

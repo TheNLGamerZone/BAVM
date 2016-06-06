@@ -50,7 +50,7 @@ public class BAVM
         lockObject = new Object();
 
         // Display aanmaken op EDT
-        EventQueue.invokeLater(() -> display = new Display(16, 58, lockObject));
+        EventQueue.invokeLater(() -> display = new Display(35, 65, lockObject));
 
         // Wachten op unlock
         this.lockThread();

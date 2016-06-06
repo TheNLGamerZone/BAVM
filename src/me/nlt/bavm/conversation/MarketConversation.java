@@ -200,7 +200,8 @@ public class MarketConversation implements Conversation
                                 + " - Positie: " + player.getPosition().name().toLowerCase()
                                 + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill())
                                 + " - Waarde: $" + new DecimalFormat("######.##").format(player.getMarketValue())
-                                + " - ID: " + player.getPlayerID());
+                                + " - ID: " + player.getPlayerID()
+                                + " - In opstelling: " + BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayerPlacement().isPlaced(player));
                         counter++;
                     }
 
