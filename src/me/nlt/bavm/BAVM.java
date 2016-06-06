@@ -1,9 +1,6 @@
 package me.nlt.bavm;
 
-import me.nlt.bavm.conversation.InformationConversation;
-import me.nlt.bavm.conversation.ManagementConversation;
-import me.nlt.bavm.conversation.MarketConversation;
-import me.nlt.bavm.conversation.WeekendConversation;
+import me.nlt.bavm.conversation.*;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
@@ -108,10 +105,11 @@ public class BAVM
         {
             display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
                     , "    0 -> Stop het spel"
-                    , "    1 -> Ga naar de markt"
-                    , "    2 -> Ga naar het informatiecentrum"
+                    , "    1 -> Ga naar het informatiecentrum"
+                    , "    2 -> Ga naar het wedstrijdcentrum"
                     , "    3 -> Ga naar teammanagement"
-                    , "    4 -> Be\u00EBindig deze week"
+                    , "    4 -> Ga naar de markt"
+                    , "    5 -> Be\u00EBindig deze week"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -123,12 +121,12 @@ public class BAVM
 
             if (mainNumber == 1)
             {
-                new MarketConversation().startConversation(display);
+                new InformationConversation().startConversation(display);
             }
 
             if (mainNumber == 2)
             {
-                new InformationConversation().startConversation(display);
+                new MatchConversation().startConversation(display);
             }
 
             if (mainNumber == 3)
@@ -136,7 +134,11 @@ public class BAVM
                 new ManagementConversation().startConversation(display);
             }
 
-            if (mainNumber == 4)
+            if (mainNumber == 4) {
+                new MarketConversation().startConversation(display);
+            }
+
+            if (mainNumber == 5)
             {
                 new WeekendConversation().startConversation(display);
             }
