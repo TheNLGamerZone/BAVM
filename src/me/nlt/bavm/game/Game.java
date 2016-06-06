@@ -4,6 +4,7 @@ import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamInfo.StatCoefficient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -11,7 +12,10 @@ import java.util.Random;
 
 public class Game
 {
-    public static int[] simulateGame(int homeID, int visitorID)
+    private int[] gameResult;
+    private ArrayList<String> gameLog = new ArrayList<>();
+
+    public Game(int homeID, int visitorID)
     {
         /*
          * simulateGame simuleert een voetbalwedstrijd met enkel de id van de twee teams, een home team en een visitor.
@@ -30,8 +34,8 @@ public class Game
         HashMap<StatCoefficient, Double> homeCoefficients = home.getTeamInfo().getStatCoefficients();
         HashMap<StatCoefficient, Double> visitorCoefficients = visitor.getTeamInfo().getStatCoefficients();
 
-        /* DEBUG
-        for (StatCoefficient statCoefficient : homeCoefficients.keySet())
+        //DEBUG
+        /*for (StatCoefficient statCoefficient : homeCoefficients.keySet())
         {
             System.out.println("HOME - " + statCoefficient.name() + ": " + homeCoefficients.get(statCoefficient));
         }
@@ -39,7 +43,7 @@ public class Game
         for (StatCoefficient statCoefficient : visitorCoefficients.keySet())
         {
             System.out.println("VISITOR - " + statCoefficient.name() + ": " + visitorCoefficients.get(statCoefficient));
-        } */
+        }*/
 
         
         /*
@@ -65,9 +69,8 @@ public class Game
             visitorLuck = luck1;
         }
 
-
-        //System.out.println(homeLuck);
-        //System.out.println(visitorLuck);
+        gameLog.add("Home luck: " + homeLuck);
+        gameLog.add("Visitor luck: " + visitorLuck);
 
 
         /*
@@ -92,14 +95,15 @@ public class Game
         int attemptResult;
         boolean modifyCoefficients = false;
 
+        gameLog.add("");
+
         /*
          * dit is de main while loop. Time is in dit geval de tijd in minuten, de loop kan echer ook teruggaan zonder dat de tijd meer wordt,
          * in het echt kan namelijk een team ook binnen een minuut meerdere helften vooruit gaan.
          */
         while (time < 90)
         {
-            //DEBUG
-        	//BAVM.getDisplay().appendText("time: " + time);
+            gameLog.add("Time: " + time);
 
             if (modifyCoefficients && ballPossession == 0) {
                 visitValues[0] = visitValues[0] * 0.9;
@@ -112,6 +116,11 @@ public class Game
             if (conflictResult != -1) {
                 conflictResult = getConflictResult(homeValues, visitValues, ballPossession);
             }
+
+            gameLog.add("");
+            String conflictString = (ballPossession == 0) ? "Conflict result of " + home.getTeamName() + " against " + visitor.getTeamName() + ": " + conflictResult
+                    : "Conflict result of " + visitor.getTeamName() + " against " + home.getTeamName() + ": " + conflictResult ;
+            gameLog.add(conflictString);
 
             /*
              * De simulator werkt op basis van een "conflict" tussen balbezitter en verdediger. Hiervoor wordt een int gemaakt die elk voor een
@@ -126,14 +135,17 @@ public class Game
                     //balbezit wordt veranderd
                 	if (ballPossession == 0) {
                         ballPossession = 1;
+                        gameLog.add(visitor.getTeamName() + " is now in possession of the ball!");
                     } else {
                         ballPossession = 0;
+                        gameLog.add(home.getTeamName() + " is now in possession of the ball!");
                     }
                     break;
                 case 1 :
                     //de ballquarter is absoluut, dus voor visit moeten ze op kwart 0 komen en voor home op kwart 3
                 	if (ballPossession == 0) {
                         ballQuarter++;
+                        //TODO continue with gameLog
                     } else {
                         ballQuarter--;
                     }
@@ -197,7 +209,17 @@ public class Game
 
         }
 
-        return goalResult;
+        gameResult = goalResult;
+    }
+
+    public int[] getGameResult()
+    {
+        return gameResult;
+    }
+
+    public ArrayList<String> getGameLog()
+    {
+        return gameLog;
     }
 
     public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {

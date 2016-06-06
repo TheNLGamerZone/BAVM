@@ -99,11 +99,11 @@ public class BAVM
     private void initGame()
     {
         //TODO laat hem de week uit een bestand laden
-        display.appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (1) + " ] - - - - - - - - - - - - - -\n");
+        display.appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (1) + " ] - - - - - - - - - - - - - -");
 
         while (true)
         {
-            display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
+            display.appendText("\n\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
                     , "    0 -> Stop het spel"
                     , "    1 -> Ga naar het informatiecentrum"
                     , "    2 -> Ga naar het wedstrijdcentrum"
