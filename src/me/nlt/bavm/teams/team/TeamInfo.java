@@ -148,6 +148,11 @@ public class TeamInfo
                 continue;
             }
 
+            if (playerPlacement.isPlaced(player))
+            {
+                continue;
+            }
+
             switch (player.getPosition().getId())
             {
                 case 0:
