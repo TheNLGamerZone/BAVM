@@ -1,26 +1,11 @@
-package me.nlt.bavm.league;
+package me.nlt.bavm.generator;
 
-import me.nlt.bavm.BAVM;
 
 import java.util.ArrayList;
 
-public class League {
-    private ArrayList<PlannedMatch> plannedFirst = new ArrayList<>();
-    private ArrayList<PlannedMatch> plannedSecond = new ArrayList<>();
-
-    public League(boolean createLeague) {
-        if (createLeague) {
-            for (String str : getStandardSequence()) {
-                plannedFirst.add(new PlannedMatch(str, 1));
-                plannedSecond.add(new PlannedMatch(str, 2));
-            }
-
-            BAVM.getDisplay().appendText("League aangemaakt!");
-        }
-    }
-
-    public ArrayList<String> getStandardSequence() {
-        ArrayList<String> matches = new ArrayList<>();
+public class MatchSequence {
+    public static ArrayList<String> getMatchSequence() {
+        ArrayList<String> matchSequence = new ArrayList<>();
 
         int array1[] = new int[9];
         int array2[] = new int[array1.length + 1];
@@ -59,9 +44,9 @@ public class League {
 
         for (int i = 0; i < (array3.length / 2) + 1; i++) {
             if (i == 0) {
-                matches.add(0 + "-" + array3[i]);
+                matchSequence.add(0 + "-" + array3[i]);
             } else {
-                matches.add(array3[array3.length - i] + "-" + array3[i]);
+                matchSequence.add(array3[array3.length - i] + "-" + array3[i]);
             }
         }
 
@@ -72,12 +57,11 @@ public class League {
 
             for (int j = 0; j < (array3.length / 2) + 1; j++) {
                 if (j == 0) {
-                    matches.add(0 + "-" + array3[j]);
+                    matchSequence.add(0 + "-" + array3[j]);
                 } else {
-                    matches.add(array3[array3.length - j] + "-" + array3[j]);
+                    matchSequence.add(array3[array3.length - j] + "-" + array3[j]);
                 }
             }
-
         }
 
         //DEBUG
@@ -85,14 +69,6 @@ public class League {
             BAVM.getDisplay().appendText(str);
         }*/
 
-        return matches;
-    }
-
-    public ArrayList<PlannedMatch> getPlannedFirst() {
-        return plannedFirst;
-    }
-
-    public ArrayList<PlannedMatch> getPlannedSecond() {
-        return plannedSecond;
+        return matchSequence;
     }
 }

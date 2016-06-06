@@ -1,4 +1,4 @@
-package me.nlt.bavm.league;
+package me.nlt.bavm.season;
 
 
 public class PlannedMatch {
