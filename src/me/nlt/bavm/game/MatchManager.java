@@ -35,7 +35,7 @@ public class MatchManager<T extends Manageable> extends Manager<T>
         //TODO let game simulate an actual game with actual coefficients
         int matchResult[] = Game.simulateGame(homeID, visitorID);
 
-        String matchName = BAVM.getTeamManager().getTeam(homeID).getTeamName() + BAVM.getTeamManager().getTeam(visitorID).getTeamName();
+        String matchName = BAVM.getTeamManager().getTeam(homeID).getTeamName() + "-" + BAVM.getTeamManager().getTeam(visitorID).getTeamName();
 
         int matchID = getNextAvailableID();
 

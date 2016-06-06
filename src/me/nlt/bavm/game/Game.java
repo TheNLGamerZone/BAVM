@@ -197,7 +197,6 @@ public class Game
 
         }
 
-        System.out.println(goalResult[0] + "-" + goalResult[1]);
         return goalResult;
     }
 
