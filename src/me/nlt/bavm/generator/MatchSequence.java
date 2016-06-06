@@ -12,7 +12,7 @@ public class MatchSequence {
         int array3[] = new int[array1.length + array2.length];
         int array1Rev[] = new int[array1.length];
         int adder = 2;
-        int shiftAmount = 18;
+        int shiftAmount = 39;
 
         for (int i = 0; i < array2.length; i++) {
             if (i == array2.length - 1) {

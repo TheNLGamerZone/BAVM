@@ -19,12 +19,17 @@ public class MatchWeek {
 
     public ArrayList<PlannedMatch> getMatchesInWeek(int weekNumber, int seasonHalf) {
         ArrayList<PlannedMatch> matchesInWeek = new ArrayList<>();
-        List<String> subMatchSequence = MatchSequence.getMatchSequence().subList(weekNumber * 10, (weekNumber * 10) + 9);
+
+        List<String> subMatchSequence = MatchSequence.getMatchSequence().subList(weekNumber * 10, (weekNumber * 10) + 10);
 
         for (int i = 0; i < 10; i++) {
             matchesInWeek.add(new PlannedMatch(subMatchSequence.get(i), seasonHalf));
         }
 
         return matchesInWeek;
+    }
+
+    public ArrayList<PlannedMatch> getMatchesInWeek() {
+        return this.matchesInWeek;
     }
 }

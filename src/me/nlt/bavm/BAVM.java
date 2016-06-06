@@ -6,6 +6,9 @@ import me.nlt.bavm.conversation.MarketConversation;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.season.MatchWeek;
+import me.nlt.bavm.season.PlannedMatch;
+import me.nlt.bavm.season.Season;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -25,6 +28,7 @@ public class BAVM
     private static TeamManager<Team> teamManager;
     private static MatchManager<Match> matchManager;
     private static CoachManager<Coach> coachManager;
+    private static Season season;
 
     /**
      * Main method
@@ -78,6 +82,7 @@ public class BAVM
         coachManager = new CoachManager<>(fileManager.firstStart);
         teamManager = new TeamManager<>(fileManager.firstStart);
         matchManager = new MatchManager<>(fileManager.firstStart);
+        season = new Season(true);
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!",
@@ -94,6 +99,14 @@ public class BAVM
      */
     private void initGame()
     {
+
+        MatchWeek matchWeek = season.getSeasonWeeks().get(0);
+        PlannedMatch plannedMatch = matchWeek.getMatchesInWeek().get(1);
+        matchManager.simulateMatch(plannedMatch.getTeamIDs()[0], plannedMatch.getTeamIDs()[1]);
+
+        Match match = matchManager.getMatch(0);
+
+        display.appendText(match.toString());
 
         while (true)
         {
@@ -281,6 +294,11 @@ public class BAVM
     public static CoachManager getCoachManager()
     {
         return coachManager;
+    }
+
+    public static Season getSeason()
+    {
+        return season;
     }
 
 }

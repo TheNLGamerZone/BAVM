@@ -4,7 +4,8 @@ import me.nlt.bavm.BAVM;
 
 import java.util.ArrayList;
 
-public class Season {
+public class Season
+{
     private ArrayList<MatchWeek> seasonWeeks = new ArrayList<>();
 
     public Season(boolean createSeason) {
