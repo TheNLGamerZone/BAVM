@@ -115,7 +115,7 @@ public class BAVM
                     , "    1 -> Ga naar de markt"
                     , "    2 -> Ga naar het informatiecentrum"
                     , "    3 -> Ga naar teammanagement"
-                    , "    4 -> Beëindig deze week"
+                    , "    4 -> Be\u00EBindig deze week"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -142,7 +142,7 @@ public class BAVM
 
             if (mainNumber == 4)
             {
-                Week.EndWeek();
+                Week.endWeek();
             }
         }
 
