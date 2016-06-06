@@ -69,6 +69,12 @@ public class Game
             visitorLuck = luck1;
         }
 
+        gameLog.add("");
+
+        gameLog.add(home.getTeamName() + " is the home team and " + visitor.getTeamName() + " is the visiting team.");
+
+        gameLog.add("");
+
         gameLog.add("Home luck: " + homeLuck);
         gameLog.add("Visitor luck: " + visitorLuck);
 
@@ -95,14 +101,13 @@ public class Game
         int attemptResult;
         boolean modifyCoefficients = false;
 
-        gameLog.add("");
-
         /*
          * dit is de main while loop. Time is in dit geval de tijd in minuten, de loop kan echer ook teruggaan zonder dat de tijd meer wordt,
          * in het echt kan namelijk een team ook binnen een minuut meerdere helften vooruit gaan.
          */
         while (time < 90)
         {
+            gameLog.add("");
             gameLog.add("Time: " + time);
 
             if (modifyCoefficients && ballPossession == 0) {
@@ -115,12 +120,11 @@ public class Game
 
             if (conflictResult != -1) {
                 conflictResult = getConflictResult(homeValues, visitValues, ballPossession);
+                String conflictString = (ballPossession == 0) ?
+                        "Conflict result of " + home.getTeamName() + " against " + visitor.getTeamName() + " on quarter " + ballQuarter + " equals " + conflictResult :
+                        "Conflict result of " + visitor.getTeamName() + " against " + home.getTeamName() + " on quarter " + ballQuarter + " equals " + conflictResult ;
+                gameLog.add(conflictString);
             }
-
-            gameLog.add("");
-            String conflictString = (ballPossession == 0) ? "Conflict result of " + home.getTeamName() + " against " + visitor.getTeamName() + ": " + conflictResult
-                    : "Conflict result of " + visitor.getTeamName() + " against " + home.getTeamName() + ": " + conflictResult ;
-            gameLog.add(conflictString);
 
             /*
              * De simulator werkt op basis van een "conflict" tussen balbezitter en verdediger. Hiervoor wordt een int gemaakt die elk voor een
@@ -129,7 +133,8 @@ public class Game
             switch (conflictResult)
             {
                 case -1 :
-                	//voor als er iets mis is
+                	//voor als er iets mis is of als er een nieuwe goal attempt gedaan moet worden
+                    gameLog.add("conflictResult = -1, skipping getConflictResult...");
                     break;
                 case 0 :
                     //balbezit wordt veranderd
@@ -145,13 +150,15 @@ public class Game
                     //de ballquarter is absoluut, dus voor visit moeten ze op kwart 0 komen en voor home op kwart 3
                 	if (ballPossession == 0) {
                         ballQuarter++;
-                        //TODO continue with gameLog
+                        gameLog.add(home.getTeamName() + " has advanced to quarter " + ballQuarter + "!");
                     } else {
                         ballQuarter--;
+                        gameLog.add(visitor.getTeamName() + " has advanced to quarter " + ballQuarter + "!");
                     }
                     break;
                 case 2 :
                     //tijd gaat verder en hij continued naar het einde van de loop, hij slaat goalberekening dus over
+                    gameLog.add("No progress has been made!");
                 	time++;
                     continue;
             }
@@ -164,8 +171,10 @@ public class Game
              */
             if (ballQuarter == 4 && ballPossession == 0) {
                 attemptResult = getAttemptResult(homeValues, visitValues, ballPossession);
+                gameLog.add("Atemmpt result of " + visitor.getTeamName() + " against " + home.getTeamName() + " equals " + attemptResult);
             } else if (ballQuarter == -1 && ballPossession == 1) {
                 attemptResult = getAttemptResult(homeValues, visitValues, ballPossession);
+                gameLog.add("Attempt result of " + home.getTeamName() + " against " + visitor.getTeamName() + " equals " + attemptResult);
             } else {
                 attemptResult = -1;
             }
@@ -180,9 +189,11 @@ public class Game
                 	if (ballPossession == 0) {
                         ballPossession = 1;
                         ballQuarter = 3;
+                        gameLog.add("Goal attempt by " + visitor.getTeamName() + " has failed, " + home.getTeamName() + " is now in possession of the ball!");
                     } else {
                         ballPossession = 0;
                         ballQuarter = 0;
+                        gameLog.add("Goal attempt by " + visitor.getTeamName() + " has failed, " + home.getTeamName() + " is now in possession of the ball!");
                     }
                     break;
                 case 1 :
@@ -193,21 +204,28 @@ public class Game
                         ballPossession = 1;
                         time++;
                         modifyCoefficients = true;
+                        gameLog.add(home.getTeamName() + " has scored!");
                     } else {
                         goalResult[1]++;
                         ballQuarter = 2;
                         ballPossession = 0;
                         time++;
                         modifyCoefficients = true;
+                        gameLog.add(visitor.getTeamName() + " has scored!");
                     }
+
+                    gameLog.add("Current stance is " + goalResult[0] + "-" + goalResult[1] + ".");
                     break;
                 case 2 :
                     //opnieuw, nu skipt hij de conflict berekenaar en probeert ie opnieuw een goal totdat er een uitkomst is.
+                    gameLog.add("Goal attempt failed, but they are looking for a rebound!");
                 	conflictResult = -1;
                     break;
             }
 
         }
+
+        gameLog.add("Final stance is " + goalResult[0] + "-" + goalResult[1] + ".");
 
         gameResult = goalResult;
     }
@@ -266,7 +284,7 @@ public class Game
         {
             //lose possession
             return 0;
-        } else if (attackResult > 2.5)
+        } else if (attackResult > 5)
         {
             //next quarter
             return 1;
@@ -312,7 +330,7 @@ public class Game
         {
             //lose possession
             return 0;
-        } else if (attemptResult > 10)
+        } else if (attemptResult > 8.5)
         {
             //goal
             //BAVM.getDisplay().appendText("Team " + ballPossession + " has scored!");
