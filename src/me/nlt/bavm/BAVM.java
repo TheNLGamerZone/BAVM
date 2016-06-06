@@ -9,6 +9,7 @@ import me.nlt.bavm.game.MatchManager;
 import me.nlt.bavm.season.MatchWeek;
 import me.nlt.bavm.season.PlannedMatch;
 import me.nlt.bavm.season.Season;
+import me.nlt.bavm.season.Week;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -99,15 +100,6 @@ public class BAVM
      */
     private void initGame()
     {
-
-        MatchWeek matchWeek = season.getSeasonWeeks().get(0);
-        PlannedMatch plannedMatch = matchWeek.getMatchesInWeek().get(1);
-        matchManager.simulateMatch(plannedMatch.getTeamIDs()[0], plannedMatch.getTeamIDs()[1]);
-
-        Match match = matchManager.getMatch(0);
-
-        display.appendText(match.toString());
-
         while (true)
         {
             display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
