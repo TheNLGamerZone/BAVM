@@ -180,6 +180,7 @@ public class Display
 
         // Zet de textField aan zodat mensen dingen kunnen typen
         jTextField.setEnabled(true);
+        jTextField.requestFocus();
 
         // Stel de vraag mits die er is
         if (!questionString.trim().equals(""))
