@@ -148,7 +148,7 @@ public class TeamInfo
                 continue;
             }
 
-            if (playerPlacement.isPlaced(player))
+            if (!playerPlacement.isPlaced(player))
             {
                 continue;
             }
