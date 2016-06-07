@@ -21,7 +21,7 @@ public class Week {
                     "Result: " + matchManager.getMatch(matchID).getMatchGoals()[0] + "-" +  matchManager.getMatch(matchID).getMatchGoals()[1]);
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(1);
             } catch(InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

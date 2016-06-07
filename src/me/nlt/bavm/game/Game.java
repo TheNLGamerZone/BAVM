@@ -110,11 +110,16 @@ public class Game
             gameLog.add("");
             gameLog.add("Time: " + time);
 
+            /*
+             * Hij past de attack skill aan zodat er niet te veel goals worden gemaakt. modifyCoefficients is alleen true als er gescoord is.
+             */
             if (modifyCoefficients && ballPossession == 0) {
-                visitValues[0] = visitValues[0] * 0.9;
+                visitValues[0] = visitValues[0] * 0.850;
+                visitValues[1] = visitValues[1] * 0.925;
                 modifyCoefficients = false;
             } else if (modifyCoefficients && ballPossession == 1) {
-                homeValues[0] = homeValues[0] * 0.9;
+                homeValues[0] = homeValues[0] * 0.850;
+                homeValues[1] = homeValues[1] * 0.925;
                 modifyCoefficients = false;
             }
 
@@ -243,6 +248,7 @@ public class Game
     public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {
         double attValues[];
         double defValues[];
+        Random rnd = new Random();
         
         /*
          * Hier kijkt de methode wie de bal heeft, en past daarop aan wie de aanvaller is en wie de verdediger.
@@ -264,7 +270,7 @@ public class Game
          * nextQuarter formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd dit is de belangrijkste formule van de simulator.
          * eerst wordt de aanvalsstat keer een willekeurig getal gedaan dat meer is dan 1 en dan min de verdedigingsstat.
          */
-        double attackResult = Math.round((attValues[1] * (1 + Math.random())) - (defValues[3] * (1 + Math.random())));
+        double attackResult = Math.round((attValues[1] * (1 + (rnd.nextInt(20) / 10))) - (defValues[3] * (1 + (rnd.nextInt(20) / 10))));
 
 
         
@@ -284,7 +290,7 @@ public class Game
         {
             //lose possession
             return 0;
-        } else if (attackResult > 5)
+        } else if (attackResult > 6)
         {
             //next quarter
             return 1;
@@ -330,7 +336,7 @@ public class Game
         {
             //lose possession
             return 0;
-        } else if (attemptResult > 8.5)
+        } else if (attemptResult > 4)
         {
             //goal
             //BAVM.getDisplay().appendText("Team " + ballPossession + " has scored!");
