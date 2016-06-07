@@ -7,9 +7,10 @@ public class Team implements Manageable
 {
     private String teamName;
     private int teamID;
-    private int teamScore;
 
     private TeamInfo teamInfo;
+
+    private TeamScores teamScores;
 
     public boolean unsavedChanges;
 
@@ -20,7 +21,7 @@ public class Team implements Manageable
         this.teamName = teamName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent, money, placement);
-        this.teamScore = 0;
+        this.teamScores = new TeamScores();
 
         if (!teamName.equals("marketTeam") && teamID != -1 && playerIDs.length != 21)
         {
@@ -35,19 +36,14 @@ public class Team implements Manageable
         return this.teamName;
     }
 
-    public int getTeamScore()
+    public TeamScores getTeamScores()
     {
-        return this.teamScore;
+        return this.teamScores;
     }
 
     public TeamInfo getTeamInfo()
     {
         return this.teamInfo;
-    }
-
-    public void increaseTeamScore(int increment)
-    {
-        this.teamScore = this.teamScore + increment;
     }
 
     @Override

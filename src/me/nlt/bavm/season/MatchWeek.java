@@ -23,7 +23,7 @@ public class MatchWeek {
         List<String> subMatchSequence = MatchSequence.getMatchSequence().subList(weekNumber * 10, (weekNumber * 10) + 10);
 
         for (int i = 0; i < 10; i++) {
-            matchesInWeek.add(new PlannedMatch(subMatchSequence.get(i), seasonHalf));
+            matchesInWeek.add(new PlannedMatch(subMatchSequence.get(i), seasonHalf, (weekNumber * 10) + i));
         }
 
         return matchesInWeek;

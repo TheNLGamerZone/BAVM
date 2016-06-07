@@ -210,6 +210,8 @@ public class Game
                         time++;
                         modifyCoefficients = true;
                         gameLog.add(home.getTeamName() + " has scored!");
+                        home.getTeamScores().increaseGoalsFor(1);
+                        visitor.getTeamScores().increaseGoalsAgainst(1);
                     } else {
                         goalResult[1]++;
                         ballQuarter = 2;
@@ -217,6 +219,8 @@ public class Game
                         time++;
                         modifyCoefficients = true;
                         gameLog.add(visitor.getTeamName() + " has scored!");
+                        visitor.getTeamScores().increaseGoalsFor(1);
+                        home.getTeamScores().increaseGoalsAgainst(1);
                     }
 
                     gameLog.add("Current stance is " + goalResult[0] + "-" + goalResult[1] + ".");
@@ -237,14 +241,23 @@ public class Game
          */
         if (goalResult[0] == goalResult[1])
         {
-            home.increaseTeamScore(1);
-            visitor.increaseTeamScore(1);
+            home.getTeamScores().increaseDraws(1);
+            visitor.getTeamScores().increaseDraws(1);
+
+            home.getTeamScores().increasePoints(1);
+            visitor.getTeamScores().increasePoints(1);
         } else if (goalResult[0] > goalResult[1])
         {
-            home.increaseTeamScore(3);
+            home.getTeamScores().increaseWins(1);
+            visitor.getTeamScores().increaseLosses(1);
+
+            home.getTeamScores().increasePoints(3);
         } else
         {
-            visitor.increaseTeamScore(3);
+            visitor.getTeamScores().increaseWins(1);
+            home.getTeamScores().increaseLosses(1);
+
+            visitor.getTeamScores().increasePoints(3);
         }
 
         gameResult = goalResult;

@@ -39,7 +39,7 @@ public class RandomNames
         Random randomNumber = new Random();
 
         //de woordlengte wordt aangemaakt, +3 zodat elk woord minimaal 3 letters lang is
-        int wordLength = randomNumber.nextInt(4) + 3;
+        int wordLength = randomNumber.nextInt(5) + 3;
         String word = "";
 
         //willekeurig 1 of 0 om te kijken of het woord met een medeklinker ja of nee begint
