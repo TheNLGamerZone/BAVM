@@ -232,6 +232,21 @@ public class Game
 
         gameLog.add("Final stance is " + goalResult[0] + "-" + goalResult[1] + ".");
 
+        /*
+         * Verhoogt de score van de winnende teams.
+         */
+        if (goalResult[0] == goalResult[1])
+        {
+            home.increaseTeamScore(1);
+            home.increaseTeamScore(1);
+        } else if (goalResult[0] > goalResult[1])
+        {
+            home.increaseTeamScore(3);
+        } else
+        {
+            visitor.increaseTeamScore(3);
+        }
+
         gameResult = goalResult;
     }
 

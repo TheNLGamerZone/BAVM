@@ -106,7 +106,8 @@ public class BAVM
                     , "    2 -> Ga naar het wedstrijdcentrum"
                     , "    3 -> Ga naar teammanagement"
                     , "    4 -> Ga naar de markt"
-                    , "    5 -> Be\u00EBindig deze week"
+                    , "    5 -> Ga naar het seizoencentrum"
+                    , "    6 -> Be\u00EBindig deze week"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -131,11 +132,17 @@ public class BAVM
                 new ManagementConversation().startConversation(display);
             }
 
-            if (mainNumber == 4) {
+            if (mainNumber == 4)
+            {
                 new MarketConversation().startConversation(display);
             }
 
             if (mainNumber == 5)
+            {
+                new SeasonConversation().startConversation(display);
+            }
+
+            if (mainNumber == 6)
             {
                 new WeekendConversation().startConversation(display);
             }

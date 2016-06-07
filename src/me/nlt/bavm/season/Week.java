@@ -2,7 +2,6 @@ package me.nlt.bavm.season;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.game.MatchManager;
-import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
 public class Week {
@@ -26,6 +25,8 @@ public class Week {
                 Thread.currentThread().interrupt();
             }
         }
+
+        Scores.calculateScores();
 
         weekNumber++;
 

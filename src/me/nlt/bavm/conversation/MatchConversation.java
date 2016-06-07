@@ -17,7 +17,7 @@ public class MatchConversation implements Conversation
                     "Typ -3 voor een lijst van alle weken", //TODO maak dit
                     "Typ -4 voor een lijst van alle wedstrijden", //TODO maak dit
                     "Typ -5 om een week te bekijken", //TODO maak dit
-                    "Typ -6 om een wedstrijd te bekijken" //TODO maak dit
+                    "Typ -6 om een wedstrijd te bekijken"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -57,8 +57,6 @@ public class MatchConversation implements Conversation
 
                 display.readLine("Typ iets om terug te keren naar het wedstrijdcentrum.");
             }
-
-            break;
         }
     }
 }
