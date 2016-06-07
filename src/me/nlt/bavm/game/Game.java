@@ -238,7 +238,7 @@ public class Game
         if (goalResult[0] == goalResult[1])
         {
             home.increaseTeamScore(1);
-            home.increaseTeamScore(1);
+            visitor.increaseTeamScore(1);
         } else if (goalResult[0] > goalResult[1])
         {
             home.increaseTeamScore(3);

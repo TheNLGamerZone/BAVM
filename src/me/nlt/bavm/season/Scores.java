@@ -17,7 +17,7 @@ public class Scores
         }
     }
 
-    public ArrayList<Integer> getScores()
+    public static ArrayList<Integer> getScores()
     {
         return scores;
     }

@@ -7,19 +7,22 @@ import me.nlt.bavm.teams.team.TeamManager;
 public class Week {
     private static int weekNumber;
 
-    public static void endWeek() {
+    public static void endWeek()
+    {
         TeamManager teamManager = BAVM.getTeamManager();
         MatchManager matchManager = BAVM.getMatchManager();
         MatchWeek matchWeek = BAVM.getSeason().getSeasonWeeks().get(weekNumber);
 
-        for (PlannedMatch plannedMatch : matchWeek.getMatchesInWeek()) {
+        for (PlannedMatch plannedMatch : matchWeek.getMatchesInWeek())
+        {
             int matchID = matchManager.simulateMatch(plannedMatch.getTeamIDs()[0], plannedMatch.getTeamIDs()[1]);
             plannedMatch.getMatchName();
 
             BAVM.getDisplay().appendText("\nMatch (ID: " + matchID + "): " + teamManager.getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + teamManager.getTeam(plannedMatch.getTeamIDs()[1]).getTeamName()  + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
                     "Result: " + matchManager.getMatch(matchID).getMatchGoals()[0] + "-" +  matchManager.getMatch(matchID).getMatchGoals()[1]);
 
-            try {
+            try
+            {
                 Thread.sleep(1);
             } catch(InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -32,5 +35,39 @@ public class Week {
 
         BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - - - - -");
 
+    }
+
+    public static void endSeason()
+    {
+        TeamManager teamManager = BAVM.getTeamManager();
+        MatchManager matchManager = BAVM.getMatchManager();
+        MatchWeek matchWeek = BAVM.getSeason().getSeasonWeeks().get(weekNumber);
+
+        for (PlannedMatch plannedMatch : matchWeek.getMatchesInWeek())
+        {
+            int matchID = matchManager.simulateMatch(plannedMatch.getTeamIDs()[0], plannedMatch.getTeamIDs()[1]);
+            plannedMatch.getMatchName();
+
+            BAVM.getDisplay().appendText("\nMatch (ID: " + matchID + "): " + teamManager.getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + teamManager.getTeam(plannedMatch.getTeamIDs()[1]).getTeamName()  + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
+                    "Result: " + matchManager.getMatch(matchID).getMatchGoals()[0] + "-" +  matchManager.getMatch(matchID).getMatchGoals()[1]);
+
+            try
+            {
+                Thread.sleep(1);
+            } catch(InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        Scores.calculateScores();
+
+
+        //TODO maak credits enz
+        BAVM.getDisplay().onClose();
+    }
+
+    public static int getWeekNumber()
+    {
+        return weekNumber;
     }
 }

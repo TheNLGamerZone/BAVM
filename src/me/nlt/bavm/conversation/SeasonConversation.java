@@ -1,6 +1,8 @@
 package me.nlt.bavm.conversation;
 
+import me.nlt.bavm.BAVM;
 import me.nlt.bavm.Display;
+import me.nlt.bavm.season.Scores;
 
 public class SeasonConversation implements Conversation{
     @Override
@@ -11,7 +13,7 @@ public class SeasonConversation implements Conversation{
         {
             display.appendText("\n\t\t- - - - - - - - - [ Het seizoenscentrum ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
-                    "Typ -3 om de competitiestand te bekijken" //TODO dit
+                    "Typ -3 om de competitiestand te bekijken"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -23,7 +25,10 @@ public class SeasonConversation implements Conversation{
 
             if (mainNumber == -3)
             {
-                //TODO dit
+                for (int i = 0; i < 20; i++)
+                {
+                    display.appendText(BAVM.getTeamManager().getTeam(i).getTeamName() + ": " + Scores.getScores().get(i));
+                }
             }
         }
     }
