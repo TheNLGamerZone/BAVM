@@ -45,19 +45,19 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     {
         int amount = BAVM.getFileManager().readAmount("teams");
 
-        for (int i = 0; i < amount - 2; i++)
+        for (int i = 0; i < amount - 1; i++)
         {
             manageables.add((T) Factory.createTeam(BAVM.getFileManager().readData("team", i)));
         }
 
-        marketTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 2));
-        playerTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 1));
+        playerTeam = (Team) super.getManageable(19);
+        marketTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 1));
     }
 
     @Override
     public void saveManageables(boolean firstSave)
     {
-        int counter = 2;
+        int counter = 1;
 
         for (T type : manageables)
         {
@@ -70,8 +70,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             }
         }
 
-        BAVM.getFileManager().saveData("team", marketTeam.toString(), manageables.size());
-        BAVM.getFileManager().saveData("team", playerTeam.toString(), manageables.size() + 1);
+        BAVM.getFileManager().saveData("team", marketTeam.toString(), 20);
 
         System.out.println(counter + " veranderingen in teams opgeslagen!");
     }
@@ -79,7 +78,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     @Override
     public void generateManageables()
     {
-        int teams = 20;
+        int teams = 19;
 
         for (int i = 0; i < teams; i++)
         {
@@ -92,8 +91,9 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 
         int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, 0.457);
 
+        manageables.add((T) new Team(RandomNames.getTeamName(), 19, playerIDs, teams, 0.457, 27500, BAVM.getPlayerManager().getPlacementString(playerIDs)));
+        playerTeam = (Team) super.getManageable(19);
         marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, "");
-        playerTeam = new Team(RandomNames.getTeamName(), -1, playerIDs, teams, 0.457, 27500, BAVM.getPlayerManager().getPlacementString(playerIDs));
 
         this.saveManageables(true);
 

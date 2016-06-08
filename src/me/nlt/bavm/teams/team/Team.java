@@ -23,7 +23,7 @@ public class Team implements Manageable
         this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent, money, placement);
         this.teamScores = new TeamScores();
 
-        if (!teamName.equals("marketTeam") && teamID != -1 && playerIDs.length != 21)
+        if (!teamName.equals("marketTeam") && teamID != 19 && playerIDs.length != 21)
         {
             BAVM.getDisplay().appendText("Invalid team: " + teamID + " (" + playerIDs.length + " players)");
         }

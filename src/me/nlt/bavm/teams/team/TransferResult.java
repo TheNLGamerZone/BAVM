@@ -1,12 +1,12 @@
 package me.nlt.bavm.teams.team;
 
 public enum TransferResult {
-	SUCCESS("Gelukt: De transfer is succesvol verlopen!"),
-	FAILED_NO_MONEY("Niet gelukt: Je hebt niet genoeg geld om die speler te kopen!"),
-	FAILED_NO_MONEY_OTHER("Niet gelukt: Het andere team heeft niet genoeg geld!"),
-	FAILED_NOT_ENOUGH_PLAYERS("Niet gelukt: Door deze tranfer zou dit team uit het toernooi worden gezet!"),
-    FAILED_NOT_IN_TEAM("Niet gelukt: Die speler is niet te koop!"),
-    FAILED_IN_FORMATION("Niet gelukt: De speler moet eerst uit de teamformatie worden gehaald!");
+	SUCCESS("GELUKT: De transfer is succesvol verlopen!\n"),
+	FAILED_NO_MONEY("NIET GELUKT: Je hebt niet genoeg geld om die speler te kopen!\n"),
+	FAILED_NO_MONEY_OTHER("NIET GELUKT: Het andere team heeft niet genoeg geld!\n"),
+	FAILED_NOT_ENOUGH_PLAYERS("NIET GELUKT: Door deze tranfer zou dit team uit het toernooi worden gezet!\n"),
+    FAILED_NOT_IN_TEAM("NIET GELUKT: Die speler is niet te koop!\n"),
+    FAILED_IN_FORMATION("NIET GELUKT: De speler moet eerst uit de teamformatie worden gehaald!\n");
 	
 	private String message;
 	

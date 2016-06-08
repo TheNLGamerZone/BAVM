@@ -165,6 +165,26 @@ public class Display
         });
     }
 
+    public void appendText(int delay, String... strings)
+    {
+        this.appendText(delay, true, strings);
+    }
+
+    public void appendText(int delay, boolean newLine, String... strings)
+    {
+        for (String string : strings)
+        {
+            this.appendText(newLine, string);
+
+            try {
+                Thread.sleep(delay);
+            } catch(InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * Hiermee kan je de input van de gebruiker lezen zonder eerst een vraag te stellen
      *

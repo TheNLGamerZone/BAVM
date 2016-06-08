@@ -82,9 +82,9 @@ public class BAVM
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!",
-                "Aantal spelers: " + fileManager.readAmount("players"),
-                "Aantal teams: " + fileManager.readAmount("teams"),
-                "Aantal coaches: " + fileManager.readAmount("coaches")
+                "Aantal spelers: " + (fileManager.readAmount("players") - 1),
+                "Aantal teams: " + (fileManager.readAmount("teams") - 1),
+                "Aantal coaches: " + (fileManager.readAmount("coaches") - 1)
         );
 
         this.initGame();
@@ -95,6 +95,8 @@ public class BAVM
      */
     private void initGame()
     {
+        //display.appendText(500, "dit", "is", "een", "test", "met", "vertraagde", "berichten");
+
         //TODO laat hem de week uit een bestand laden
         display.appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (1) + " ] - - - - - - - - - - - - - -");
 
