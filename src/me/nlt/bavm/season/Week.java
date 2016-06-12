@@ -2,12 +2,13 @@ package me.nlt.bavm.season;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
 public class Week {
     private static int weekNumber;
 
-    public static void endWeek()
+    public static void endWeek(boolean endSeason)
     {
         TeamManager teamManager = BAVM.getTeamManager();
         MatchManager matchManager = BAVM.getMatchManager();
@@ -29,10 +30,17 @@ public class Week {
             }
         }
 
-        weekNumber++;
+        if (endSeason) {
+            Team winner = BAVM.getTeamManager().getTeam(AllScores.displayScores());
 
-        BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - - - - -");
+            BAVM.getDisplay().appendText("\n" + winner.getTeamName() + " (ID: " + winner.getID() + ") has won the season!");
 
+            //TODO maak credits enz
+        } else {
+            weekNumber++;
+
+            BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - - - - -");
+        }
     }
 
     public static void endSeason()
@@ -56,9 +64,6 @@ public class Week {
                 Thread.currentThread().interrupt();
             }
         }
-
-        //TODO maak credits enz
-        BAVM.getDisplay().onClose();
     }
 
     public static int getWeekNumber()

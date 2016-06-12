@@ -17,12 +17,12 @@ public class WeekendConversation implements Conversation
             if (confirmationNumber == 123)
             {
                 display.appendText("Weekeinde wordt berekend...");
-                Week.endWeek();
+                Week.endWeek(false);
             } else if (confirmationNumber == 666)
             {
-                for (int i = 0; i < 37; i++)
+                for (int i = Week.getWeekNumber(); i < 37; i++)
                 {
-                    Week.endWeek();
+                    Week.endWeek(false);
                 }
             } else
             {
@@ -36,7 +36,7 @@ public class WeekendConversation implements Conversation
 
             if (confirmationNumber == 123)
             {
-               Week.endSeason();
+               Week.endWeek(true);
             } else
             {
                 display.appendText("Je eindigt dit seizoen niet.");
