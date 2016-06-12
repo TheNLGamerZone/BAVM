@@ -2,6 +2,7 @@ package me.nlt.bavm.game;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.team.Team;
+import me.nlt.bavm.teams.team.TeamInfo;
 import me.nlt.bavm.teams.team.TeamInfo.StatCoefficient;
 
 import java.util.ArrayList;
@@ -210,8 +211,8 @@ public class Game
                         time++;
                         modifyCoefficients = true;
                         gameLog.add(home.getTeamName() + " has scored!");
-                        home.getTeamScores().increaseGoalsFor(1);
-                        visitor.getTeamScores().increaseGoalsAgainst(1);
+                        home.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSFOR, 1);
+                        visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSAGAINST, 1);
                     } else {
                         goalResult[1]++;
                         ballQuarter = 2;
@@ -219,8 +220,8 @@ public class Game
                         time++;
                         modifyCoefficients = true;
                         gameLog.add(visitor.getTeamName() + " has scored!");
-                        visitor.getTeamScores().increaseGoalsFor(1);
-                        home.getTeamScores().increaseGoalsAgainst(1);
+                        visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSFOR, 1);
+                        home.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSAGAINST, 1);
                     }
 
                     gameLog.add("Current stance is " + goalResult[0] + "-" + goalResult[1] + ".");
@@ -241,23 +242,23 @@ public class Game
          */
         if (goalResult[0] == goalResult[1])
         {
-            home.getTeamScores().increaseDraws(1);
-            visitor.getTeamScores().increaseDraws(1);
+            home.getTeamInfo().increaseTeamScores(TeamInfo.Score.DRAWS, 1);
+            visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.DRAWS, 1);
 
-            home.getTeamScores().increasePoints(1);
-            visitor.getTeamScores().increasePoints(1);
+            home.getTeamInfo().increaseTeamScores(TeamInfo.Score.POINTS, 1);
+            visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.POINTS, 1);
         } else if (goalResult[0] > goalResult[1])
         {
-            home.getTeamScores().increaseWins(1);
-            visitor.getTeamScores().increaseLosses(1);
+            home.getTeamInfo().increaseTeamScores(TeamInfo.Score.WINS, 1);
+            visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.LOSSES, 1);
 
-            home.getTeamScores().increasePoints(3);
+            home.getTeamInfo().increaseTeamScores(TeamInfo.Score.POINTS, 3);
         } else
         {
-            visitor.getTeamScores().increaseWins(1);
-            home.getTeamScores().increaseLosses(1);
+            visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.WINS, 1);
+            home.getTeamInfo().increaseTeamScores(TeamInfo.Score.LOSSES, 1);
 
-            visitor.getTeamScores().increasePoints(3);
+            visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.POINTS, 3);
         }
 
         gameResult = goalResult;

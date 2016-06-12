@@ -4,6 +4,7 @@ import me.nlt.bavm.conversation.*;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.season.AllScores;
 import me.nlt.bavm.season.Season;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;

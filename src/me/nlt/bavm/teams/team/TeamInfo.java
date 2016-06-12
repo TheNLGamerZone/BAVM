@@ -14,6 +14,7 @@ public class TeamInfo
     private Geld teamGeld;
     private double teamTalent;
     private PlayerPlacement playerPlacement;
+    private HashMap<Score, Integer> teamScores = new HashMap<>();
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
@@ -31,6 +32,11 @@ public class TeamInfo
         this.teamTalent = teamTalent;
 
         this.createPlacement(placement);
+
+        for (Score score : Score.values())
+        {
+            teamScores.put(score, 0);
+        }
     }
 
     private void createPlacement(String placement)
@@ -86,6 +92,25 @@ public class TeamInfo
         this.playerPlacement = new PlayerPlacement(keeper, defenders, attackers, midfielders);
     }
 
+    public enum Score {
+        POINTS(0), WINS(1), DRAWS(2), LOSSES(3), GOALSFOR(4), GOALSAGAINST(5);
+        private int index;
+
+        private Score(int location)
+        {
+            this.index = index;
+        }
+
+        public int getIndex()
+        {
+            return this.index;
+        }
+    }
+
+    public void increaseTeamScores(Score score, int increment)
+    {
+        teamScores.replace(score, teamScores.get(score) + increment);
+    }
 
     public enum StatCoefficient
     {
@@ -256,6 +281,11 @@ public class TeamInfo
     public PlayerPlacement getPlayerPlacement()
     {
         return this.playerPlacement;
+    }
+
+    public HashMap<Score, Integer> getTeamScores()
+    {
+        return teamScores;
     }
 
     @Override

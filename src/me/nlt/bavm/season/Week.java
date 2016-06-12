@@ -2,7 +2,6 @@ package me.nlt.bavm.season;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.game.MatchManager;
-import me.nlt.bavm.teams.team.TeamScores;
 import me.nlt.bavm.teams.team.TeamManager;
 
 public class Week {
