@@ -122,10 +122,7 @@ public class MatchConversation implements Conversation
                     }
                 }
 
-                for (String str : match.getMatchLog())
-                {
-                    display.appendText(str);
-                }
+                match.getMatchLog().forEach(display::appendText);
 
                 display.readLine("Typ iets om terug te keren naar het wedstrijdcentrum.");
             }

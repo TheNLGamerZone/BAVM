@@ -6,8 +6,6 @@ import me.nlt.bavm.season.AllScores;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamInfo;
 
-import java.util.HashMap;
-
 public class SeasonConversation implements Conversation{
     @Override
     public void startConversation(Display display)
