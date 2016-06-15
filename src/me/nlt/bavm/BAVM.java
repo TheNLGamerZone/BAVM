@@ -16,6 +16,7 @@ import me.nlt.bavm.teams.team.TeamManager;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.net.URL;
 
@@ -206,6 +207,7 @@ public class BAVM
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 
             clip.open(audioInputStream);
+            ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0F);
             clip.loop(clip.LOOP_CONTINUOUSLY);
 
             display.appendText(delay, messages);
