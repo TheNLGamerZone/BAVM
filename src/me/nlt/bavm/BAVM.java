@@ -13,7 +13,11 @@ import me.nlt.bavm.teams.player.PlayerManager;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.*;
+import java.net.URL;
 
 public class BAVM
 {
@@ -147,6 +151,11 @@ public class BAVM
             {
                 new WeekendConversation().startConversation(display);
             }
+
+            if (mainNumber == 8080)
+            {
+                rollCredits();
+            }
         }
     }
 
@@ -185,4 +194,27 @@ public class BAVM
         return season;
     }
 
+    public static void rollCredits()
+    {
+        try
+        {
+            String[] messages = {"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+                    "Bedankt voor het spelen", "", "", "Jaja", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits"};
+            int delay = 1500;
+            URL url = new URL("http://tim.suppatim.me/credit_music_edited.wav");
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+
+            clip.open(audioInputStream);
+            clip.loop(clip.LOOP_CONTINUOUSLY);
+
+            display.appendText(delay, messages);
+            Thread.sleep(((2 * 60 + 48) * 1000 + 5) - messages.length * delay);
+            clip.stop();
+            clip.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
