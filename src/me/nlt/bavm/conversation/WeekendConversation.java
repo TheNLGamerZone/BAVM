@@ -8,7 +8,7 @@ public class WeekendConversation implements Conversation
     @Override
     public void startConversation(Display display)
     {
-        if (Week.getWeekNumber() != 37)
+        if (Week.getWeekNumber() != 37 && Week.getWeekNumber() != 38)
         {
             display.appendText("Je staat op het punt om naar de volgende week te gaan, weet je het zeker?\nTyp 123 om naar de volgende week te gaan.");
 
@@ -36,7 +36,10 @@ public class WeekendConversation implements Conversation
 
             if (confirmationNumber == 123)
             {
-               Week.endWeek(true);
+               if (!Week.endWeek(true))
+               {
+                   display.appendText("Het seizoen is al klaar, wacht op de volgende.");
+               }
             } else
             {
                 display.appendText("Je eindigt dit seizoen niet.");

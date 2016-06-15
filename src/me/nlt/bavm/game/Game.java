@@ -70,11 +70,11 @@ public class Game
             visitorLuck = luck1;
         }
 
-        gameLog.add("");
+        gameLog.add(" ");
 
         gameLog.add(home.getTeamName() + " is the home team and " + visitor.getTeamName() + " is the visiting team.");
 
-        gameLog.add("");
+        gameLog.add(" ");
 
         gameLog.add("Home luck: " + homeLuck);
         gameLog.add("Visitor luck: " + visitorLuck);
@@ -108,7 +108,7 @@ public class Game
          */
         while (time < 90)
         {
-            gameLog.add("");
+            gameLog.add(" ");
             gameLog.add("Time: " + time);
 
             /*

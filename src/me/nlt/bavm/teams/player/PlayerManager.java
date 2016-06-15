@@ -3,7 +3,7 @@ package me.nlt.bavm.teams.player;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
-import me.nlt.bavm.teams.Factory;
+import me.nlt.bavm.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.Market;
@@ -66,7 +66,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             }
         }
 
-        System.out.println(counter + " veranderingen met spelers opgeslagen!");
+        System.out.println((counter == 0 ? "Geen" : counter) + " veranderingen met spelers opgeslagen!");
     }
 
     @Override

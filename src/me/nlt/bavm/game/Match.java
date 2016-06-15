@@ -65,7 +65,20 @@ public class Match implements Manageable
     @Override
     public String toString()
     {
-        return "teams=" + teamIDs[0] + ":" + teamIDs[1] +
-                ",score=" + matchGoals[0] + ":" + matchGoals[1];
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (String logMessage : matchLog)
+        {
+            stringBuilder.append(logMessage.replaceAll(" ", "_").replaceAll(",", "%").replaceAll("=", "~") + "@");
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 1);
+
+        return "Match{" +
+                "id=" + getID() +
+                ",teams=" + teamIDs[0] + ":" + teamIDs[1] +
+                ",score=" + matchGoals[0] + ":" + matchGoals[1] +
+                ",logs=" + stringBuilder.toString() +
+                "}";
     }
 }

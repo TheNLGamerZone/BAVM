@@ -3,7 +3,8 @@ package me.nlt.bavm.season;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.team.TeamInfo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AllScores {
     private static ArrayList<Integer> sortedTeams = new ArrayList<>();
@@ -85,11 +86,11 @@ public class AllScores {
         }
 
         BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - [ Competitiestand ] - - - - - - - - - - - ",
-                "Pts\tW\tD\tL\tF\tA");
+                "\tPts\tW\tD\tL\tF\tA");
 
                 for (int i : sortedTeams)
                 {
-                    String toDisplay = BAVM.getTeamManager().getTeam(i).getTeamName() + " (ID: " + i + "):\n";
+                    String toDisplay = BAVM.getTeamManager().getTeam(i).getTeamName() + " (ID: " + i + ")" + (i == 19 ? " (Dit ben jij)" : "") + ":\n\t";
 
                     for (TeamInfo.Score score : TeamInfo.Score.values())
                     {

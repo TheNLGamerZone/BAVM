@@ -3,9 +3,10 @@ package me.nlt.bavm.teams.coach;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
-import me.nlt.bavm.teams.Factory;
+import me.nlt.bavm.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
+import me.nlt.bavm.teams.exceptions.FactoryException;
 
 public class CoachManager<T extends Manageable> extends Manager<T>
 {
@@ -36,7 +37,13 @@ public class CoachManager<T extends Manageable> extends Manager<T>
 
         for (int i = 0; i < amount; i++)
         {
-            manageables.add((T) Factory.createCoach(BAVM.getFileManager().readData("coach", i)));
+            try
+            {
+                manageables.add((T) Factory.createCoach(BAVM.getFileManager().readData("coach", i)));
+            } catch (FactoryException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -56,7 +63,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
             }
         }
 
-        System.out.println(counter + " veranderingen met coaches opgeslagen!");
+        System.out.println((counter == 0 ? "Geen" : counter) + " veranderingen met coaches opgeslagen!");
     }
 
     @Override

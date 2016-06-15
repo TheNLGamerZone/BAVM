@@ -18,7 +18,7 @@ public class Team implements Manageable
 
         this.teamName = teamName;
         this.teamID = teamID;
-        this.teamInfo = new TeamInfo(playerIDs, coachID, teamTalent, money, placement);
+        this.teamInfo = new TeamInfo(this, playerIDs, coachID, teamTalent, money, placement);
 
         if (!teamName.equals("marketTeam") && teamID != 19 && playerIDs.length != 21)
         {

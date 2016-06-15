@@ -2,9 +2,10 @@ package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.generator.RandomNames;
-import me.nlt.bavm.teams.Factory;
+import me.nlt.bavm.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
+import me.nlt.bavm.teams.exceptions.FactoryException;
 import me.nlt.bavm.teams.player.Player;
 
 import java.util.ArrayList;
@@ -47,11 +48,23 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 
         for (int i = 0; i < amount - 1; i++)
         {
-            manageables.add((T) Factory.createTeam(BAVM.getFileManager().readData("team", i)));
+            try
+            {
+                manageables.add((T) Factory.createTeam(BAVM.getFileManager().readData("team", i)));
+            } catch (FactoryException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         playerTeam = (Team) super.getManageable(19);
-        marketTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 1));
+        try
+        {
+            marketTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 1));
+        } catch (FactoryException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -72,7 +85,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 
         BAVM.getFileManager().saveData("team", marketTeam.toString(), 20);
 
-        System.out.println(counter + " veranderingen in teams opgeslagen!");
+        System.out.println((counter == 0 ? "Geen" : counter) + " veranderingen in teams opgeslagen!");
     }
 
     @Override

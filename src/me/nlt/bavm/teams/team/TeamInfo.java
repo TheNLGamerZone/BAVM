@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class TeamInfo
 {
+    private Team team;
     private ArrayList<Player> teamPlayerList = new ArrayList<>();
     private Coach teamCoach;
     private Geld teamGeld;
@@ -18,8 +19,9 @@ public class TeamInfo
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
-    public TeamInfo(int[] playerIDs, int coachID, double teamTalent, int money, String placement)
+    public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int money, String placement)
     {
+        this.team = team;
         for (int i : playerIDs)
         {
             teamPlayerList.add(BAVM.getPlayerManager().getPlayer(i));
@@ -270,6 +272,8 @@ public class TeamInfo
 
     public Geld getTeamGeld()
     {
+        // Quick 'n dirty
+        team.unsavedChanges = true;
         return this.teamGeld;
     }
 

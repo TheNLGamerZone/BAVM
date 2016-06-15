@@ -29,6 +29,7 @@ public class FileManager
     private Element players;
     private Element teams;
     private Element coaches;
+    private Element matches;
 
     public boolean firstStart = false;
 
@@ -62,37 +63,47 @@ public class FileManager
                 players = document.createElement("players");
                 teams = document.createElement("teams");
                 coaches = document.createElement("coaches");
+                matches = document.createElement("matches");
                 Element player = document.createElement("player");
                 Element team = document.createElement("team");
                 Element coach = document.createElement("coach");
+                Element match = document.createElement("match");
 
                 // Elementen vullen
                 document.appendChild(rootElement);
                 rootElement.appendChild(players);
                 rootElement.appendChild(teams);
                 rootElement.appendChild(coaches);
+                rootElement.appendChild(matches);
                 players.appendChild(player);
                 players.setAttribute("amount", "0");
                 teams.appendChild(team);
                 teams.setAttribute("amount", "0");
                 coaches.setAttribute("amount", "0");
                 coaches.appendChild(coach);
+                matches.setAttribute("amount", "0");
+                matches.setAttribute("week", "0");
+                matches.appendChild(match);
                 player.setAttribute("id", "-1");
                 team.setAttribute("id", "-1");
                 coach.setAttribute("id", "-1");
+                match.setAttribute("id", "-1");
 
                 // Placeholders neerzetten
                 Element playerString = document.createElement("dataString");
                 Element teamString = document.createElement("dataString");
                 Element coachString = document.createElement("dataString");
+                Element matchString = document.createElement("dataString");
 
                 playerString.appendChild(document.createTextNode("NULL <-> PH"));
                 teamString.appendChild(document.createTextNode("NULL <-> PH"));
                 coachString.appendChild(document.createTextNode("NULL <-> PH"));
+                matchString.appendChild(document.createTextNode("NULL <-> PH"));
 
                 player.appendChild(playerString);
                 team.appendChild(teamString);
                 coach.appendChild(coachString);
+                match.appendChild(matchString);
 
                 // Naar XML bestand schrijven
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -129,6 +140,9 @@ public class FileManager
                                     break;
                                 case "coaches":
                                     coaches = element;
+                                    break;
+                                case "matches":
+                                    matches = element;
                                     break;
                             }
                         }
@@ -173,7 +187,7 @@ public class FileManager
                 dataElement.appendChild(document.createTextNode(dataString));
                 element.appendChild(dataElement);
 
-                int newAmount = 0;
+                int newAmount;
                 switch (tag)
                 {
                     case "player":
@@ -197,6 +211,12 @@ public class FileManager
                         coaches.removeAttribute("amount");
                         coaches.setAttribute("amount", newAmount + "");
                         break;
+                    case "match":
+                        matches.appendChild(element);
+
+                        newAmount = Integer.parseInt(matches.getAttribute("amount")) + 1;
+                        matches.removeAttribute("amount");
+                        matches.setAttribute("amount", newAmount + "");
                 }
             } else
             {
@@ -222,6 +242,40 @@ public class FileManager
         {
             e.printStackTrace();
         }
+    }
+
+    public void addWeek()
+    {
+        int newWeek = Integer.parseInt(matches.getAttribute("week")) + 1;
+        matches.removeAttribute("week");
+        matches.setAttribute("week", newWeek + "");
+    }
+
+    public int getWeekNumber()
+    {
+        try
+        {
+            document.getDocumentElement().normalize();
+
+            NodeList nodeList = document.getElementsByTagName("matches");
+
+            for (int i = 0; i < nodeList.getLength(); i++)
+            {
+                Node node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element element = (Element) node;
+
+                    return Integer.parseInt(element.getAttribute("week"));
+                }
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     public int readAmount(String tag)
