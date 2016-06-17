@@ -101,5 +101,8 @@ public class AllScores {
                 }
 
         return sortedTeams.get(0);
+
+        //RESET
+
     }
 }

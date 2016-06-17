@@ -19,7 +19,7 @@ public class StartingConversation implements Conversation{
 
             display.appendText("Je staat op het punt om je personage de naam " + directorName + " te geven. Weet je het zeker?");
 
-            if (display.readLine(false, "Typ 123 om te bevestigen").equals("123")) {
+            if (display.readLine(false, "Typ 123 om de naamgeving te bevestigen.").equals("123")) {
                 BAVM.getTeamManager().getTeam(19).setDirectorName(directorName);
                 break;
             } else {
@@ -36,13 +36,12 @@ public class StartingConversation implements Conversation{
 
             display.appendText("Je staat op het punt om je team de naam " + teamName + " te geven. Weet je het zeker?");
 
-            if (display.readLine(false, "Typ 123 om te bevestigen").equals("123")) {
+            if (display.readLine(false, "Typ 123 om de naamgeving te bevestigen.").equals("123")) {
                 BAVM.getTeamManager().getTeam(19).setTeamName(teamName);
                 break;
             } else {
                 display.appendText("Naamgeving geannuleerd.");
             }
         }
-
     }
 }

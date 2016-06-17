@@ -104,7 +104,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 
         int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, 0.457);
 
-        manageables.add((T) new Team(RandomNames.getTeamName(), RandomNames.getPeopleName(), 19, playerIDs, teams, 0.457, -1, -1, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
+        manageables.add((T) new Team(RandomNames.getTeamName(), RandomNames.getPeopleName(), 19, playerIDs, teams, 0.4750, -1, -1, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
         playerTeam = (Team) super.getManageable(19);
         marketTeam = new Team("marketTeam", "Satan", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, 0, "", null);
 
@@ -135,7 +135,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             return TransferResult.FAILED_NOT_ENOUGH_PLAYERS;
         }
 
-        if (sendingTeam.getTeamInfo().getPlayerPlacement().isPlaced(player))
+        if (sendingTeam != BAVM.getTeamManager().marketTeam && sendingTeam.getTeamInfo().getPlayerPlacement().isPlaced(player))
         {
             return TransferResult.FAILED_IN_FORMATION;
         }

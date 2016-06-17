@@ -22,7 +22,9 @@ public class ManagementConversation implements Conversation
             display.appendText("\n\t\t- - - - - - - - - [ Team management ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je de opstelling te veranderen",
-                    "Typ '-4' om je spelers/team te trainen"
+                    "Typ '-4' om je spelers/team te trainen",
+                    "Typ '-5' om een andere directeur aan te stellen (verander je naam)",
+                    "Typ '-6' om je team een andere naam te geven"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -47,7 +49,7 @@ public class ManagementConversation implements Conversation
             				"   Keeper: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.KEEPER),
             				"   Aanvallers: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.ATTACKER),
             				"   Verdedigers: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.DEFENDER),
-            				"   Middevelders: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.MIDFIELDER),
+            				"   Middenvelders: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.MIDFIELDER),
             				"Typ het ID van de speler die je wilt wisselen"
             				);
             	
@@ -310,6 +312,52 @@ public class ManagementConversation implements Conversation
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            if (mainNumber == -5)
+            {
+                while (true) {
+                    String directorName = display.readLine(false, "Typ de naam van je personage! Typ -1 om de stap over te slaan (de naam wordt dan willekeurig gegenereerd).");
+
+                    if (directorName.equals("-1")) {
+                        break;
+                    } else if (directorName.equals("-2"))
+                    {
+                        break backToMain;
+                    }
+
+                    display.appendText("Je staat op het punt om je personage de naam " + directorName + " te geven. Weet je het zeker?");
+
+                    if (display.readLine(false, "Typ 123 om de naamgeving te bevestigen.").equals("123")) {
+                        BAVM.getTeamManager().getTeam(19).setDirectorName(directorName);
+                        break;
+                    } else {
+                        display.appendText("Naamgeving geannuleerd.");
+                    }
+                }
+            }
+
+            if (mainNumber == -6)
+            {
+                while (true) {
+                    String teamName = display.readLine(false, "Typ de naam van je team! Typ -1 om de stap over te slaan (de naam wordt dan willekeurig gegenereerd).");
+
+                    if (teamName.equals("-1")) {
+                        break;
+                    } else if (teamName.equals("-2"))
+                    {
+                        break backToMain;
+                    }
+
+                    display.appendText("Je staat op het punt om je team de naam " + teamName + " te geven. Weet je het zeker?");
+
+                    if (display.readLine(false, "Typ 123 om de naamgeving te bevestigen.").equals("123")) {
+                        BAVM.getTeamManager().getTeam(19).setTeamName(teamName);
+                        break;
+                    } else {
+                        display.appendText("Naamgeving geannuleerd.");
                     }
                 }
             }

@@ -253,6 +253,7 @@ public class BAVM
             display.clearText();
             clip.stop();
             clip.close();
+            Week.nextSeason();
         } catch (Exception e)
         {
             e.printStackTrace();

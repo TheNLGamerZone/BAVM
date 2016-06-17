@@ -38,8 +38,10 @@ public class Week
             }
         }
 
+        //TODO fix double ranks
+
         weekNumber++;
-        BAVM.getFileManager().addWeek();
+        BAVM.getFileManager().addWeek(false);
 
         if (endSeason)
         {
@@ -48,11 +50,12 @@ public class Week
             BAVM.getDisplay().appendText("\n" + winner.getTeamName() + " (ID: " + winner.getID() + ") has won the season!");
             if (winner.getID() == BAVM.getTeamManager().playerTeam.getID())
             {
-                // TODO: Credits
+                BAVM.rollCredits();
             } else
             {
                 BAVM.getDisplay().appendText("Je hebt helaas niet gewonnen, volgend seizoen beter!", "Om je opweg te helpen hebben we een extra sponsor voor je geregeld die direct $500.000,00 investeert, gebruik het geld goed!");
                 BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().addGeld(500000);
+                nextSeason();
             }
         } else
         {
@@ -68,6 +71,22 @@ public class Week
         }
 
         return true;
+    }
+
+    public static void nextSeason()
+    {
+        //TODO change stuff here
+        weekNumber = 0;
+        BAVM.getFileManager().addWeek(true);
+
+        for (int i = 0; i < 20; i++)
+        {
+            Geld geld = BAVM.getTeamManager().getTeam(i).getTeamInfo().getTeamGeld();
+
+            geld.addGeld(geld.getWeeklyIncome());
+        }
+
+        BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - - [ NIEUW SEIZOEN: WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - -");
     }
 
     public static int getWeekNumber()

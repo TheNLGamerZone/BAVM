@@ -246,11 +246,17 @@ public class FileManager
         storageFile.delete();
     }
 
-    public void addWeek()
+    public void addWeek(boolean newSeason)
     {
         int newWeek = Integer.parseInt(matches.getAttribute("week")) + 1;
         matches.removeAttribute("week");
-        matches.setAttribute("week", newWeek + "");
+
+        if (newSeason)
+        {
+            matches.setAttribute("week", 0 + "");
+        } else {
+            matches.setAttribute("week", newWeek + "");
+        }
     }
 
     public int getWeekNumber()

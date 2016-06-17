@@ -124,7 +124,7 @@ public class Display
     public void onClose()
     {
         System.out.println("Afsluiten ..");
-        appendText("Afsluiten ..");
+        appendText("\nAfsluiten .. Forceer het programma niet af te sluiten, opslaan kan even duren!");
 
         BAVM.getTeamManager().saveManageables(false);
         BAVM.getPlayerManager().saveManageables(false);
