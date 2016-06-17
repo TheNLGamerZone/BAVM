@@ -182,7 +182,7 @@ public class Factory
 
     public static Team createTeam(String teamString) throws FactoryException
     {
-        String teamName = null, placement = null, scores = null;
+        String teamName = null, directorName = null, placement = null, scores = null;
         int teamID = -2, coachID = -1, currentGeld = -1, weeklyIncome = -1;
         int[] playerIDs = null;
         double teamTalent = -1;
@@ -272,6 +272,8 @@ public class Factory
                         }
                     }
                     break;
+                case "directorName":
+                    directorName = data.replaceAll("_", " ");
             }
         }
 
@@ -280,7 +282,7 @@ public class Factory
             throw new FactoryException("team", teamID, "Kon " + (teamName == null ? "naam" : "opstelling") + " niet laden");
         }
 
-        return new Team(teamName, teamID, playerIDs, coachID, teamTalent, currentGeld, weeklyIncome, placement, scores);
+        return new Team(teamName, directorName, teamID, playerIDs, coachID, teamTalent, currentGeld, weeklyIncome, placement, scores);
     }
 
     public static Match createMatch(String matchString) throws FactoryException

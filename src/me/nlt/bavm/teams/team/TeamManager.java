@@ -9,6 +9,7 @@ import me.nlt.bavm.teams.exceptions.FactoryException;
 import me.nlt.bavm.teams.player.Player;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TeamManager<T extends Manageable> extends Manager<T>
 {
@@ -96,17 +97,16 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         for (int i = 0; i < teams; i++)
         {
             double teamTalent = Math.random();
-            String name = RandomNames.getTeamName();
             int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, teamTalent);
 
-            manageables.add((T) new Team(name, i, playerIDs, i, teamTalent, -1, -1, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
+            manageables.add((T) new Team(RandomNames.getTeamName(), RandomNames.getPeopleName(), i, playerIDs, i, teamTalent, -1, -1, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
         }
 
         int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, 0.457);
 
-        manageables.add((T) new Team(RandomNames.getTeamName(), 19, playerIDs, teams, 0.457, -1, -1, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
+        manageables.add((T) new Team(RandomNames.getTeamName(), RandomNames.getPeopleName(), 19, playerIDs, teams, 0.457, -1, -1, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
         playerTeam = (Team) super.getManageable(19);
-        marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, 0, "", null);
+        marketTeam = new Team("marketTeam", "Satan", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, 0, "", null);
 
         this.saveManageables(true);
 

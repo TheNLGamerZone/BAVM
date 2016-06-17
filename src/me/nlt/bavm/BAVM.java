@@ -80,7 +80,6 @@ public class BAVM
         // Eigenlijk lieg ik bij het eerste bericht maar anders kan het niet
         display.appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers en teams worden geladen\n");
 
-        //TODO replace 'true' with 'fileManager.firstStart'
         fileManager = new FileManager();
         playerManager = new PlayerManager<>(fileManager.firstStart);
         coachManager = new CoachManager<>(fileManager.firstStart);
@@ -104,6 +103,11 @@ public class BAVM
      */
     private void initGame()
     {
+        if (fileManager.firstStart)
+        {
+            new StartingConversation().startConversation(display);
+        }
+
         display.appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (Week.getWeekNumber() + 1) + " ] - - - - - - - - - - - - - -");
 
         while (true)
@@ -231,7 +235,7 @@ public class BAVM
                     "FileManager: Tim", "Game: Tip", "Match: Tip", "MatchManager: Tip & Tim", "MatchSequence: Tip", "RandomNames: Tip", "RandomStats: Tip & Tim",
                     "AllScores: Tip", "MatchWeek: Tip", "PlannedWeek: Tip", "Season: Tip", "Week: Tip",
                     "Coach: Tip & Tim", "CoachManager: Tim", "CoachStats: Tip & Tim", "FactoryException: Tim", "InvalidPlayerException: Tim", "Player: Tim", "PlayerManager: Tim", "PlayerStats: Tim", "Position: Tim",
-                    "Geld: Tip", "PlayerPlacement: Tim", "Team: Tim", "TeamInfo: Tip & Tim", "TeamManager: Tim", "TransferResult: Tim",
+                    "Geld: Tip", "PlayerPlacement: Tim", "Team: Tip & Tim", "TeamInfo: Tip & Tim", "TeamManager: Tim", "TransferResult: Tim",
                     "Manageable: Tim", "Manager: Tim", "Market: Tim", "BAVM (multi-threading): Tim", "BAVM (menu): Tip & Tim", "Display: Tim", "Factory: Tim", "XML-Indeling: Tim",
                     "", "Dat was het!", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "\n"
             };

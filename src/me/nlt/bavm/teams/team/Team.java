@@ -6,17 +6,19 @@ import me.nlt.bavm.teams.Manageable;
 public class Team implements Manageable
 {
     private String teamName;
+    private String directorName;
     private int teamID;
 
     private TeamInfo teamInfo;
 
     public boolean unsavedChanges;
 
-    public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
+    public Team(String teamName, String directorName, int teamID, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
         System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
 
         this.teamName = teamName;
+        this.directorName = directorName;
         this.teamID = teamID;
         this.teamInfo = new TeamInfo(this, playerIDs, coachID, teamTalent, currentGeld, weeklyIncome, placement, scores);
 
@@ -33,9 +35,24 @@ public class Team implements Manageable
         return this.teamName;
     }
 
+    public String getDirectorName()
+    {
+        return this.directorName;
+    }
+
     public TeamInfo getTeamInfo()
     {
         return this.teamInfo;
+    }
+
+    public void setDirectorName(String directorName)
+    {
+        this.directorName = directorName;
+    }
+
+    public void setTeamName(String teamName)
+    {
+        this.teamName = teamName;
     }
 
     @Override
@@ -45,6 +62,7 @@ public class Team implements Manageable
                 "name=" + this.teamName.replaceAll(" ", "_") +
                 ",id=" + this.teamID +
                 ",info=" + this.teamInfo.toString() +
+                ",directorName=" + this.directorName.replaceAll(" ", "_") +
                 "}";
     }
 

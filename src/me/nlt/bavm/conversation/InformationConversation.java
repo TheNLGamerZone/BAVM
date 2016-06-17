@@ -62,6 +62,7 @@ public class InformationConversation implements Conversation
 
                 display.appendText("\n\t\t- - - - - - - - - - - [ Team bekijken ] - - - - - - - - - - - ",
                         "Naam: " + team.getTeamName(),
+                        "Directeur: " + team.getDirectorName(),
                         "Team talent: " + team.getTeamInfo().getTeamTalent(),
                         "Team ID: " + team.getID(),
                         "Geld in de kas: $" + team.getTeamInfo().getTeamGeld().getCurrentGeldK(),
@@ -71,7 +72,7 @@ public class InformationConversation implements Conversation
                         "   Keeper: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.KEEPER),
                         "   Aanvallers: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.ATTACKER),
                         "   Verdedigers: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.DEFENDER),
-                        "   Middevelders: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.MIDFIELDER),
+                        "   Middenvelders: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.MIDFIELDER),
                         "Spelers:"
                 );
 
