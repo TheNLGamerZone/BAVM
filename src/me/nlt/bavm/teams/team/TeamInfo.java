@@ -19,7 +19,7 @@ public class TeamInfo
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
-    public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int money, String placement, String scores)
+    public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
         this.team = team;
         for (int i : playerIDs)
@@ -30,7 +30,7 @@ public class TeamInfo
         //DEBUG
         //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
-        this.teamGeld = new Geld(teamTalent, money);
+        this.teamGeld = new Geld(teamTalent, currentGeld, weeklyIncome);
         this.teamTalent = teamTalent;
 
         this.createPlacement(placement);
@@ -344,7 +344,7 @@ public class TeamInfo
         return "teamtalent;" + this.teamTalent + 
         		"<players;" + infoString + 
         		"<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") + 
-        		"<money;" + teamGeld.toString() + 
+        		"<geld;" + teamGeld.toString() +
         		"<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null" +
         		"<scores;" + stringBuilder.toString());
     }

@@ -12,13 +12,13 @@ public class Team implements Manageable
 
     public boolean unsavedChanges;
 
-    public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent, int money, String placement, String scores)
+    public Team(String teamName, int teamID, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
         System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
 
         this.teamName = teamName;
         this.teamID = teamID;
-        this.teamInfo = new TeamInfo(this, playerIDs, coachID, teamTalent, money, placement, scores);
+        this.teamInfo = new TeamInfo(this, playerIDs, coachID, teamTalent, currentGeld, weeklyIncome, placement, scores);
 
         if (!teamName.equals("marketTeam") && teamID != 19 && playerIDs.length != 21)
         {

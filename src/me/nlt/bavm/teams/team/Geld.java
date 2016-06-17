@@ -4,13 +4,24 @@ public class Geld {
     private int weeklyIncome;
     private int currentGeld;
 
-    public Geld (double teamTalent, int money, boolean generateNew)
+    public Geld (double teamTalent, int currentGeld, int weeklyIncome)
     {
         int teamIncomeFactor = (int) ((teamTalent + 1) * 30000);
         int teamIncomeVariance = (int) ((Math.random() + 1) * 10000);
 
-        weeklyIncome = teamIncomeFactor + teamIncomeVariance;
-        currentGeld = (weeklyIncome * (int) ((Math.random() + 1) * 15)) + money;
+        if (weeklyIncome == -1)
+        {
+            this.weeklyIncome = teamIncomeFactor + teamIncomeVariance;
+        } else {
+            this.weeklyIncome = weeklyIncome;
+        }
+
+        if (currentGeld == -1)
+        {
+            this.currentGeld = this.weeklyIncome * (int) ((Math.random() + 1) * 15);
+        } else {
+            this.currentGeld = currentGeld;
+        }
     }
 
     public int getWeeklyIncome()
@@ -36,6 +47,6 @@ public class Geld {
     @Override
     public String toString()
     {
-        return "money!" + currentGeld;
+        return "geld!" + currentGeld + "!" + weeklyIncome;
     }
 }

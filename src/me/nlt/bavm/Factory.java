@@ -183,7 +183,7 @@ public class Factory
     public static Team createTeam(String teamString) throws FactoryException
     {
         String teamName = null, placement = null, scores = null;
-        int teamID = -2, coachID = -1, money = -1;
+        int teamID = -2, coachID = -1, currentGeld = -1, weeklyIncome = -1;
         int[] playerIDs = null;
         double teamTalent = -1;
 
@@ -253,10 +253,11 @@ public class Factory
                                     throw new FactoryException("team", teamID, "Kon ID van coach niet laden");
                                 }
                                 break;
-                            case "money":
+                            case "geld":
                                 try
                                 {
-                                    money = Integer.parseInt(infoData.split("!")[1]);
+                                    currentGeld = Integer.parseInt(infoData.split("!")[1]);
+                                    weeklyIncome = Integer.parseInt(infoData.split("!")[2]);
                                 } catch (NumberFormatException e)
                                 {
                                     throw new FactoryException("team", teamID, "Kon geld niet laden");
@@ -279,7 +280,7 @@ public class Factory
             throw new FactoryException("team", teamID, "Kon " + (teamName == null ? "naam" : "opstelling") + " niet laden");
         }
 
-        return new Team(teamName, teamID, playerIDs, coachID, teamTalent, money, placement, scores);
+        return new Team(teamName, teamID, playerIDs, coachID, teamTalent, currentGeld, weeklyIncome, placement, scores);
     }
 
     public static Match createMatch(String matchString) throws FactoryException
