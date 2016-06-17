@@ -134,6 +134,11 @@ public class Display
         System.exit(1);
     }
 
+    public void clearText()
+    {
+        textArea.setText("");
+    }
+
     /**
      * Hiermee kan tekst worden toegevoegd aan de JTextArea en dus worden getoond
      *
