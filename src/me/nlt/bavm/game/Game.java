@@ -1,6 +1,8 @@
 package me.nlt.bavm.game;
 
 import me.nlt.bavm.BAVM;
+import me.nlt.bavm.teams.player.Player;
+import me.nlt.bavm.teams.player.PlayerStats;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamInfo;
 import me.nlt.bavm.teams.team.TeamInfo.StatCoefficient;
@@ -8,6 +10,7 @@ import me.nlt.bavm.teams.team.TeamInfo.StatCoefficient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 //TODO add condition effect
 
@@ -261,6 +264,8 @@ public class Game
             visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.POINTS, 3);
         }
 
+        playerExperience(home, visitor, homeLuck, visitorLuck);
+
         gameResult = goalResult;
     }
 
@@ -374,6 +379,83 @@ public class Game
         {
             //try again
             return 2;
+        }
+    }
+
+    public static void playerExperience(Team home, Team visitor, double homeLuck, double visitorLuck)
+    {
+        double keeperBases[] = {0.4, 0.4, 0.6, 0.8, 1.0, 1.0};
+        double defenderBases[] = {0.5, 0.4, 1.0, 1.0, 0.3, 1.0};
+        double midfielderBases[] = {0.4, 0.9, 1.0, 0.9, 0.2, 0.8};
+        double attackerBases[] = {1.0, 1.0, 0.5, 0.5, 0.2, 1.0};
+
+
+        for (PlayerStats.Stat stat : PlayerStats.Stat.values()) {
+            for (int i = 0; i < 2; i++)
+            {
+                Team team;
+                double upgradeValue;
+
+                if (i == 0)
+                {
+                    team = home;
+                    upgradeValue = homeLuck / 4;
+                } else {
+                    team = visitor;
+                    upgradeValue = visitorLuck / 4;
+                }
+
+                //Attackers
+                for (Player player : team.getTeamInfo().getPlayerPlacement().getAttackers().stream().collect(Collectors.toList()))
+                {
+                    upgradeValue = attackerBases[stat.getLocation()] * upgradeValue;
+
+                    double currentStat = player.getPlayerStats().getValue(stat);
+                    double upgrade = (currentStat + upgradeValue <= 100
+                            ? upgradeValue
+                            : upgradeValue - Math.abs((currentStat + upgradeValue) - 100));
+
+                    player.getPlayerStats().increaseSkill(stat, upgrade);
+                }
+
+                //Midfielders
+                for (Player player : team.getTeamInfo().getPlayerPlacement().getMidfielders().stream().collect(Collectors.toList()))
+                {
+                    upgradeValue = midfielderBases[stat.getLocation()] * upgradeValue;
+
+                    double currentStat = player.getPlayerStats().getValue(stat);
+                    double upgrade = (currentStat + upgradeValue <= 100
+                            ? upgradeValue
+                            : upgradeValue - Math.abs((currentStat + upgradeValue) - 100));
+
+                    player.getPlayerStats().increaseSkill(stat, upgrade);
+                }
+
+                //Defenders
+                for (Player player : team.getTeamInfo().getPlayerPlacement().getDefenders().stream().collect(Collectors.toList()))
+                {
+                    upgradeValue = defenderBases[stat.getLocation()] * upgradeValue;
+
+                    double currentStat = player.getPlayerStats().getValue(stat);
+                    double upgrade = (currentStat + upgradeValue <= 100
+                            ? upgradeValue
+                            : upgradeValue - Math.abs((currentStat + upgradeValue) - 100));
+
+                    player.getPlayerStats().increaseSkill(stat, upgrade);
+                }
+
+                //Keepers
+                Player player = team.getTeamInfo().getPlayerPlacement().getKeeper();
+
+                upgradeValue = keeperBases[stat.getLocation()] * upgradeValue;
+
+                double currentStat = player.getPlayerStats().getValue(stat);
+                double upgrade = (currentStat + upgradeValue <= 100
+                        ? upgradeValue
+                        : upgradeValue - Math.abs((currentStat + upgradeValue) - 100));
+
+                player.getPlayerStats().increaseSkill(stat, upgrade);
+            }
         }
     }
 }
