@@ -99,14 +99,14 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             String name = RandomNames.getTeamName();
             int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, teamTalent);
 
-            manageables.add((T) new Team(name, i, playerIDs, i, teamTalent, 1000000, BAVM.getPlayerManager().getPlacementString(playerIDs)));
+            manageables.add((T) new Team(name, i, playerIDs, i, teamTalent, 1000000, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
         }
 
         int[] playerIDs = BAVM.getPlayerManager().getPlayerIDs(this, 0.457);
 
-        manageables.add((T) new Team(RandomNames.getTeamName(), 19, playerIDs, teams, 0.457, 27500, BAVM.getPlayerManager().getPlacementString(playerIDs)));
+        manageables.add((T) new Team(RandomNames.getTeamName(), 19, playerIDs, teams, 0.457, 275000, BAVM.getPlayerManager().getPlacementString(playerIDs), null));
         playerTeam = (Team) super.getManageable(19);
-        marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, "");
+        marketTeam = new Team("marketTeam", -666, BAVM.getPlayerManager().getFreePlayers(this), -1, 0.0, 234730247, "", null);
 
         this.saveManageables(true);
 

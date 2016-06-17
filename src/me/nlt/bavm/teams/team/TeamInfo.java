@@ -19,7 +19,7 @@ public class TeamInfo
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
-    public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int money, String placement)
+    public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int money, String placement, String scores)
     {
         this.team = team;
         for (int i : playerIDs)
@@ -34,13 +34,32 @@ public class TeamInfo
         this.teamTalent = teamTalent;
 
         this.createPlacement(placement);
-
-        for (Score score : Score.values())
-        {
-            teamScores.put(score, 0);
-        }
+        this.createScores(scores);
     }
-
+    
+    private void createScores(String scores)
+    {
+    	if (scores == null)
+    	{
+    		for (Score score : Score.values())
+            {
+                teamScores.put(score, 0);
+            }
+    	} else
+    	{
+    		for (String data : scores.split("%"))
+    		{
+    			for (Score score : Score.values())
+    			{
+    				if (score.name().equals(data.split(">")[0]))
+    				{
+    					teamScores.put(score, Integer.parseInt(data.split(">")[1]));
+    				}
+    			}
+    		}
+    	}
+    }
+    
     private void createPlacement(String placement)
     {
         if (placement.equals("null") || placement.equals(""))
@@ -312,7 +331,21 @@ public class TeamInfo
 
         // Laatste komma weghalen
         stringBuilder.setLength(stringBuilder.length() - 1);
+        infoString = stringBuilder.toString();
+        stringBuilder.setLength(0);
+        
+        for (Score score : Score.values())
+        {
+        	stringBuilder.append(score.name() + ">" + teamScores.get(score) + "%");
+        }
+        
+        stringBuilder.setLength(stringBuilder.length() - 1);
 
-        return "teamtalent;" + this.teamTalent + "<players;" + stringBuilder.toString() + "<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") + "<money;" + teamGeld.toString() + "<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null");
+        return "teamtalent;" + this.teamTalent + 
+        		"<players;" + infoString + 
+        		"<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") + 
+        		"<money;" + teamGeld.toString() + 
+        		"<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null" +
+        		"<scores;" + stringBuilder.toString());
     }
 }
