@@ -21,8 +21,6 @@ import java.net.URISyntaxException;
 
 public class FileManager
 {
-    private String mainDir = "";
-    private File mainDirectory = null;
     private File storageFile = null;
 
     private Document document;
@@ -42,8 +40,7 @@ public class FileManager
     {
         try
         {
-            mainDir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/') + "/BAVM";
-            mainDirectory = new File(mainDir);
+            String mainDir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/') + "/BAVM";
             storageFile = new File(mainDir + "/data.xml/");
 
             storageFile.getParentFile().mkdirs();
@@ -242,6 +239,11 @@ public class FileManager
         {
             e.printStackTrace();
         }
+    }
+
+    public void deleteData()
+    {
+        storageFile.delete();
     }
 
     public void addWeek()

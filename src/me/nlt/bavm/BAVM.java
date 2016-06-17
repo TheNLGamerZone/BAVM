@@ -18,7 +18,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.awt.*;
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class BAVM
 {
@@ -107,13 +109,14 @@ public class BAVM
         while (true)
         {
             display.appendText("\n\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
-                    , "    0 -> Stop het spel"
-                    , "    1 -> Ga naar het informatiecentrum"
-                    , "    2 -> Ga naar het wedstrijdcentrum"
-                    , "    3 -> Ga naar teammanagement"
-                    , "    4 -> Ga naar de markt"
-                    , "    5 -> Ga naar het seizoencentrum"
-                    , "    6 -> Be\u00EBindig deze week"
+                    , "    -9 -> Verwijder alle voortgang en begin opnieuw"
+                    , "    0  -> Stop het spel"
+                    , "    1  -> Ga naar het informatiecentrum"
+                    , "    2  -> Ga naar het wedstrijdcentrum"
+                    , "    3  -> Ga naar teammanagement"
+                    , "    4  -> Ga naar de markt"
+                    , "    5  -> Ga naar het seizoencentrum"
+                    , "    6  -> Be\u00EBindig deze week"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -151,6 +154,23 @@ public class BAVM
             if (mainNumber == 6)
             {
                 new WeekendConversation().startConversation(display);
+            }
+
+            if (mainNumber == -9)
+            {
+                if ((int) display.readDouble(false, "Je staat op het punt om al je voortgang DEFINITIEF te verwijderen en opnieuw te beginnen\nTyp 123 om dit te bevestigen") == 123)
+                {
+                    display.clearText();
+                    display.appendText("Data wordt verwijderd en spel wordt opnieuw gestart!");
+
+                    if (!resetGame())
+                    {
+                        display.appendText("Deze functie is alleen beschikbaar met een JAR, dus niet via een built-in IDE Java Application");
+                    }
+                } else
+                {
+                    display.appendText("Je start niet opnieuw!");
+                }
             }
 
             if (mainNumber == 8080)
@@ -201,7 +221,8 @@ public class BAVM
 
         try
         {
-            String[] messages = {"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+            String[] messages = {
+                    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
                     "Bedankt voor het spelen van de BrinkAnema Voetbal Manager!", "", "", "Dit spel is gemaakt voor de NLT Java opdracht.", "", "", "Game Director: Tim Anema", "", "",
                     "Co-Game Director: Tip ten Brink", "", "", "Lead Designer: Tim Anema", "", "", "Co-Lead Designer: Tip ten Brink", "", "", "Lead Programmer: Tim Anema", "", "",
                     "Co-Lead Programmer: Tip ten Brink", "", "", "Muziek: 'Victory' by Two Steps from Hell", "", "", "Special thanks:", " Stackoverflow", " Meneer Erik Smedema", " Meneer Theulings",
@@ -232,5 +253,35 @@ public class BAVM
         {
             e.printStackTrace();
         }
+    }
+
+    public static boolean resetGame()
+    {
+        try
+        {
+            final String javaBinary = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+            final File gameJAR = new File(BAVM.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            final ArrayList<String> commands = new ArrayList<>();
+            final ProcessBuilder processBuilder;
+
+            if (!gameJAR.getName().endsWith(".jar"))
+            {
+                return false;
+            }
+
+            commands.add(javaBinary);
+            commands.add("-jar");
+            commands.add(gameJAR.getPath());
+            processBuilder = new ProcessBuilder(commands);
+            processBuilder.start();
+            fileManager.deleteData();
+
+            System.exit(0);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
