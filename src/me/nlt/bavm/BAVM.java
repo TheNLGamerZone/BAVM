@@ -200,7 +200,10 @@ public class BAVM
         try
         {
             String[] messages = {"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-                    "Bedankt voor het spelen", "", "", "Jaja", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits", "", "", "Meer credits"};
+                    "Bedankt voor het spelen van de BrinkAnema Voetbal Manager!", "", "", "Dit spel is gemaakt voor de NLT Java opdracht.", "", "", "Game Director: Tim Anema", "", "",
+                    "Co-Game Director: Tip ten Brink", "", "", "Lead Designer: Tim Anema", "", "", "Co-Lead Designer: Tip ten Brink", "", "", "Lead Programmer: Tim Anema", "", "",
+                    "Co-Lead Programmer: Tip ten Brink", "", "", "Muziek: 'Victory' by Two Steps from Hell", "", "", "Special thanks:", "Stackoverflow", "Meneer Eric Smedema", "Meneer Theulings",
+                    "", "", "Dat was het!", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Na de muziek kan je weer verder...\n"};
             int delay = 1500;
             URL url = new URL("http://tim.suppatim.me/credit_music_edited.wav");
             Clip clip = AudioSystem.getClip();

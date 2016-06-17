@@ -1,41 +1,41 @@
 package me.nlt.bavm.teams.team;
 
 public class Geld {
-    private int monthlyIncomeK;
-    private int currentGeldK;
+    private int weeklyIncome;
+    private int currentGeld;
 
-    public Geld (double teamTalent, int money)
+    public Geld (double teamTalent, int money, boolean generateNew)
     {
-        int teamIncomeFactor = (int) (teamTalent * 1000);
-        int teamIncomeVariance = (int) (Math.random() * 500);
+        int teamIncomeFactor = (int) ((teamTalent + 1) * 30000);
+        int teamIncomeVariance = (int) ((Math.random() + 1) * 10000);
 
-        monthlyIncomeK = teamIncomeFactor + teamIncomeVariance;
-        currentGeldK = money;
+        weeklyIncome = teamIncomeFactor + teamIncomeVariance;
+        currentGeld = (weeklyIncome * (int) ((Math.random() + 1) * 15)) + money;
     }
 
-    public int getMonthlyIncomeK()
+    public int getWeeklyIncome()
     {
-        return this.monthlyIncomeK;
+        return this.weeklyIncome;
     }
 
     public int getCurrentGeldK()
     {
-        return this.currentGeldK;
+        return this.currentGeld;
     }
     
     public void removeGeld(int amount)
     {
-    	this.currentGeldK -= amount;
+    	this.currentGeld -= amount;
     }
     
     public void addGeld(int amount)
     {
-    	this.currentGeldK += amount;
+    	this.currentGeld += amount;
     }
 
     @Override
     public String toString()
     {
-        return "money!" + currentGeldK;
+        return "money!" + currentGeld;
     }
 }
