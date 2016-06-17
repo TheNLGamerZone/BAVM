@@ -4,6 +4,8 @@ import me.nlt.bavm.BAVM;
 import me.nlt.bavm.Display;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.player.PlayerStats;
+import me.nlt.bavm.teams.player.Position;
+import me.nlt.bavm.teams.team.Team;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -28,6 +30,94 @@ public class ManagementConversation implements Conversation
             if (mainNumber == -1 || mainNumber == -2)
             {
                 break;
+            }
+            
+            if (mainNumber == -3)
+            {
+            	Team team = BAVM.getTeamManager().playerTeam;
+            	Player playerInPlacement;
+            	Player transferPlayer = null;
+            	Position position = null;
+            	
+            	while (true)
+            	{
+            		display.appendText("\n\t\t- - - - - - - - - - [ Opstelling veranderen ] - - - - - - - - - - ",
+            				"Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
+            				"Huidige opstelling:",
+            				"   Keeper: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.KEEPER),
+            				"   Aanvallers: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.ATTACKER),
+            				"   Verdedigers: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.DEFENDER),
+            				"   Middevelders: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.MIDFIELDER),
+            				"Typ het ID van de speler die je wilt wisselen"
+            				);
+            	
+            		allSettingsSet:
+            		while (true)
+            		{
+            			int playerID = (int) display.readDouble(false);
+            			playerInPlacement = BAVM.getPlayerManager().getPlayer(playerID);
+
+            			if (playerID == -1)
+            			{
+            				break;
+            			} else if (playerID == -2)
+            			{
+            				break backToMain;
+            			} else if (playerInPlacement == null)
+            			{
+            				display.appendText("Die speler bestaat niet!");
+            			} else if (!team.getTeamInfo().getPlayerPlacement().isPlaced(playerInPlacement))
+            			{
+            				display.appendText("Die speler zit niet in de huidige opstelling!");
+            			} else
+            			{
+            				while (true)
+            				{
+            					playerID = (int) display.readDouble(false, "Typ het ID van de speler die je in de opstelling wilt zetten");
+                    			transferPlayer = BAVM.getPlayerManager().getPlayer(playerID);
+                    		
+                    			if (playerID == -2)
+                    			{
+                    				break backToMain;
+                    			} else if (transferPlayer == null)
+                    			{
+                    				display.appendText("Die speler bestaat niet!");
+                    			} else if (!team.getTeamInfo().getPlayers().contains(transferPlayer))
+                    			{
+                    				display.appendText("Die speler zit niet in je team!");
+                    			} else
+                    			{
+	                    			while (true)
+	                    			{
+	                    				String givenPosition = display.readLine(false, "Typ de eerste twee letters van de positie waar je de speler wilt neerzetten");
+	                    			
+	                    				for (Position loopPosition : Position.values())
+	                    				{
+		                    				if (loopPosition.name().contains(givenPosition.toUpperCase()))
+		                    				{
+		                    					position = loopPosition;
+		                    				}
+		                    			}
+	                    			
+		                    			if (position == null)
+		                    			{
+		                    				display.appendText("Die positie bestaat niet!");
+		                    			} else if (position == Position.KEEPER && team.getTeamInfo().getPlayerPlacement().getKeeper() != playerInPlacement)
+		                    			{
+		                    				display.appendText("Je kan niet twee keepers hebben!\nAls je een speler als keeper wilt hebben zul je die moeten wisselen met de huidige keeper");
+		                    			} else
+		                    			{
+		                    				break allSettingsSet;
+		                    			}
+	                    			}
+                    			}
+            				}
+            			}
+            		}   
+            		
+                	team.getTeamInfo().getPlayerPlacement().exchangePlayers(playerInPlacement, transferPlayer, position);
+                	display.appendText("Je hebt de speler " + transferPlayer.getPlayerName() + " op het veld gezet als een " + position.name().toLowerCase());
+            	}
             }
 
             if (mainNumber == -4)

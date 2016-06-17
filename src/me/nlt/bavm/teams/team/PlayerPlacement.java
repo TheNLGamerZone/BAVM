@@ -44,6 +44,51 @@ public class PlayerPlacement
     {
         return this.midfielders;
     }
+    
+    public void exchangePlayers(Player playerInPlacement, Player transferPlayer, Position position)
+    {
+    	this.removePlayer(playerInPlacement);
+    	
+    	switch (position)
+    	{
+    		case KEEPER:
+    			keeper = transferPlayer;
+    			break;
+    		case ATTACKER:
+    			attackers.add(transferPlayer);
+    			break;
+    		case MIDFIELDER:
+    			midfielders.add(transferPlayer);
+    			break;
+    		case DEFENDER:
+    			defenders.add(transferPlayer);
+    			break;
+    		default:
+    			break;
+    	}
+    }
+    
+    public void removePlayer(Player player)
+    {
+    	if (!isPlaced(player))
+    	{
+    		return;
+    	}
+    	
+    	if (keeper == player)
+    	{
+    		keeper = null;
+    	} else if (attackers.contains(player))
+    	{
+    		attackers.remove(player);
+    	} else if (midfielders.contains(player))
+    	{
+    		midfielders.remove(player);
+    	} else
+    	{
+    		defenders.remove(player);
+    	}
+    }
 
     public boolean isPlaced(Player player)
     {
@@ -62,23 +107,23 @@ public class PlayerPlacement
         switch (position)
         {
             case KEEPER:
-                return keeper.getPlayerName();
+                return keeper.getPlayerName() + " (" + keeper.getID() + ")";
             case ATTACKER:
                 for (Player player : attackers)
                 {
-                    stringBuilder.append(player.getPlayerName() + ", ");
+                    stringBuilder.append(player.getPlayerName() + " (" + player.getID() + "), ");
                 }
                 break;
             case DEFENDER:
                 for (Player player : defenders)
                 {
-                    stringBuilder.append(player.getPlayerName() + ", ");
+                    stringBuilder.append(player.getPlayerName() + " (" + player.getID() + "), ");
                 }
                 break;
             case MIDFIELDER:
                 for (Player player : midfielders)
                 {
-                    stringBuilder.append(player.getPlayerName() + ", ");
+                    stringBuilder.append(player.getPlayerName() + " (" + player.getID() + "), ");
                 }
                 break;
         }

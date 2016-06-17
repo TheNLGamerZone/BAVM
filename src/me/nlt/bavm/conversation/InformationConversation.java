@@ -100,7 +100,7 @@ public class InformationConversation implements Conversation
                     display.appendText(" " + team.getTeamName() + " (ID: " + team.getID() + ")");
                 }
 
-                display.readLine("Typ iets om terug te keren naar het informatiecentrum.");
+                display.readLine(false, "Typ iets om terug te keren naar het informatiecentrum.");
             }
 
             if (mainNumber == -6)
@@ -139,7 +139,7 @@ public class InformationConversation implements Conversation
                     display.appendText("   " + stat.name().substring(0, 1) + stat.name().substring(1).toLowerCase() + ": " + player.getPlayerStats().getValue(stat));
                 }
 
-                display.readLine("Typ iets om terug te keren naar het informatiecentrum.");
+                display.readLine(false, "Typ iets om terug te keren naar het informatiecentrum.");
             }
 
             if (mainNumber == -7)
@@ -175,7 +175,7 @@ public class InformationConversation implements Conversation
                     display.appendText("   " + stat.name().substring(0, 1) + stat.name().substring(1).toLowerCase() + ": " + coach.getCoachStats().getValue(stat));
                 }
 
-                display.readLine("Typ iets om terug te keren naar het informatiecentrum.");
+                display.readLine(false, "Typ iets om terug te keren naar het informatiecentrum.");
             }
         }
     }
