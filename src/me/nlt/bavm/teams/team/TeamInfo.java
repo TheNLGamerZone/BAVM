@@ -345,7 +345,7 @@ public class TeamInfo
         		"<players;" + infoString + 
         		"<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") + 
         		"<geld;" + teamGeld.toString() +
-        		"<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null" +
-        		"<scores;" + stringBuilder.toString());
+        		"<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null") +
+        		"<scores;" + stringBuilder.toString();
     }
 }

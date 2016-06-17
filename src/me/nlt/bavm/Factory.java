@@ -30,7 +30,7 @@ public class Factory
         double checkSum = 0;
 
         // Randen van de string strippen
-        playerString = playerString.trim().substring(7, playerString.length() - 1);
+        playerString = playerString.trim().substring(7, playerString.trim().length() - 1);
 
         // String in stukjes 'hakken' op de plekken van de komma's
         String[] rawPlayerData = playerString.split(",");
