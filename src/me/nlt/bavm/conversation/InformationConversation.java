@@ -152,7 +152,7 @@ public class InformationConversation implements Conversation
 
                 while (true)
                 {
-                    int playerID = (int) display.readDouble(false, "Typ het ID van een speler om zijn informatie te bekijken");
+                    int playerID = (int) display.readDouble(false, "Typ het ID van een coach om zijn informatie te bekijken");
                     coach = BAVM.getCoachManager().getCoach(playerID);
 
                     if (playerID == -2)
