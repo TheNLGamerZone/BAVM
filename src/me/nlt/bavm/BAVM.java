@@ -162,7 +162,7 @@ public class BAVM
 
             if (mainNumber == -9)
             {
-                if ((int) display.readDouble(false, "Je staat op het punt om al je voortgang DEFINITIEF te verwijderen en opnieuw te beginnen\nTyp 123 om dit te bevestigen") == 123)
+                if (display.readLine(false, "Je staat op het punt om al je voortgang DEFINITIEF te verwijderen en opnieuw te beginnen\nTyp 123 om dit te bevestigen").equals("123"))
                 {
                     display.clearText();
                     display.appendText("Data wordt verwijderd en spel wordt opnieuw gestart!");
