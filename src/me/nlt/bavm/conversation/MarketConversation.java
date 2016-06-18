@@ -233,9 +233,7 @@ public class MarketConversation implements Conversation
                         display.appendText("Je staat op het punt " + player.getPlayerName() + " te verkopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de verkoop te bevestigen."
                                 , "Saldo na verkoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() + player.getMarketValue()));
 
-                        int confirmationNumber = (int) display.readDouble(false);
-
-                        if (confirmationNumber == 123)
+                        if (display.readLine(false, "").equals("123"))
                         {
                             TransferResult transferResult = BAVM.getTeamManager().transferPlayer(BAVM.getTeamManager().playerTeam, BAVM.getTeamManager().marketTeam, player, (int) player.getMarketValue());
 

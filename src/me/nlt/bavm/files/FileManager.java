@@ -249,14 +249,9 @@ public class FileManager
     public void addWeek(boolean newSeason)
     {
         int newWeek = Integer.parseInt(matches.getAttribute("week")) + 1;
-        matches.removeAttribute("week");
 
-        if (newSeason)
-        {
-            matches.setAttribute("week", 0 + "");
-        } else {
-            matches.setAttribute("week", newWeek + "");
-        }
+        matches.removeAttribute("week");
+        matches.setAttribute("week", (newSeason ? 0 : newWeek) + "");
     }
 
     public int getWeekNumber()

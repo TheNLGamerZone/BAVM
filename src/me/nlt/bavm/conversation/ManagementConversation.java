@@ -284,7 +284,7 @@ public class ManagementConversation implements Conversation
                                     }
                                 }
 
-                                if ((int) display.readDouble(false, "Typ 123 om te bevestigen") == 123)
+                                if (display.readLine(false, "Typ 123 om te bevestigen").equals("123"))
                                 {
                                     if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price)
                                     {

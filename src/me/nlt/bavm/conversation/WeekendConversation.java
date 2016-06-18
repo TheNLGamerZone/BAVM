@@ -32,9 +32,7 @@ public class WeekendConversation implements Conversation
         {
             display.appendText("Je staat op het punt om naar het SEIZOEN te be\u00EBindigen en de laatste wedstrijd te spelen! Weet je dat heel zeker? \nTyp 123 om naar dit seizoen te be\u00EBindigen.");
 
-            int confirmationNumber = (int) display.readDouble(false);
-
-            if (confirmationNumber == 123)
+            if (display.readLine(false, "").equals("123"))
             {
                if (!Week.endWeek(true))
                {
