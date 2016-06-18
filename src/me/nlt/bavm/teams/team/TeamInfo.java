@@ -119,7 +119,7 @@ public class TeamInfo
 
         private Score(int location)
         {
-            this.index = index;
+            this.index = location;
         }
 
         public int getIndex()
@@ -131,6 +131,15 @@ public class TeamInfo
     public void increaseTeamScores(Score score, int increment)
     {
         teamScores.replace(score, teamScores.get(score) + increment);
+    }
+
+    public void resetTeamScores()
+    {
+        for (Score score : Score.values())
+        {
+            teamScores.remove(score);
+        }
+        createScores(null);
     }
 
     public enum StatCoefficient

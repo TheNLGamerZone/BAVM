@@ -5,11 +5,11 @@ import me.nlt.bavm.teams.team.TeamInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class AllScores {
-    private static ArrayList<Integer> sortedTeams = new ArrayList<>();
-
     public static int displayScores() {
+        ArrayList<Integer> sortedTeams = new ArrayList<>();
         HashMap<Integer, Integer> points = new HashMap<>();
         HashMap<Integer, Integer> pointsCompare = new HashMap<>();
         HashMap<Integer, Integer> goalDifference = new HashMap<>();
@@ -33,7 +33,7 @@ public class AllScores {
             //System.out.println("it: " + i + ", highest key: " + key);
 
 
-            if (i != 0 && pointsCompare.get(sortedTeams.get(i - 1)) == pointsCompare.get(key))
+            if (i != 0 && Objects.equals(pointsCompare.get(sortedTeams.get(i - 1)), pointsCompare.get(key)))
             {
                 int otherKey = sortedTeams.get(i - 1);
                 //DEBUG
@@ -101,8 +101,5 @@ public class AllScores {
                 }
 
         return sortedTeams.get(0);
-
-        //RESET
-
     }
 }

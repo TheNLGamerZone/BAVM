@@ -167,7 +167,7 @@ public class BAVM
                     display.clearText();
                     display.appendText("Data wordt verwijderd en spel wordt opnieuw gestart!");
 
-                    if (!resetGame())
+                    if (!restartGame(true))
                     {
                         display.appendText("Deze functie is alleen beschikbaar met een JAR, dus niet via een built-in IDE Java Application");
                     }
@@ -229,10 +229,10 @@ public class BAVM
                     "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
                     "Bedankt voor het spelen van de BrinkAnema Voetbal Manager!", "", "", "Dit spel is gemaakt voor de NLT Java opdracht.", "", "", "Game Director: Tim Anema", "", "",
                     "Co-Game Director: Tip ten Brink", "", "", "Lead Designer: Tim Anema", "", "", "Co-Lead Designer: Tip ten Brink", "", "", "Lead Programmer: Tim Anema", "", "",
-                    "Co-Lead Programmer: Tip ten Brink", "", "", "Muziek: 'Victory' by Two Steps from Hell", "", "", "Special thanks:", " Stackoverflow", " Meneer Erik Smedema", " Meneer Theulings",
+                    "Co-Lead Programmer: Tip ten Brink", "", "", "Muziek: 'Victory' by Two Steps from Hell", "", "", "Special thanks:", " Stackoverflow", " Meneer Smedema", " Meneer Theulings",
                     "", "",
-                    "More credits:", "Conversation: Tim", "InformationConversation: Tim", "ManagementConversation: Tim", "MarketConversation: Tim", "MarketFilter: Tim", "MatchConversation: Tip", "SeasonConversation: Tip", "WeekendConversation: Tip",
-                    "FileManager: Tim", "Game: Tip", "Match: Tip", "MatchManager: Tip & Tim", "MatchSequence: Tip", "RandomNames: Tip", "RandomStats: Tip & Tim",
+                    "More credits:", "Conversation: Tim", "InformationConversation: Tip & Tim", "ManagementConversation: Tim", "MarketConversation: Tim", "MarketFilter: Tim", "MatchConversation: Tip", "SeasonConversation: Tip", "WeekendConversation: Tip",
+                    "FileManager: Tim", "Game (simulatie): Tip", "Match: Tip", "MatchManager: Tip & Tim", "MatchSequence: Tip", "RandomNames: Tip", "RandomStats: Tip & Tim",
                     "AllScores: Tip", "MatchWeek: Tip", "PlannedWeek: Tip", "Season: Tip", "Week: Tip",
                     "Coach: Tip & Tim", "CoachManager: Tim", "CoachStats: Tip & Tim", "FactoryException: Tim", "InvalidPlayerException: Tim", "Player: Tim", "PlayerManager: Tim", "PlayerStats: Tim", "Position: Tim",
                     "Geld: Tip", "PlayerPlacement: Tim", "Team: Tip & Tim", "TeamInfo: Tip & Tim", "TeamManager: Tim", "TransferResult: Tim",
@@ -260,7 +260,7 @@ public class BAVM
         }
     }
 
-    public static boolean resetGame()
+    public static boolean restartGame(boolean restart)
     {
         try
         {
@@ -279,8 +279,10 @@ public class BAVM
             commands.add(gameJAR.getPath());
             processBuilder = new ProcessBuilder(commands);
             processBuilder.start();
-            fileManager.deleteData();
-
+            if (restart)
+            {
+                fileManager.deleteData();
+            }
             System.exit(0);
         } catch (Exception e)
         {

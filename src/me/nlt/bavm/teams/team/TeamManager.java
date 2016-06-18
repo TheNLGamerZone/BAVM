@@ -71,6 +71,8 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
+        BAVM.getDisplay().appendText(" Teams aan het opslaan...");
+
         int counter = 1;
 
         for (T type : manageables)

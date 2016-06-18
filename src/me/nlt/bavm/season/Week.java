@@ -9,6 +9,7 @@ import me.nlt.bavm.teams.team.TeamManager;
 public class Week
 {
     public static int weekNumber;
+    public static int seasonNumber;
 
     public static boolean endWeek(boolean endSeason)
     {
@@ -75,9 +76,16 @@ public class Week
 
     public static void nextSeason()
     {
+        for (int i = 0; i < 20; i++)
+        {
+            BAVM.getTeamManager().getTeam(i).getTeamInfo().resetTeamScores();
+        }
+
         //TODO change stuff here
         weekNumber = 0;
         BAVM.getFileManager().addWeek(true);
+        seasonNumber++;
+        //TODO save season number
 
         for (int i = 0; i < 20; i++)
         {
