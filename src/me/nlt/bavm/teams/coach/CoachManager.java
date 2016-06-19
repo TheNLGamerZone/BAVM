@@ -1,12 +1,15 @@
 package me.nlt.bavm.teams.coach;
 
 import me.nlt.bavm.BAVM;
+import me.nlt.bavm.Factory;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
-import me.nlt.bavm.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.exceptions.FactoryException;
+import me.nlt.bavm.teams.team.Team;
+
+import java.util.ArrayList;
 
 public class CoachManager<T extends Manageable> extends Manager<T>
 {
@@ -74,7 +77,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     @Override
     public void generateManageables()
     {
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < 74; i++)
         {
             double teamTalent = Math.random();
 
@@ -82,5 +85,33 @@ public class CoachManager<T extends Manageable> extends Manager<T>
         }
 
         this.saveManageables(true);
+    }
+
+    public ArrayList<Coach> getFreeCoaches()
+    {
+        ArrayList<Coach> freeCoaches = new ArrayList<>();
+
+        for (T type : manageables)
+        {
+            Coach coach = (Coach) type;
+            boolean inTeam = false;
+
+            for (Object object : BAVM.getTeamManager().getLoadedTeams())
+            {
+                Team team = (Team) object;
+
+                if (team.getTeamInfo().getTeamCoach() == coach)
+                {
+                    inTeam = true;
+                }
+            }
+
+            if (!inTeam)
+            {
+                freeCoaches.add(coach);
+            }
+        }
+
+        return freeCoaches;
     }
 }

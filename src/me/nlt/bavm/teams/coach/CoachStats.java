@@ -42,6 +42,8 @@ public class CoachStats
      */
     public CoachStats(int coachID, double[] skillValues)
     {
+        this.coachID = coachID;
+
         // Skills in de array zetten
         for (CStat stat : CStat.values())
         {
@@ -120,6 +122,18 @@ public class CoachStats
 
         // Zo niet returnen we 'null'
         return null;
+    }
+
+    public double getTotalSkill()
+    {
+        double skill = 0;
+
+        for (CStat cStat : CStat.values())
+        {
+            skill += getValue(cStat);
+        }
+
+        return skill;
     }
 
     /**

@@ -3,6 +3,7 @@ package me.nlt.bavm.conversation;
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.Display;
 import me.nlt.bavm.teams.Market;
+import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.team.TransferResult;
 
@@ -35,7 +36,8 @@ public class MarketConversation implements Conversation
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je filters aan te passen",
                     "Typ '-4' om te zoeken",
-                    "Typ '-5' om spelers te verkopen"
+                    "Typ '-5' om spelers te verkopen",
+                    "Typ '-6' om een coach aan te nemen"
             );
 
             int mainNumber = (int) display.readDouble(false);
@@ -244,6 +246,19 @@ public class MarketConversation implements Conversation
                             break;
                         }
                     }
+                }
+            }
+
+            if (mainNumber == -6)
+            {
+                display.appendText("\n\t\t- - - - - - - - - - - - [ Coach aannemen ] - - - - - - - - - - - - ");
+
+                for (Object object : BAVM.getCoachManager().getFreeCoaches())
+                {
+                    Coach coach = (Coach) object;
+                    double price = coach.getCoachStats().getTotalSkill() * ((Math.random() + Math.random()) * 12424);
+
+                    display.appendText(" " + coach.getCoachName() + " - Skill: " + new DecimalFormat("####.##").format(coach.getCoachStats().getTotalSkill()) + " - Prijs: $" + new DecimalFormat("####.##").format(price));
                 }
             }
         }
