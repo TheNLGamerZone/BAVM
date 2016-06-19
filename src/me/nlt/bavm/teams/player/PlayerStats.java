@@ -163,6 +163,20 @@ public class PlayerStats
         return null;
     }
 
+    public static Stat getSkill(int index)
+    {
+        switch (index)
+        {
+            case 0 : return Stat.AFMAKEN;
+            case 1 : return Stat.AANVAL;
+            case 2 : return Stat.BALBEZIT;
+            case 3 : return Stat.VERDEDIGEN;
+            case 4 : return Stat.DOELMAN;
+            case 5 : return Stat.CONDITIE;
+            default : return null;
+        }
+    }
+
     public double getTotalSkill()
     {
         return this.totalSkill;

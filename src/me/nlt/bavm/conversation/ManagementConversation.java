@@ -287,7 +287,7 @@ public class ManagementConversation implements Conversation
 
                                 if (display.readLine(false, "Typ 123 om te bevestigen").equals("123"))
                                 {
-                                    if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price)
+                                    if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price)
                                     {
                                         display.appendText("Je hebt niet genoeg geld voor deze training!");
                                         break trainen;
@@ -384,7 +384,7 @@ public class ManagementConversation implements Conversation
 
                                 if (display.readLine(false, "Typ 123 om te bevestigen").equals("123"))
                                 {
-                                    if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price)
+                                    if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price)
                                     {
                                         display.appendText("Je hebt niet genoeg geld voor deze training!");
                                         break trainen;

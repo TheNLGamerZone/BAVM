@@ -7,6 +7,7 @@ import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
 import me.nlt.bavm.season.Season;
 import me.nlt.bavm.season.Week;
+import me.nlt.bavm.teams.TeamAI;
 import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.coach.CoachManager;
 import me.nlt.bavm.teams.player.Player;
@@ -162,6 +163,11 @@ public class BAVM
             if (mainNumber == 6)
             {
                 new WeekendConversation().startConversation(display);
+            }
+
+            if (mainNumber == 7)
+            {
+                TeamAI.doTeamAI();
             }
 
             if (mainNumber == -9)

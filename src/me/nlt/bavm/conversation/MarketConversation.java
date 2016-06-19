@@ -168,7 +168,7 @@ public class MarketConversation implements Conversation
                     } else
                     {
                         display.appendText("Je staat op het punt " + player.getPlayerName() + " te kopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de aankoop te bevestigen."
-                                , "Saldo na aankoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() - player.getMarketValue()));
+                                , "Saldo na aankoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() - player.getMarketValue()));
 
                         int confirmationNumber = (int) display.readDouble(false);
 
@@ -233,7 +233,7 @@ public class MarketConversation implements Conversation
                     } else
                     {
                         display.appendText("Je staat op het punt " + player.getPlayerName() + " te verkopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de verkoop te bevestigen."
-                                , "Saldo na verkoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() + player.getMarketValue()));
+                                , "Saldo na verkoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() + player.getMarketValue()));
 
                         if (display.readLine(false, "").equals("123"))
                         {

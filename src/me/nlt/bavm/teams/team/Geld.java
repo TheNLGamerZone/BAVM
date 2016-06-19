@@ -4,7 +4,7 @@ public class Geld {
     private int weeklyIncome;
     private int currentGeld;
 
-    public Geld (double teamTalent, int currentGeld, int weeklyIncome)
+    public Geld (double teamTalent, int currentGeld, int weeklyIncome, int id)
     {
         int teamIncomeFactor = (int) ((teamTalent + 1) * 30000);
         int teamIncomeVariance = (int) ((Math.random() + 1) * 10000);
@@ -18,7 +18,12 @@ public class Geld {
 
         if (currentGeld == -1)
         {
-            this.currentGeld = this.weeklyIncome * (int) ((Math.random() + 1) * 15);
+            if (id != 19)
+            {
+                this.currentGeld = this.weeklyIncome * (int) ((Math.random() + 1) * 3);
+            } else {
+                this.currentGeld = this.weeklyIncome * (int) ((Math.random() + 1) * 15);
+            }
         } else {
             this.currentGeld = currentGeld;
         }
@@ -29,7 +34,7 @@ public class Geld {
         return this.weeklyIncome;
     }
 
-    public int getCurrentGeldK()
+    public int getCurrentGeld()
     {
         return this.currentGeld;
     }

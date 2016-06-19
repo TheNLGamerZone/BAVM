@@ -30,7 +30,7 @@ public class TeamInfo
         //DEBUG
         //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
-        this.teamGeld = new Geld(teamTalent, currentGeld, weeklyIncome);
+        this.teamGeld = new Geld(teamTalent, currentGeld, weeklyIncome, team.getID());
         this.teamTalent = teamTalent;
 
         this.createPlacement(placement);

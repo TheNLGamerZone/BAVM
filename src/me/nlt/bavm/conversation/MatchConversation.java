@@ -85,12 +85,10 @@ public class MatchConversation implements Conversation
                     int matchID = plannedMatch.getMatchID();
                     plannedMatch.getMatchName();
                     Match match = BAVM.getMatchManager().getMatch(matchID);
-                    
                     if (match == null)
                     {
                     	continue;
                     }
-                    
                     BAVM.getDisplay().appendText("\nMatch (ID: " + matchID + "): " + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[1]).getTeamName()  + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
                             "Result: " + match.getMatchGoals()[0] + "-" +  match.getMatchGoals()[1]);
 

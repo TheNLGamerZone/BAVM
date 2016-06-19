@@ -104,6 +104,7 @@ public class Game
         int conflictResult = 0;
         int attemptResult;
         boolean modifyCoefficients = false;
+        boolean conditionModify = false;
 
         /*
          * dit is de main while loop. Time is in dit geval de tijd in minuten, de loop kan echer ook teruggaan zonder dat de tijd meer wordt,
@@ -115,15 +116,34 @@ public class Game
             gameLog.add("Time: " + time);
 
             /*
+             * De waardes worden aangepast op basis van de conditieskills
+             */
+
+            //TODO fix memory leak?
+            /*if (conditionModify)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    visitValues[i] = visitValues[i] - (0.001 * (100 - visitValues[5]));
+                    homeValues[i] = homeValues[i] - (0.001 * (100 - homeValues[5]));
+                }
+
+                conditionModify = false;
+            }*/
+
+            /*
              * Hij past de attack skill aan zodat er niet te veel goals worden gemaakt. modifyCoefficients is alleen true als er gescoord is.
              */
-            if (modifyCoefficients && ballPossession == 0) {
-                visitValues[0] = visitValues[0] * 0.850;
-                visitValues[1] = visitValues[1] * 0.925;
-                modifyCoefficients = false;
-            } else if (modifyCoefficients && ballPossession == 1) {
-                homeValues[0] = homeValues[0] * 0.850;
-                homeValues[1] = homeValues[1] * 0.925;
+            if (modifyCoefficients)
+            {
+                if (ballPossession == 0)
+                {
+                    visitValues[0] = visitValues[0] * 0.850;
+                    visitValues[1] = visitValues[1] * 0.925;
+                } else {
+                    homeValues[0] = homeValues[0] * 0.850;
+                    homeValues[1] = homeValues[1] * 0.925;
+                }
                 modifyCoefficients = false;
             }
 
@@ -169,6 +189,7 @@ public class Game
                     //tijd gaat verder en hij continued naar het einde van de loop, hij slaat goalberekening dus over
                     gameLog.add("No progress has been made!");
                 	time++;
+                    conditionModify = true;
                     continue;
             }
 
@@ -192,6 +213,7 @@ public class Game
                 case -1 :
                     //er moet geen goal berekent worden
                 	time++;
+                    conditionModify = true;
                     break;
                 case 0 :
                     //goalkans gefaald, ander krijgt de bal op hun eigen kwart
@@ -212,6 +234,7 @@ public class Game
                         ballQuarter = 1;
                         ballPossession = 1;
                         time++;
+                        conditionModify = true;
                         modifyCoefficients = true;
                         gameLog.add(home.getTeamName() + " has scored!");
                         home.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSFOR, 1);
@@ -221,6 +244,7 @@ public class Game
                         ballQuarter = 2;
                         ballPossession = 0;
                         time++;
+                        conditionModify = true;
                         modifyCoefficients = true;
                         gameLog.add(visitor.getTeamName() + " has scored!");
                         visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSFOR, 1);

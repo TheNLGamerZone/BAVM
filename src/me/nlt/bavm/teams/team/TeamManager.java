@@ -124,12 +124,12 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             return TransferResult.FAILED_NOT_IN_TEAM;
         }
 
-        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price && receivingTeam != this.playerTeam)
+        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price && receivingTeam != this.playerTeam)
         {
             return TransferResult.FAILED_NO_MONEY_OTHER;
         }
 
-        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeldK() < price && receivingTeam == this.playerTeam)
+        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price && receivingTeam == this.playerTeam)
         {
             return TransferResult.FAILED_NO_MONEY;
         }

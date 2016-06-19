@@ -2,6 +2,7 @@ package me.nlt.bavm.season;
 
 import me.nlt.bavm.BAVM;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.teams.TeamAI;
 import me.nlt.bavm.teams.team.Geld;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamManager;
@@ -22,6 +23,14 @@ public class Week
         MatchManager matchManager = BAVM.getMatchManager();
         MatchWeek matchWeek = BAVM.getSeason().getSeasonWeeks().get(weekNumber);
 
+        /*
+         * Team AI
+         */
+        TeamAI.doTeamAI();
+
+        /*
+         * Wedstrijden worden berekend
+         */
         for (PlannedMatch plannedMatch : matchWeek.getMatchesInWeek())
         {
             int matchID = matchManager.simulateMatch(plannedMatch.getTeamIDs()[0], plannedMatch.getTeamIDs()[1]);
@@ -38,8 +47,6 @@ public class Week
                 BAVM.getDisplay().printException(e);
             }
         }
-
-        //TODO fix double ranks
 
         weekNumber++;
         BAVM.getFileManager().addWeek(false);

@@ -65,7 +65,7 @@ public class InformationConversation implements Conversation
                         "Directeur: " + team.getDirectorName(),
                         "Team talent: " + team.getTeamInfo().getTeamTalent(),
                         "Team ID: " + team.getID(),
-                        "Geld in de kas: $" + team.getTeamInfo().getTeamGeld().getCurrentGeldK(),
+                        "Geld in de kas: $" + team.getTeamInfo().getTeamGeld().getCurrentGeld(),
                         "Inkomsten per week: $" + team.getTeamInfo().getTeamGeld().getWeeklyIncome(),
                         "Coach: " + team.getTeamInfo().getTeamCoach().getCoachName() + " (ID: " + team.getTeamInfo().getTeamCoach().getCoachID() + ")",
                         "Opstelling:",
