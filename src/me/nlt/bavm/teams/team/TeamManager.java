@@ -70,7 +70,10 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
-        BAVM.getDisplay().appendText("    -> Teams aan het opslaan ...");
+        if (!BAVM.getFileManager().firstStart)
+        {
+            BAVM.getDisplay().appendText("    -> Teams aan het opslaan ...");
+        }
 
         int counter = 1;
 

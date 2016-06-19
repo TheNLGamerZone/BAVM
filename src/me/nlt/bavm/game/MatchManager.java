@@ -36,7 +36,10 @@ public class MatchManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
-        BAVM.getDisplay().appendText("    -> Wedstrijden aan het opslaan ...");
+        if (!BAVM.getFileManager().firstStart)
+        {
+            BAVM.getDisplay().appendText("    -> Wedstrijden aan het opslaan ...");
+        }
 
         int counter = 0;
 

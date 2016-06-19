@@ -50,7 +50,11 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
-        BAVM.getDisplay().appendText("    -> Coaches aan het opslaan ...");
+        if (!BAVM.getFileManager().firstStart)
+        {
+            BAVM.getDisplay().appendText("    -> Coaches aan het opslaan ...");
+        }
+
         int counter = 0;
 
         for (T type : manageables)

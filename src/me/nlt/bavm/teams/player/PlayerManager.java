@@ -53,7 +53,10 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
-        BAVM.getDisplay().appendText("    -> Spelers aan het opslaan ...");
+        if (!BAVM.getFileManager().firstStart)
+        {
+            BAVM.getDisplay().appendText("    -> Spelers aan het opslaan ...");
+        }
 
         int counter = 0;
 
