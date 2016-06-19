@@ -15,7 +15,7 @@ public class Team implements Manageable
 
     public Team(String teamName, String directorName, int teamID, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
-        System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
+        //System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
 
         this.teamName = teamName;
         this.directorName = directorName;

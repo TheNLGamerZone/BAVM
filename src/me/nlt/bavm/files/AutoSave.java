@@ -15,6 +15,7 @@ public class AutoSave
         this.timer = new Timer(true);
         this.delay = delayInSecs * 1000;
 
+        BAVM.getFileManager().saveData();
         this.runTimer();
     }
 
