@@ -35,7 +35,7 @@ public class Week
                 Thread.sleep(1);
             } catch (InterruptedException e)
             {
-                Thread.currentThread().interrupt();
+                BAVM.getDisplay().printException(e);
             }
         }
 

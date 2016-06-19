@@ -260,7 +260,7 @@ public class BAVM
             Week.nextSeason();
         } catch (Exception e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
     }
 
@@ -290,7 +290,7 @@ public class BAVM
             System.exit(0);
         } catch (Exception e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
 
         return false;

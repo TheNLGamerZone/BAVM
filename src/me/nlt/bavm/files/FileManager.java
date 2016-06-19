@@ -148,7 +148,7 @@ public class FileManager
             }
         } catch (URISyntaxException | ParserConfigurationException | TransformerException | SAXException | IOException e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
     }
 
@@ -164,7 +164,7 @@ public class FileManager
             transformer.transform(source, result);
         } catch (Exception e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
     }
 
@@ -279,7 +279,7 @@ public class FileManager
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
 
         return -1;
@@ -306,7 +306,7 @@ public class FileManager
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
 
         return -1;
@@ -337,7 +337,7 @@ public class FileManager
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
 
         return null;

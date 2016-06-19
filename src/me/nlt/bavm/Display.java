@@ -199,7 +199,7 @@ public class Display
                 Thread.sleep(delay);
             } catch(InterruptedException e)
             {
-                e.printStackTrace();
+                BAVM.getDisplay().printException(e);
             }
         }
     }
@@ -264,7 +264,7 @@ public class Display
                 inputLine.wait();
             } catch (InterruptedException e)
             {
-                e.printStackTrace();
+                BAVM.getDisplay().printException(e);
             }
         }
 
