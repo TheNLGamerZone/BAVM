@@ -59,7 +59,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
 
             if ((firstSave || coach.unsavedChanges()))
             {
-                BAVM.getFileManager().saveData("coach", coach.toString(), coach.getID());
+                BAVM.getFileManager().writeData("coach", coach.toString(), coach.getID());
                 counter++;
             }
         }

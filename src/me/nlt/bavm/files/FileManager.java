@@ -152,92 +152,96 @@ public class FileManager
         }
     }
 
-    public void saveData(String tag, String dataString, int ID)
+    public void saveData()
     {
         try
         {
-            NodeList nodeList = document.getElementsByTagName(tag);
-            Node node = null;
-
-            for (int i = 0; i < nodeList.getLength(); i++)
-            {
-                Node subNode = nodeList.item(i);
-
-                if (subNode.getNodeType() == Node.ELEMENT_NODE)
-                {
-                    Element element = (Element) subNode;
-
-                    if (Integer.parseInt(element.getAttribute("id")) == ID)
-                    {
-                        node = subNode;
-                    }
-                }
-
-            }
-
-            if (node == null)
-            {
-                Element element = document.createElement(tag);
-                Element dataElement = document.createElement("dataString");
-
-                element.setAttribute("id", ID + "");
-                dataElement.appendChild(document.createTextNode(dataString));
-                element.appendChild(dataElement);
-
-                int newAmount;
-                switch (tag)
-                {
-                    case "player":
-                        players.appendChild(element);
-
-                        newAmount = Integer.parseInt(players.getAttribute("amount")) + 1;
-                        players.removeAttribute("amount");
-                        players.setAttribute("amount", newAmount + "");
-                        break;
-                    case "team":
-                        teams.appendChild(element);
-
-                        newAmount = Integer.parseInt(teams.getAttribute("amount")) + 1;
-                        teams.removeAttribute("amount");
-                        teams.setAttribute("amount", newAmount + "");
-                        break;
-                    case "coach":
-                        coaches.appendChild(element);
-
-                        newAmount = Integer.parseInt(coaches.getAttribute("amount")) + 1;
-                        coaches.removeAttribute("amount");
-                        coaches.setAttribute("amount", newAmount + "");
-                        break;
-                    case "match":
-                        matches.appendChild(element);
-
-                        newAmount = Integer.parseInt(matches.getAttribute("amount")) + 1;
-                        matches.removeAttribute("amount");
-                        matches.setAttribute("amount", newAmount + "");
-                }
-            } else
-            {
-                NodeList nodeChildren = node.getChildNodes();
-
-                for (int i = 0; i < nodeChildren.getLength(); i++)
-                {
-                    Node child = nodeChildren.item(i);
-
-                    if (child.getNodeName().equals("dataString"))
-                    {
-                        child.setTextContent(dataString);
-                    }
-                }
-            }
-
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
             StreamResult result = new StreamResult(storageFile);
+
             transformer.transform(source, result);
-        } catch (TransformerException e)
+        } catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public void writeData(String tag, String dataString, int ID)
+    {
+        NodeList nodeList = document.getElementsByTagName(tag);
+        Node node = null;
+
+        for (int i = 0; i < nodeList.getLength(); i++)
+        {
+            Node subNode = nodeList.item(i);
+
+            if (subNode.getNodeType() == Node.ELEMENT_NODE)
+            {
+                Element element = (Element) subNode;
+
+                if (Integer.parseInt(element.getAttribute("id")) == ID)
+                {
+                    node = subNode;
+                }
+            }
+
+        }
+
+        if (node == null)
+        {
+            Element element = document.createElement(tag);
+            Element dataElement = document.createElement("dataString");
+
+            element.setAttribute("id", ID + "");
+            dataElement.appendChild(document.createTextNode(dataString));
+            element.appendChild(dataElement);
+
+            int newAmount;
+            switch (tag)
+            {
+                case "player":
+                    players.appendChild(element);
+
+                    newAmount = Integer.parseInt(players.getAttribute("amount")) + 1;
+                    players.removeAttribute("amount");
+                    players.setAttribute("amount", newAmount + "");
+                    break;
+                case "team":
+                    teams.appendChild(element);
+
+                    newAmount = Integer.parseInt(teams.getAttribute("amount")) + 1;
+                    teams.removeAttribute("amount");
+                    teams.setAttribute("amount", newAmount + "");
+                    break;
+                case "coach":
+                    coaches.appendChild(element);
+
+                    newAmount = Integer.parseInt(coaches.getAttribute("amount")) + 1;
+                    coaches.removeAttribute("amount");
+                    coaches.setAttribute("amount", newAmount + "");
+                    break;
+                case "match":
+                    matches.appendChild(element);
+
+                    newAmount = Integer.parseInt(matches.getAttribute("amount")) + 1;
+                    matches.removeAttribute("amount");
+                    matches.setAttribute("amount", newAmount + "");
+            }
+        } else
+        {
+            NodeList nodeChildren = node.getChildNodes();
+
+            for (int i = 0; i < nodeChildren.getLength(); i++)
+            {
+                Node child = nodeChildren.item(i);
+
+                if (child.getNodeName().equals("dataString"))
+                {
+                    child.setTextContent(dataString);
+                }
+            }
         }
     }
 
@@ -345,5 +349,7 @@ public class FileManager
         BAVM.getPlayerManager().saveManageables(false);
         BAVM.getCoachManager().saveManageables(false);
         BAVM.getMatchManager().saveManageables(false);
+
+        this.saveData();
     }
 }

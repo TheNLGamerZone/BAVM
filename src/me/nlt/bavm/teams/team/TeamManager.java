@@ -80,12 +80,12 @@ public class TeamManager<T extends Manageable> extends Manager<T>
 
             if ((firstSave || team.unsavedChanges()))
             {
-                BAVM.getFileManager().saveData("team", team.toString(), team.getID());
+                BAVM.getFileManager().writeData("team", team.toString(), team.getID());
                 counter++;
             }
         }
 
-        BAVM.getFileManager().saveData("team", marketTeam.toString(), 20);
+        BAVM.getFileManager().writeData("team", marketTeam.toString(), 20);
 
         System.out.println((counter == 0 ? "Geen" : counter) + " veranderingen in teams opgeslagen!");
     }
