@@ -6,6 +6,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 public class Display
 {
@@ -32,6 +35,20 @@ public class Display
         this.lockObject = lockObject;
 
         this.initDisplay();
+    }
+
+    public void printException(Exception exception)
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(byteArrayOutputStream);
+        String string;
+
+        exception.printStackTrace(printStream);
+        string = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
+
+        appendText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ",
+                "De volgende fout is opgetreden: ", string, "Laat het ons weten en we zullen het zo spoedig mogelijk oplossen!",
+                "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
     }
 
     /**

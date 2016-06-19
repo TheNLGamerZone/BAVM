@@ -42,7 +42,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
                 manageables.add((T) Factory.createCoach(BAVM.getFileManager().readData("coach", i)));
             } catch (FactoryException e)
             {
-                e.printStackTrace();
+                BAVM.getDisplay().printException(e);
             }
         }
     }

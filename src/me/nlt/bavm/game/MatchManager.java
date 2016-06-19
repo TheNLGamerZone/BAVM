@@ -28,7 +28,7 @@ public class MatchManager<T extends Manageable> extends Manager<T>
                 manageables.add((T) Factory.createMatch(BAVM.getFileManager().readData("match", i)));
             } catch (FactoryException e)
             {
-                e.printStackTrace();
+                BAVM.getDisplay().printException(e);
             }
         }
     }

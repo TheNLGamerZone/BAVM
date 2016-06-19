@@ -45,7 +45,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
                 manageables.add((T) Factory.createPlayer(BAVM.getFileManager().readData("player", i)));
             } catch (InvalidPlayerException e)
             {
-                e.printStackTrace();
+                BAVM.getDisplay().printException(e);
             }
         }
     }

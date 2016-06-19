@@ -53,7 +53,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
                 manageables.add((T) Factory.createTeam(BAVM.getFileManager().readData("team", i)));
             } catch (FactoryException e)
             {
-                e.printStackTrace();
+                BAVM.getDisplay().printException(e);
             }
         }
 
@@ -63,7 +63,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             marketTeam = Factory.createTeam(BAVM.getFileManager().readData("team", amount - 1));
         } catch (FactoryException e)
         {
-            e.printStackTrace();
+            BAVM.getDisplay().printException(e);
         }
     }
 
