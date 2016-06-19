@@ -43,11 +43,19 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             try
             {
                 manageables.add((T) Factory.createPlayer(BAVM.getFileManager().readData("player", i)));
+
+                if (i%30 == 0)
+                {
+                    BAVM.getDisplay().clearText();
+                    BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  " + i + " spelers geladen ...");
+                }
             } catch (InvalidPlayerException e)
             {
                 BAVM.getDisplay().printException(e);
             }
         }
+
+        System.out.println("Alle spelers geladen");
     }
 
     @Override
@@ -77,39 +85,13 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     @Override
     public void generateManageables()
     {
-        //DEBUG
-        System.out.println("15% kans op keeper, 25% kans op defender, 30% kans op attacker en 30% kans op midfielder");
-
-        int keeper = 0, defender = 0, attacker = 0, midfielder = 0, total = 0;
-
-        //amount of players to generate
-        int playersToGenerate = 1028;
+        // Amount of players to generate
+        int playersToGenerate = 750;
 
         for (Position position : generatePositions(playersToGenerate, new int[]{15, 25, 30, 30}))
         {
             manageables.add((T) new Player(RandomNames.getPeopleName(), this.getNextAvailableID(), position, RandomStats.randomStats(position)));
-
-            switch (position)
-            {
-                case KEEPER:
-                    keeper++;
-                    break;
-                case DEFENDER:
-                    defender++;
-                    break;
-                case ATTACKER:
-                    attacker++;
-                    break;
-                case MIDFIELDER:
-                    midfielder++;
-                    break;
-            }
-
-            total++;
         }
-
-        //DEBUG
-        System.out.printf("%d keepers, %d defenders, %d attackers and %d midfielders (%d total)%n", keeper, defender, attacker, midfielder, total);
 
         // Save players
         this.saveManageables(true);

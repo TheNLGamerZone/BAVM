@@ -75,7 +75,7 @@ public class Week
                 geld.addGeld(geld.getWeeklyIncome());
             }
 
-            BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - - - - -");
+            //BAVM.getDisplay().appendText("\t\t- - - - - - - - - - - - - - - [ WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - - - - -");
         }
 
         return true;

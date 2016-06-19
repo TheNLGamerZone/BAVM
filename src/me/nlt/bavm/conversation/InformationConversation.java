@@ -10,8 +10,6 @@ import me.nlt.bavm.teams.player.Position;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamInfo;
 
-import java.text.DecimalFormat;
-
 public class InformationConversation implements Conversation
 {
     @Override
@@ -20,7 +18,8 @@ public class InformationConversation implements Conversation
         backToMain:
         while (true)
         {
-            display.appendText("\n\t\t- - - - - - - - - [ Het informatiecentrum ] - - - - - - - - -",
+            display.clearText();
+            display.appendText("\t\t- - - - - - - - - [ Het informatiecentrum ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je eigen team te bekijken",
                     "Typ '-4' om een ander team te bekijken",
@@ -60,7 +59,8 @@ public class InformationConversation implements Conversation
                     }
                 }
 
-                display.appendText("\n\t\t- - - - - - - - - - - [ Team bekijken ] - - - - - - - - - - - ",
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - - [ Team bekijken ] - - - - - - - - - - - ",
                         "Naam: " + team.getTeamName(),
                         "Directeur: " + team.getDirectorName(),
                         "Team talent: " + team.getTeamInfo().getTeamTalent(),
@@ -88,12 +88,13 @@ public class InformationConversation implements Conversation
                     display.appendText("   " + statCoefficient.name().substring(0, 1) + statCoefficient.name().substring(1).toLowerCase() + ": " + team.getTeamInfo().getStatCoefficients().get(statCoefficient));
                 }
 
-                display.readLine("Typ iets om terug te keren naar het informatiecentrum.");
+                display.readLine(false, "Typ iets om terug te keren naar het informatiecentrum.");
             }
 
             if (mainNumber == -5)
             {
-                display.appendText("\n\t\t- - - - - - - - - - - [ Teams bekijken ] - - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - - [ Teams bekijken ] - - - - - - - - - - - ");
 
                 for (Object object : BAVM.getTeamManager().getLoadedTeams())
                 {
@@ -109,7 +110,8 @@ public class InformationConversation implements Conversation
             {
                 Player player;
 
-                display.appendText("\n\t\t- - - - - - - - - - [ Speler bekijken ] - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Speler bekijken ] - - - - - - - - - - ");
 
                 while (true)
                 {
@@ -132,7 +134,7 @@ public class InformationConversation implements Conversation
                         "Speler ID: " + player.getID(),
                         "Aanbevolen positie: " + player.getPosition().name().substring(0, 1) + player.getPosition().name().substring(1).toLowerCase(),
                         "Totale skill: " + player.getPlayerStats().getTotalSkill(),
-                        "Waarde: $" + new DecimalFormat("#####.##").format(player.getMarketValue()) + (BAVM.getTeamManager().marketTeam.getTeamInfo().getPlayers().contains(player) ? " (Speler te koop)" : " (Speler niet te koop)"),
+                        "Waarde: $" + decimalFormat.format(player.getMarketValue()) + (BAVM.getTeamManager().marketTeam.getTeamInfo().getPlayers().contains(player) ? " (Speler te koop)" : " (Speler niet te koop)"),
                         "Skills:"
                 );
 
@@ -148,7 +150,8 @@ public class InformationConversation implements Conversation
             {
                 Coach coach;
 
-                display.appendText("\n\t\t- - - - - - - - - - [ Coach bekijken ] - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Coach bekijken ] - - - - - - - - - - ");
 
                 while (true)
                 {

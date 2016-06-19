@@ -5,7 +5,6 @@ import me.nlt.bavm.Display;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.season.MatchWeek;
 import me.nlt.bavm.season.PlannedMatch;
-import me.nlt.bavm.season.Season;
 
 public class MatchConversation implements Conversation
 {
@@ -15,7 +14,8 @@ public class MatchConversation implements Conversation
         backToMain:
         while (true)
         {
-            display.appendText("\n\t\t- - - - - - - - - [ Het wedstrijdcentrum ] - - - - - - - - -",
+            display.clearText();
+            display.appendText("\t\t- - - - - - - - - [ Het wedstrijdcentrum ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ -3 voor een lijst van alle wedstrijden",
                     "Typ -4 om een week te bekijken",
@@ -31,7 +31,9 @@ public class MatchConversation implements Conversation
 
             if (mainNumber == -3)
             {
-                display.appendText("\n\t\t- - - - - - - - - - [ Alle wedstrijden bekijken ] - - - - - - - - - - ");
+                int playedMatches = 0;
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Alle wedstrijden bekijken ] - - - - - - - - - - ");
 
                 for (MatchWeek matchWeek : BAVM.getSeason().getSeasonWeeks())
                 {
@@ -44,24 +46,32 @@ public class MatchConversation implements Conversation
                         {
                             BAVM.getDisplay().appendText("Match (ID: " + matchID + "): " + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[1]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
                                     "Result: " + BAVM.getMatchManager().getMatch(matchID).getMatchGoals()[0] + "-" + BAVM.getMatchManager().getMatch(matchID).getMatchGoals()[1]);
-
-                            try {
+                            playedMatches++;
+                            try
+                            {
                                 Thread.sleep(1);
-                            } catch (InterruptedException e) {
+                            } catch (InterruptedException e)
+                            {
                                 Thread.currentThread().interrupt();
                             }
                         }
                     }
                 }
 
-                display.readLine("Typ iets om terug te keren naar het wedstrijdcentrum.");
+                if (playedMatches == 0)
+                {
+                    display.appendText("Nog geen wedstrijden gespeeld");
+                }
+
+                display.readLine(false, "Typ iets om terug te keren naar het wedstrijdcentrum.");
             }
 
             if (mainNumber == -4)
             {
                 MatchWeek matchWeek;
 
-                display.appendText("\n\t\t- - - - - - - - - - [ Week bekijken ] - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Week bekijken ] - - - - - - - - - - ");
 
                 while (true)
                 {
@@ -87,34 +97,39 @@ public class MatchConversation implements Conversation
                     Match match = BAVM.getMatchManager().getMatch(matchID);
                     if (match == null)
                     {
-                    	continue;
+                        continue;
                     }
-                    BAVM.getDisplay().appendText("\nMatch (ID: " + matchID + "): " + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[1]).getTeamName()  + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
-                            "Result: " + match.getMatchGoals()[0] + "-" +  match.getMatchGoals()[1]);
+                    BAVM.getDisplay().appendText("\nMatch (ID: " + matchID + "): " + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[1]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
+                            "Result: " + match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1]);
 
                     try
                     {
                         Thread.sleep(1);
-                    } catch(InterruptedException e) {
+                    } catch (InterruptedException e)
+                    {
                         Thread.currentThread().interrupt();
                     }
                 }
 
-                display.readLine("Typ iets om terug te keren naar het wedstrijdcentrum.");
+                display.readLine(false, "Typ iets om terug te keren naar het wedstrijdcentrum.");
             }
 
             if (mainNumber == -5)
             {
                 Match match;
 
-                display.appendText("\n\t\t- - - - - - - - - - [ Wedstrijd bekijken ] - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Wedstrijd bekijken ] - - - - - - - - - - ");
 
                 while (true)
                 {
                     int matchID = (int) display.readDouble(false, "Typ het ID van de wedstrijd om diens informatie te bekijken");
                     match = BAVM.getMatchManager().getMatch(matchID);
 
-                    if (matchID == -2)
+                    if (matchID == -1)
+                    {
+                        break;
+                    } else if (matchID == -2)
                     {
                         break backToMain;
                     } else if (match == null)
@@ -122,13 +137,10 @@ public class MatchConversation implements Conversation
                         display.appendText("Die wedstrijd bestaat niet!");
                     } else
                     {
-                        break;
+                        match.getMatchLog().forEach(display::appendText);
+                        display.readLine(false, "Typ iets om terug te keren naar het wedstrijdcentrum.");
                     }
                 }
-
-                match.getMatchLog().forEach(display::appendText);
-
-                display.readLine("Typ iets om terug te keren naar het wedstrijdcentrum.");
             }
         }
     }

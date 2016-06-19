@@ -6,14 +6,16 @@ import me.nlt.bavm.season.AllScores;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamInfo;
 
-public class SeasonConversation implements Conversation{
+public class SeasonConversation implements Conversation
+{
     @Override
     public void startConversation(Display display)
     {
         backToMain:
         while (true)
         {
-            display.appendText("\n\t\t- - - - - - - - - [ Het seizoenscentrum ] - - - - - - - - -",
+            display.clearText();
+            display.appendText("\t\t- - - - - - - - - [ Het seizoenscentrum ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ -3 om de competitiestand te bekijken",
                     "Typ -4 om de stand van een team te bekijken"
@@ -35,7 +37,8 @@ public class SeasonConversation implements Conversation{
             {
                 Team team;
 
-                display.appendText("\n\t\t- - - - - - - - - - [ Stand van een team ] - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Stand van een team ] - - - - - - - - - - ");
 
                 while (true)
                 {
@@ -45,7 +48,7 @@ public class SeasonConversation implements Conversation{
                     if (teamID == -2)
                     {
                         break backToMain;
-                    } else if (team== null)
+                    } else if (team == null)
                     {
                         display.appendText("Dat team bestaat niet!");
                     } else

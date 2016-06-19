@@ -7,7 +7,6 @@ import me.nlt.bavm.teams.coach.Coach;
 import me.nlt.bavm.teams.player.Player;
 import me.nlt.bavm.teams.team.TransferResult;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,8 @@ public class MarketConversation implements Conversation
         backToMain:
         while (true)
         {
-            display.appendText("\n\t\t- - - - - - - - - - - - - - - - [ De Markt ] - - - - - - - - - - - - - - - -",
+            display.clearText();
+            display.appendText("\t\t- - - - - - - - - - - - - - - - [ De Markt ] - - - - - - - - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je filters aan te passen",
                     "Typ '-4' om te zoeken",
@@ -49,14 +49,15 @@ public class MarketConversation implements Conversation
 
             if (mainNumber == -3)
             {
-                display.appendText("\n\t\t- - - - - - - - - - - - - [ Filters aanpassen ]- - - - - - - - - - - - - ", "Typ het nummer van de filter om de filter aan/uit te zetten", "Typ '-1' om terug te keren naar de markt");
-
                 while (true)
                 {
+                    display.clearText();
+                    display.appendText("\t\t- - - - - - - - - - - - - [ Filters aanpassen ]- - - - - - - - - - - - - ", "Typ het nummer van de filter om de filter aan/uit te zetten", "Typ '-1' om terug te keren naar de markt");
+
                     int counter = 1;
                     for (Market.MarketFilter marketFilter : marketFilters.keySet())
                     {
-                        display.appendText(counter + ": " + marketFilter.name() + " -> " + marketFilters.get(marketFilter));
+                        display.appendText(counter + ": " + marketFilter.getDisplayName() + (marketFilters.get(marketFilter) ? "Actief" : "Inactief"));
                         counter++;
                     }
 
@@ -79,7 +80,7 @@ public class MarketConversation implements Conversation
                         if (number == i + 1)
                         {
                             marketFilters.put(filters.get(i), !marketFilters.get(filters.get(i)));
-                            display.appendText("\nJe hebt " + filters.get(i).name() + " omgezet naar " + marketFilters.get(filters.get(i)));
+                            display.appendText("Je hebt " + filters.get(i).name() + " omgezet naar " + (marketFilters.get(filters.get(i)) ? "actief" : "inactief") + "!\n");
 
                             for (Market.MarketFilter filter : filters)
                             {
@@ -141,7 +142,8 @@ public class MarketConversation implements Conversation
 
                 marketFilters.keySet().stream().filter(marketFilter -> filters.contains(Market.MarketFilter.ALL) && marketFilter.getFilterType() == 0 && marketFilter != Market.MarketFilter.ALL).forEach(filters::remove);
 
-                display.appendText("\n\t\t- - - - - - - - - - - - [ Zoeken naar spelers ] - - - - - - - - - - - - ", "Filters: " + filters.toString());
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - - - [ Zoeken naar spelers ] - - - - - - - - - - - - ", "Filters: " + filters.toString());
 
                 display.appendText(Market.listPlayers(filters));
 
@@ -167,8 +169,8 @@ public class MarketConversation implements Conversation
                         display.appendText("Dat is geen speler!");
                     } else
                     {
-                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te kopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de aankoop te bevestigen."
-                                , "Saldo na aankoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() - player.getMarketValue()));
+                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te kopen voor $" + decimalFormat.format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de aankoop te bevestigen."
+                                , "Saldo na aankoop: $" + decimalFormat.format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() - player.getMarketValue()));
 
                         int confirmationNumber = (int) display.readDouble(false);
 
@@ -190,18 +192,19 @@ public class MarketConversation implements Conversation
             {
                 ArrayList<Player> players = BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayers();
 
-                display.appendText("\n\t\t- - - - - - - - - - - - [ Spelers verkopen ] - - - - - - - - - - - - ");
-
                 while (true)
                 {
+                    display.clearText();
+                    display.appendText("\t\t- - - - - - - - - - - - [ Spelers verkopen ] - - - - - - - - - - - - ");
+
                     int counter = 1;
 
                     for (Player player : players)
                     {
                         display.appendText(counter + ": " + player.getPlayerName()
-                                + " - Positie: " + player.getPosition().name().toLowerCase()
-                                + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill())
-                                + " - Waarde: $" + new DecimalFormat("######.##").format(player.getMarketValue())
+                                + " - Positie: " + player.getPosition().getDutchAlias().toLowerCase()
+                                + " - Skill: " + decimalFormat.format(player.getPlayerStats().getTotalSkill())
+                                + " - Waarde: $" + decimalFormat.format(player.getMarketValue())
                                 + " - ID: " + player.getPlayerID()
                                 + " - In opstelling: " + BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayerPlacement().isPlaced(player));
                         counter++;
@@ -232,8 +235,8 @@ public class MarketConversation implements Conversation
                         display.appendText("Deze speler zit niet in je team!");
                     } else
                     {
-                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te verkopen voor $" + new DecimalFormat("####.##").format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de verkoop te bevestigen."
-                                , "Saldo na verkoop: $" + new DecimalFormat("######.##").format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() + player.getMarketValue()));
+                        display.appendText("Je staat op het punt " + player.getPlayerName() + " te verkopen voor $" + decimalFormat.format(player.getMarketValue()) + ", weet je het zeker?\nTyp 123 om de verkoop te bevestigen."
+                                , "Saldo na verkoop: $" + decimalFormat.format(BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() + player.getMarketValue()));
 
                         if (display.readLine(false, "").equals("123"))
                         {
@@ -251,14 +254,47 @@ public class MarketConversation implements Conversation
 
             if (mainNumber == -6)
             {
-                display.appendText("\n\t\t- - - - - - - - - - - - [ Coach aannemen ] - - - - - - - - - - - - ");
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - - - [ Coach aannemen ] - - - - - - - - - - - - ");
 
                 for (Object object : BAVM.getCoachManager().getFreeCoaches())
                 {
                     Coach coach = (Coach) object;
-                    double price = coach.getCoachStats().getTotalSkill() * ((Math.random() + Math.random()) * 12424);
+                    double price = coach.getCoachStats().getTotalSkill() * ((Math.random() + Math.random()) * 1242);
 
-                    display.appendText(" " + coach.getCoachName() + " - Skill: " + new DecimalFormat("####.##").format(coach.getCoachStats().getTotalSkill()) + " - Prijs: $" + new DecimalFormat("####.##").format(price));
+                    display.appendText(" " + coach.getCoachName() + " - ID: " + coach.getID() + " - Skill: " + decimalFormat.format(coach.getCoachStats().getTotalSkill()) + " - Prijs: $" + decimalFormat.format(price));
+                }
+
+                while (true)
+                {
+                    int coachID = (int) display.readDouble(false, "Typ het ID van de coach in die je wilt aannemen");
+                    Coach coach = BAVM.getCoachManager().getCoach(coachID);
+                    Coach currentCoach = BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamCoach();
+
+                    if (coachID == 1)
+                    {
+                        break;
+                    } else if (coachID == -2)
+                    {
+                        break backToMain;
+                    } else if (coach == null)
+                    {
+                        display.appendText("Die coach bestaat niet!");
+                    } else
+                    {
+                        double price = coach.getCoachStats().getTotalSkill() * 1.34 * 1242;
+                        double priceCurrentCoach = currentCoach.getCoachStats().getTotalSkill() * 1.21 * 824;
+
+                        if (display.readLine(false, "Je staat op het punt '" + coach.getCoachName() + "' als coach in te ruilen voor '" + currentCoach.getCoachName() + "' voor $" + decimalFormat.format((price - priceCurrentCoach) * 10) + "\nTyp 123 om te bevestigen.").equals("123"))
+                        {
+                            display.appendText(BAVM.getCoachManager().transferCoach(coach, BAVM.getTeamManager().playerTeam, (price - priceCurrentCoach) * 10).getMessage());
+                        } else
+                        {
+                            display.appendText("Coach aannemen afgebroken.");
+                        }
+
+                        break;
+                    }
                 }
             }
         }

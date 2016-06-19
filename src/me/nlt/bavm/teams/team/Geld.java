@@ -9,24 +9,8 @@ public class Geld {
         int teamIncomeFactor = (int) ((teamTalent + 1) * 30000);
         int teamIncomeVariance = (int) ((Math.random() + 1) * 10000);
 
-        if (weeklyIncome == -1)
-        {
-            this.weeklyIncome = teamIncomeFactor + teamIncomeVariance;
-        } else {
-            this.weeklyIncome = weeklyIncome;
-        }
-
-        if (currentGeld == -1)
-        {
-            if (id != 19)
-            {
-                this.currentGeld = this.weeklyIncome * (int) ((Math.random() + 1) * 3);
-            } else {
-                this.currentGeld = this.weeklyIncome * (int) ((Math.random() + 1) * 15);
-            }
-        } else {
-            this.currentGeld = currentGeld;
-        }
+        this.weeklyIncome = (weeklyIncome == -1 ? teamIncomeFactor + teamIncomeVariance : weeklyIncome);
+        this.currentGeld = (currentGeld == -1 ? (id != 19 ? this.weeklyIncome * (int) ((Math.random() + 1) * 3) : this.weeklyIncome * (int) ((Math.random() + 1) * 15)) : currentGeld);
     }
 
     public int getWeeklyIncome()

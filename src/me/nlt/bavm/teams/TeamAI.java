@@ -6,7 +6,6 @@ import me.nlt.bavm.teams.player.PlayerStats;
 import me.nlt.bavm.teams.team.Team;
 import me.nlt.bavm.teams.team.TeamInfo;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -50,11 +49,11 @@ public class TeamAI {
                         {
                             if (currentStat + stepSize > newStat)
                             {
-                                price += (currentStat * 3 * (currentStat / 100)) * currentStat + Math.abs(currentStat - newStat) * 15000 - players.size();
+                                price += Math.abs((currentStat * 3 * (currentStat / 100)) * currentStat + upgradeValue * 15000 - players.size());
                                 currentStat += Math.abs(currentStat - newStat);
                             } else
                             {
-                                price += (currentStat * 3 * (currentStat / 100)) * currentStat + stepSize * 15000 - players.size();
+                                price += Math.abs((currentStat * 3 * (currentStat / 100)) * currentStat + stepSize * 15000 - players.size());
                                 currentStat += stepSize;
                             }
                         }

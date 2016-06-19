@@ -94,11 +94,8 @@ public class BAVM
         new AutoSave(5 * 60);
 
         // Zorgen dat de rest laad
-        display.appendText("BAVM is gereed om te worden gebruikt!",
-                "Aantal spelers: " + (fileManager.readAmount("players") - 1),
-                "Aantal teams: " + (fileManager.readAmount("teams") - 1),
-                "Aantal coaches: " + (fileManager.readAmount("coaches") - 1)
-        );
+        BAVM.getDisplay().clearText();
+        BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  Alle coaches geladen", "  Alle teams geladen", "  Alle wedstrijden geladen");
 
         this.initGame();
     }
@@ -113,11 +110,14 @@ public class BAVM
             new StartingConversation().startConversation(display);
         }
 
-        display.appendText("\n\t\t- - - - - - - - - - - - - - - [ WEEK " + (Week.getWeekNumber() + 1) + " ] - - - - - - - - - - - - - -");
+        //TODO: Probleem met lines fixen
+        System.out.println(display.textArea.getText().trim().length());
 
         while (true)
         {
-            display.appendText("\n\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
+            display.clearText();
+            display.appendText("\t\t- - - - - - - - - - - - - - - [ WEEK " + (Week.getWeekNumber() + 1) + " ] - - - - - - - - - - - - - -");
+            display.appendText("\t\t- - - - - - - - - - - - - [ Hoofdmenu ] - - - - - - - - - - - - - ", "Opties:"
                     , "    -9 -> Verwijder alle voortgang en begin opnieuw"
                     , "    0  -> Stop het spel"
                     , "    1  -> Ga naar het informatiecentrum"

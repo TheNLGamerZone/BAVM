@@ -8,6 +8,7 @@ import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.exceptions.FactoryException;
 import me.nlt.bavm.teams.team.Team;
+import me.nlt.bavm.teams.team.TransferResult;
 
 import java.util.ArrayList;
 
@@ -43,11 +44,19 @@ public class CoachManager<T extends Manageable> extends Manager<T>
             try
             {
                 manageables.add((T) Factory.createCoach(BAVM.getFileManager().readData("coach", i)));
+
+                if (i%15 == 0)
+                {
+                    BAVM.getDisplay().clearText();
+                    BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  " + i + " coaches geladen ...");
+                }
             } catch (FactoryException e)
             {
                 BAVM.getDisplay().printException(e);
             }
         }
+
+        System.out.println("Alle coaches geladen");
     }
 
     @Override
@@ -85,6 +94,24 @@ public class CoachManager<T extends Manageable> extends Manager<T>
         }
 
         this.saveManageables(true);
+    }
+
+    public TransferResult transferCoach(Coach coach, Team receivingTeam, double price)
+    {
+        if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price)
+        {
+            return TransferResult.FAILED_NO_MONEY_COACH;
+        }
+
+        if (!getFreeCoaches().contains(coach))
+        {
+            return TransferResult.FAILED_NOT_AVAILABLE;
+        }
+
+        receivingTeam.getTeamInfo().getTeamGeld().removeGeld((int) price);
+        receivingTeam.getTeamInfo().setTeamCoach(coach);
+
+        return TransferResult.SUCCESS_COACH;
     }
 
     public ArrayList<Coach> getFreeCoaches()

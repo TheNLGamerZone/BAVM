@@ -18,12 +18,14 @@ public class WeekendConversation implements Conversation
             {
                 display.appendText("Weekeinde wordt berekend...");
                 Week.endWeek(false);
+                display.readLine(false, "Typ iets om weer verder te gaan");
             } else if (confirmationNumber == 666)
             {
                 for (int i = Week.getWeekNumber(); i < 37; i++)
                 {
                     Week.endWeek(false);
                 }
+                display.readLine(false, "Typ iets om weer verder te gaan");
             } else
             {
                 display.appendText("Je gaat niet naar de volgende week.");

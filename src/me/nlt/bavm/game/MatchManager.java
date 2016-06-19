@@ -8,6 +8,8 @@ import me.nlt.bavm.teams.exceptions.FactoryException;
 
 public class MatchManager<T extends Manageable> extends Manager<T>
 {
+    public static boolean dataLoaded = false;
+
     public MatchManager(boolean firstStart)
     {
         super();
@@ -20,17 +22,25 @@ public class MatchManager<T extends Manageable> extends Manager<T>
     {
         int amount = BAVM.getFileManager().readAmount("matches");
 
-
         for (int i = 0; i < amount; i++)
         {
             try
             {
                 manageables.add((T) Factory.createMatch(BAVM.getFileManager().readData("match", i)));
+
+                if (i%30 == 0)
+                {
+                    BAVM.getDisplay().clearText();
+                    BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  Alle coaches geladen", "  Alle teams geladen", "  " + i + " wedstrijden geladen ...");
+                }
             } catch (FactoryException e)
             {
                 BAVM.getDisplay().printException(e);
             }
         }
+
+        System.out.println("Alle wedstrijden geladen");
+        dataLoaded = true;
     }
 
     @Override

@@ -36,30 +36,30 @@ public class TeamInfo
         this.createPlacement(placement);
         this.createScores(scores);
     }
-    
+
     private void createScores(String scores)
     {
-    	if (scores == null)
-    	{
-    		for (Score score : Score.values())
+        if (scores == null)
+        {
+            for (Score score : Score.values())
             {
                 teamScores.put(score, 0);
             }
-    	} else
-    	{
-    		for (String data : scores.split("%"))
-    		{
-    			for (Score score : Score.values())
-    			{
-    				if (score.name().equals(data.split(">")[0]))
-    				{
-    					teamScores.put(score, Integer.parseInt(data.split(">")[1]));
-    				}
-    			}
-    		}
-    	}
+        } else
+        {
+            for (String data : scores.split("%"))
+            {
+                for (Score score : Score.values())
+                {
+                    if (score.name().equals(data.split(">")[0]))
+                    {
+                        teamScores.put(score, Integer.parseInt(data.split(">")[1]));
+                    }
+                }
+            }
+        }
     }
-    
+
     private void createPlacement(String placement)
     {
         if (placement.equals("null") || placement.equals(""))
@@ -113,7 +113,8 @@ public class TeamInfo
         this.playerPlacement = new PlayerPlacement(keeper, defenders, attackers, midfielders);
     }
 
-    public enum Score {
+    public enum Score
+    {
         POINTS(0), WINS(1), DRAWS(2), LOSSES(3), GOALSFOR(4), GOALSAGAINST(5);
         private int index;
 
@@ -139,6 +140,7 @@ public class TeamInfo
         {
             teamScores.remove(score);
         }
+
         createScores(null);
     }
 
@@ -298,6 +300,11 @@ public class TeamInfo
         return this.teamCoach;
     }
 
+    public void setTeamCoach(Coach coach)
+    {
+        this.teamCoach = coach;
+    }
+
     public Geld getTeamGeld()
     {
         // Quick 'n dirty
@@ -342,19 +349,19 @@ public class TeamInfo
         stringBuilder.setLength(stringBuilder.length() - 1);
         infoString = stringBuilder.toString();
         stringBuilder.setLength(0);
-        
+
         for (Score score : Score.values())
         {
-        	stringBuilder.append(score.name() + ">" + teamScores.get(score) + "%");
+            stringBuilder.append(score.name() + ">" + teamScores.get(score) + "%");
         }
-        
+
         stringBuilder.setLength(stringBuilder.length() - 1);
 
-        return "teamtalent;" + this.teamTalent + 
-        		"<players;" + infoString + 
-        		"<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") + 
-        		"<geld;" + teamGeld.toString() +
-        		"<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null") +
-        		"<scores;" + stringBuilder.toString();
+        return "teamtalent;" + this.teamTalent +
+                "<players;" + infoString +
+                "<coach;" + (teamCoach != null ? teamCoach.getCoachID() : "-1") +
+                "<geld;" + teamGeld.toString() +
+                "<placement;" + (playerPlacement != null ? playerPlacement.toString() : "null") +
+                "<scores;" + stringBuilder.toString();
     }
 }

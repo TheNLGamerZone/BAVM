@@ -14,19 +14,26 @@ public class Market
 
     public enum MarketFilter
     {
-        ALL(0), KEEPER(0), ATTACKER(0), DEFENDER(0), MIDFIELDER(0),
-        PRICE_HIGH_LOW(1), PRICE_LOW_HIGH(1), STATS_HIGH_LOW(1), STATS_LOW_HIGH(1);
+        ALL(0, "Alle posities: \t\t"), KEEPER(0, "Keepers: \t\t"), ATTACKER(0, "Aanvallers: \t\t"), DEFENDER(0, "Verdedigers: \t\t"), MIDFIELDER(0, "Middenvelders: \t"),
+        PRICE_HIGH_LOW(1, "Prijs van hoog naar laag: \t"), PRICE_LOW_HIGH(1, "Prijs van laag naar hoog: \t"), STATS_HIGH_LOW(1, "Stats van hoog naar laag: \t"), STATS_LOW_HIGH(1, "Stats van laag naar hoog: \t");
 
         private int filterType;
+        private String displayName;
 
-        private MarketFilter(int filterType)
+        private MarketFilter(int filterType, String displayName)
         {
             this.filterType = filterType;
+            this.displayName = displayName;
         }
 
         public int getFilterType()
         {
             return this.filterType;
+        }
+
+        public String getDisplayName()
+        {
+            return this.displayName;
         }
     }
 
@@ -91,7 +98,7 @@ public class Market
             Player player = sortedPlayers.get(i);
 
             marketStrings.add((i + 1) + ": " + player.getPlayerName()
-                    + " - Positie: " + player.getPosition().name().toLowerCase()
+                    + " - Positie: " + player.getPosition().getDutchAlias().toLowerCase()
                     + " - Skill: " + new DecimalFormat("###.##").format(player.getPlayerStats().getTotalSkill())
                     + " - Prijs: $" + new DecimalFormat("######.##").format(player.getMarketValue())
                     + " - ID: " + player.getPlayerID());

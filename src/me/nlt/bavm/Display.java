@@ -170,12 +170,22 @@ public class Display
      */
     public void appendText(boolean newLine, String... strings)
     {
+        final boolean[] firstLine = {textArea.getText().trim().length() == 0};
+
         // Op EDT uitvoeren
         EventQueue.invokeLater(() -> {
             // Door alle strings lopen en die printen in het actie venster
             for (String string : strings)
             {
-                textArea.append((newLine ? "\n" : "") + string);
+                if (firstLine[0])
+                {
+                    textArea.append("" + string);
+                    firstLine[0] = false;
+                } else
+                {
+                    textArea.append((newLine ? "\n" : "") + string);
+                }
+
                 textArea.setCaretPosition(textArea.getDocument().getLength());
             }
 

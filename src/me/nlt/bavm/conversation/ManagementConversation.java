@@ -9,7 +9,6 @@ import me.nlt.bavm.teams.player.PlayerStats;
 import me.nlt.bavm.teams.player.Position;
 import me.nlt.bavm.teams.team.Team;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,8 @@ public class ManagementConversation implements Conversation
         backToMain:
         while (true)
         {
-            display.appendText("\n\t\t- - - - - - - - - [ Team management ] - - - - - - - - -",
+            display.clearText();
+            display.appendText("\t\t- - - - - - - - - [ Team management ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je de opstelling te veranderen",
                     "Typ '-4' om je spelers/team te trainen",
@@ -43,9 +43,11 @@ public class ManagementConversation implements Conversation
                 Player transferPlayer = null;
                 Position position = null;
 
+                display.clearText();
+                managementMenu:
                 while (true)
                 {
-                    display.appendText("\n\t\t- - - - - - - - - - [ Opstelling veranderen ] - - - - - - - - - - ",
+                    display.appendText("\t\t- - - - - - - - - - [ Opstelling veranderen ] - - - - - - - - - - ",
                             "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                             "Huidige opstelling:",
                             "   Keeper: " + team.getTeamInfo().getPlayerPlacement().getPlacement(Position.KEEPER),
@@ -55,7 +57,7 @@ public class ManagementConversation implements Conversation
                             "Typ het ID van de speler die je wilt wisselen"
                     );
 
-                    allSettingsSet:
+                    backMenu:
                     while (true)
                     {
                         int playerID = (int) display.readDouble(false);
@@ -63,7 +65,7 @@ public class ManagementConversation implements Conversation
 
                         if (playerID == -1)
                         {
-                            break;
+                            break managementMenu;
                         } else if (playerID == -2)
                         {
                             break backToMain;
@@ -77,10 +79,18 @@ public class ManagementConversation implements Conversation
                         {
                             while (true)
                             {
+                                for (Player player : team.getTeamInfo().getPlayers())
+                                {
+                                    display.appendText("   " + player.getPlayerName() + " (ID: " + player.getID() + ")");
+                                }
+
                                 playerID = (int) display.readDouble(false, "Typ het ID van de speler die je in de opstelling wilt zetten");
                                 transferPlayer = BAVM.getPlayerManager().getPlayer(playerID);
 
-                                if (playerID == -2)
+                                if (playerID == -1)
+                                {
+                                    break backMenu;
+                                } else if (playerID == -2)
                                 {
                                     break backToMain;
                                 } else if (transferPlayer == null)
@@ -89,6 +99,9 @@ public class ManagementConversation implements Conversation
                                 } else if (!team.getTeamInfo().getPlayers().contains(transferPlayer))
                                 {
                                     display.appendText("Die speler zit niet in je team!");
+                                } else if (team.getTeamInfo().getPlayerPlacement().isPlaced(transferPlayer))
+                                {
+                                    display.appendText("Die speler zit al in je opstelling!");
                                 } else
                                 {
                                     while (true)
@@ -97,7 +110,7 @@ public class ManagementConversation implements Conversation
 
                                         for (Position loopPosition : Position.values())
                                         {
-                                            if (loopPosition.name().contains(givenPosition.toUpperCase()))
+                                            if (loopPosition.name().contains(givenPosition.toUpperCase()) || loopPosition.getDutchAlias().contains(givenPosition.toUpperCase()))
                                             {
                                                 position = loopPosition;
                                             }
@@ -111,22 +124,24 @@ public class ManagementConversation implements Conversation
                                             display.appendText("Je kan niet twee keepers hebben!\nAls je een speler als keeper wilt hebben zul je die moeten wisselen met de huidige keeper");
                                         } else
                                         {
-                                            break allSettingsSet;
+                                            display.clearText();
+                                            team.getTeamInfo().getPlayerPlacement().exchangePlayers(playerInPlacement, transferPlayer, position);
+                                            display.appendText("Je hebt de speler " + transferPlayer.getPlayerName() + " op het veld gezet als een " + position.getDutchAlias().toLowerCase());
+
+                                            break backMenu;
                                         }
                                     }
                                 }
                             }
                         }
                     }
-
-                    team.getTeamInfo().getPlayerPlacement().exchangePlayers(playerInPlacement, transferPlayer, position);
-                    display.appendText("Je hebt de speler " + transferPlayer.getPlayerName() + " op het veld gezet als een " + position.name().toLowerCase());
                 }
             }
 
             if (mainNumber == -4)
             {
-                display.appendText("\n\t\t- - - - - - - - - - [ Team trainen ] - - - - - - - - - - ",
+                display.clearText();
+                display.appendText("\t\t- - - - - - - - - - [ Team trainen ] - - - - - - - - - - ",
                         "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                         "Typ '-3' om een speler te trainen",
                         "Typ '-4' om het hele team te trainen",
@@ -153,10 +168,11 @@ public class ManagementConversation implements Conversation
 
                     if (option == -3)
                     {
+                        display.clearText();
                         spelerTrainen:
                         while (true)
                         {
-                            display.appendText("\n\t\t- - - - - - - - - - [ Speler trainen ] - - - - - - - - - - ",
+                            display.appendText("\t\t- - - - - - - - - - [ Speler trainen ] - - - - - - - - - - ",
                                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                                     "Typ het ID van de speler om te trainen:\n"
                             );
@@ -198,6 +214,7 @@ public class ManagementConversation implements Conversation
                     {
                         if (players.isEmpty())
                         {
+                            display.clearText();
                             display.appendText("\n\t\t- - - - - - - - - - [ Team trainen ] - - - - - - - - - - ",
                                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu"
                             );
@@ -255,7 +272,7 @@ public class ManagementConversation implements Conversation
                                     {
                                         if (currentStat + stepSize > newStat)
                                         {
-                                            price += (currentStat * currentStat * (currentStat / 100)) * currentStat + Math.abs(currentStat - newStat) * 15000 - players.size() * 1234;
+                                            price += (currentStat * currentStat * (currentStat / 100)) * currentStat + givenUpgrade * 15000 - players.size() * 1234;
                                             currentStat += Math.abs(currentStat - newStat);
                                         } else
                                         {
@@ -265,7 +282,7 @@ public class ManagementConversation implements Conversation
                                     }
                                 }
 
-                                display.appendText("Je staat op het punt " + stat.name().substring(0, 1) + stat.name().substring(1).toLowerCase() + " voor het hele team te upgraden met " + new DecimalFormat("###.##").format(givenUpgrade) + " voor $" + new DecimalFormat("######.##").format(price));
+                                display.appendText("Je staat op het punt " + stat.name().substring(0, 1) + stat.name().substring(1).toLowerCase() + " voor het hele team te upgraden met " + decimalFormat.format(givenUpgrade) + " voor $" + decimalFormat.format(price));
 
                                 for (Player player : players)
                                 {
@@ -281,7 +298,7 @@ public class ManagementConversation implements Conversation
                                             continue;
                                         }
 
-                                        display.appendText("   " + player.getPlayerName() + " (" + stats.name().substring(0, 1) + stats.name().substring(1).toLowerCase() + "): " + new DecimalFormat("###.##").format(player.getPlayerStats().getValue(stats)) + (" (Nieuwe waarde: " + new DecimalFormat("###.##").format((currentStat + upgrade <= 100 ? currentStat + upgrade : 100)) + ")"));
+                                        display.appendText("   " + player.getPlayerName() + " (" + stats.name().substring(0, 1) + stats.name().substring(1).toLowerCase() + "): " + decimalFormat.format(player.getPlayerStats().getValue(stats)) + (" (Nieuwe waarde: " + decimalFormat.format((currentStat + upgrade <= 100 ? currentStat + upgrade : 100)) + ")"));
                                     }
                                 }
 
@@ -289,6 +306,7 @@ public class ManagementConversation implements Conversation
                                 {
                                     if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price)
                                     {
+                                        display.clearText();
                                         display.appendText("Je hebt niet genoeg geld voor deze training!");
                                         break trainen;
                                     }
@@ -303,11 +321,13 @@ public class ManagementConversation implements Conversation
                                         player.getPlayerStats().increaseSkill(stat, upgrade);
                                     }
 
+                                    display.clearText();
                                     BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().removeGeld((int) price);
                                     display.appendText("De stat '" + stat.name().toLowerCase() + "' is voor " + (players.size() == 1 ? players.get(0).getPlayerName() : "iedereen") + " verhoogd met " + givenUpgrade + "!");
                                     break trainen;
                                 } else
                                 {
+                                    display.clearText();
                                     display.appendText("Trainen geannuleerd.");
                                     break trainen;
                                 }
@@ -319,7 +339,8 @@ public class ManagementConversation implements Conversation
                     {
                         CoachStats.CStat coachStat = null;
 
-                        display.appendText("\n\t\t- - - - - - - - - - [ Coach trainen ] - - - - - - - - - - ",
+                        display.clearText();
+                        display.appendText("\t\t- - - - - - - - - - [ Coach trainen ] - - - - - - - - - - ",
                                 "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                                 "Typ de eerste twee letters van de stat die je wilt trainen: \n"
                         );
@@ -370,22 +391,23 @@ public class ManagementConversation implements Conversation
                                 {
                                     if (currentStat + stepSize > newStat)
                                     {
-                                        price += (currentStat * currentStat * (currentStat / 100)) * currentStat + Math.abs(currentStat - newStat) * 15000 - ((int) (Math.random() * 10)) * 1234;
+                                        price += Math.abs((currentStat * currentStat * (currentStat / 100)) * currentStat + Math.abs(currentStat - newStat) * 15000 - ((int) (Math.random() * 10)) * 1234);
                                         currentStat += Math.abs(currentStat - newStat);
                                     } else
                                     {
-                                        price += (currentStat * currentStat * (currentStat / 100)) * currentStat + stepSize * 15000 - ((int) (Math.random() * 10)) * 1234;
+                                        price += Math.abs((currentStat * currentStat * (currentStat / 100)) * currentStat + stepSize * 15000 - ((int) (Math.random() * 10)) * 1234);
                                         currentStat += stepSize;
                                     }
                                 }
 
-                                display.appendText("Je staat op het punt " + coachStat.name().substring(0, 1) + coachStat.name().substring(1).toLowerCase() + " voor je coach te upgraden met " + new DecimalFormat("###.##").format(givenUpgrade) + " voor $" + new DecimalFormat("######.##").format(price));
-                                display.appendText(" " + coach.getCoachName() + " (" + coachStat.name().substring(0, 1) + coachStat.name().substring(1).toLowerCase() + "): " + new DecimalFormat("###.##").format(coach.getCoachStats().getValue(coachStat)) + " (Nieuwe waarde: " + new DecimalFormat("###.##").format(newStat) + ")");
+                                display.appendText("Je staat op het punt " + coachStat.name().substring(0, 1) + coachStat.name().substring(1).toLowerCase() + " voor je coach te upgraden met " + decimalFormat.format(givenUpgrade) + " voor $" + decimalFormat.format(price));
+                                display.appendText(" " + coach.getCoachName() + " (" + coachStat.name().substring(0, 1) + coachStat.name().substring(1).toLowerCase() + "): " + decimalFormat.format(coach.getCoachStats().getValue(coachStat)) + " (Nieuwe waarde: " + decimalFormat.format(newStat) + ")");
 
                                 if (display.readLine(false, "Typ 123 om te bevestigen").equals("123"))
                                 {
                                     if (BAVM.getTeamManager().playerTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price)
                                     {
+                                        display.clearText();
                                         display.appendText("Je hebt niet genoeg geld voor deze training!");
                                         break trainen;
                                     }
@@ -397,6 +419,7 @@ public class ManagementConversation implements Conversation
                                     break trainen;
                                 } else
                                 {
+                                    display.clearText();
                                     display.appendText("Trainen geannuleerd.");
                                     break trainen;
                                 }
