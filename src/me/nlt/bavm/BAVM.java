@@ -1,6 +1,7 @@
 package me.nlt.bavm;
 
 import me.nlt.bavm.conversation.*;
+import me.nlt.bavm.files.AutoSave;
 import me.nlt.bavm.files.FileManager;
 import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
@@ -87,6 +88,9 @@ public class BAVM
         matchManager = new MatchManager<>(fileManager.firstStart);
         Week.weekNumber = fileManager.getWeekNumber();
         season = new Season(true);
+
+        // Iedere 5 minuten een autosave starten
+        new AutoSave(5 * 60);
 
         // Zorgen dat de rest laad
         display.appendText("BAVM is gereed om te worden gebruikt!",

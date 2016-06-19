@@ -33,8 +33,6 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     @Override
     public void loadManageables()
     {
-        BAVM.getDisplay().appendText(" Coaches aan het opslaan...");
-
         int amount = BAVM.getFileManager().readAmount("coaches");
 
         for (int i = 0; i < amount; i++)
@@ -52,6 +50,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
+        BAVM.getDisplay().appendText("    -> Coaches aan het opslaan ...");
         int counter = 0;
 
         for (T type : manageables)

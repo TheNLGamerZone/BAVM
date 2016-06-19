@@ -126,11 +126,7 @@ public class Display
         System.out.println("Afsluiten ..");
         appendText("\nAfsluiten .. Forceer het programma niet af te sluiten, opslaan kan even duren!");
 
-        BAVM.getTeamManager().saveManageables(false);
-        BAVM.getPlayerManager().saveManageables(false);
-        BAVM.getCoachManager().saveManageables(false);
-        BAVM.getMatchManager().saveManageables(false);
-
+        BAVM.getFileManager().saveAll();
         System.exit(1);
     }
 

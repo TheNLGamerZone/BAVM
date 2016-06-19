@@ -1,15 +1,14 @@
 package me.nlt.bavm.teams.team;
 
 import me.nlt.bavm.BAVM;
-import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.Factory;
+import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.exceptions.FactoryException;
 import me.nlt.bavm.teams.player.Player;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class TeamManager<T extends Manageable> extends Manager<T>
 {
@@ -71,7 +70,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     @Override
     public void saveManageables(boolean firstSave)
     {
-        BAVM.getDisplay().appendText(" Teams aan het opslaan...");
+        BAVM.getDisplay().appendText("    -> Teams aan het opslaan ...");
 
         int counter = 1;
 

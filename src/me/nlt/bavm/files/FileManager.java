@@ -338,4 +338,12 @@ public class FileManager
 
         return null;
     }
+
+    public void saveAll()
+    {
+        BAVM.getTeamManager().saveManageables(false);
+        BAVM.getPlayerManager().saveManageables(false);
+        BAVM.getCoachManager().saveManageables(false);
+        BAVM.getMatchManager().saveManageables(false);
+    }
 }
