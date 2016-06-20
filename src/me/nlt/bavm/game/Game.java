@@ -19,6 +19,10 @@ public class Game
     private int[] gameResult;
     private ArrayList<String> gameLog = new ArrayList<>();
 
+    /*
+     * Deze methode is de constructor voor het Game object, dat op basis van de team id's van het thuis- en uitteam de wedstrijd simuleert,
+     * de twee variabelen zijn de gameResult (uitslag) en gameLog (log vanwedstrijdverloop
+     */
     public Game(int homeID, int visitorID)
     {
         /*
@@ -293,6 +297,10 @@ public class Game
         gameResult = goalResult;
     }
 
+    /*
+     * Deze twee methode's worden gebruikt om de variabelen te "getten"
+     */
+
     public int[] getGameResult()
     {
         return gameResult;
@@ -302,6 +310,10 @@ public class Game
     {
         return gameLog;
     }
+
+    /*
+     * Deze methode berekent het conflictResult, op basis daarvan wordt elke minuut beslist wat er gebeurt
+     */
 
     public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {
         double attValues[];
@@ -359,6 +371,10 @@ public class Game
         }
     }
 
+    /*
+     * Als een team de 4e helft heeft gepasseerd (vanuit hun oogpunt) wordt deze methode aangeroepen en die berekent of het goal wordt of niet
+     */
+
     public static int getAttemptResult(double[] homeValues, double[] visitValues, int ballPossession) {
         //doet hetzelfde als conflictresult maar dan met andere stats (afmaken en keeper)
     	
@@ -405,6 +421,10 @@ public class Game
             return 2;
         }
     }
+
+    /*
+     * Deze methode zorgt dat de spelers beter worden na de wedstrijd
+     */
 
     public static void playerExperience(Team home, Team visitor, double homeLuck, double visitorLuck)
     {

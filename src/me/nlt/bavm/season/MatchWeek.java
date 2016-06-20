@@ -7,13 +7,11 @@ import java.util.List;
 
 public class MatchWeek {
     private ArrayList<PlannedMatch> matchesInWeek = new ArrayList<>();
-    private int weekNumber;
-    private int seasonHalf;
 
+    /*
+     * Het matchWeek object heeft alle geplande wedstrijden voor 1 speelronde/week in zich
+     */
     public MatchWeek(int weekNumber, int seasonHalf) {
-        this.weekNumber = weekNumber;
-        this.seasonHalf = seasonHalf;
-
         this.matchesInWeek = getMatchesInWeek(weekNumber, seasonHalf);
     }
 

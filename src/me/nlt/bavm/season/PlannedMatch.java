@@ -6,6 +6,9 @@ public class PlannedMatch {
     private int matchID;
     private int[] teamIDs = new int[2];
 
+    /*
+     * PlannedMatch heeft alle data nodig om een Game te simuleren
+     */
     public PlannedMatch(String matchName, int seasonHalf, int matchID)
     {
         this.matchName = matchName;

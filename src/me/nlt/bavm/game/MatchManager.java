@@ -83,6 +83,10 @@ public class MatchManager<T extends Manageable> extends Manager<T>
     {
     }
 
+    /*
+     * Hier wordt een nieuw Match object gemaakt en de data daarvoor wordt genereerd uit een Game object
+     */
+
     public int simulateMatch(int homeID, int visitorID)
     {
         Game game = new Game(homeID, visitorID);

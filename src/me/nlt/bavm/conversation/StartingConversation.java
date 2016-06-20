@@ -4,6 +4,10 @@ import me.nlt.bavm.BAVM;
 import me.nlt.bavm.Display;
 
 public class StartingConversation implements Conversation{
+
+    /*
+     * In deze "Conversation" kun je de naam van je directeur en team aanpassen
+     */
     @Override
     public void startConversation(Display display)
     {

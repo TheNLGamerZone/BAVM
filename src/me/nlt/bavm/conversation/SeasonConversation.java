@@ -8,6 +8,9 @@ import me.nlt.bavm.teams.team.TeamInfo;
 
 public class SeasonConversation implements Conversation
 {
+    /*
+     * In deze "Conversation" kun je de standen zien van het huidige seizoen
+     */
     @Override
     public void startConversation(Display display)
     {

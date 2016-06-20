@@ -5,6 +5,9 @@ import me.nlt.bavm.season.Week;
 
 public class WeekendConversation implements Conversation
 {
+    /*
+     * In deze "Conversation" kun je naar de volgende week gaan
+     */
     @Override
     public void startConversation(Display display)
     {

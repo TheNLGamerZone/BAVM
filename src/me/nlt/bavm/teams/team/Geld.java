@@ -4,6 +4,9 @@ public class Geld {
     private int weeklyIncome;
     private int currentGeld;
 
+    /*
+     * Het geld object heeft de wekelijkse inkomsten en huidige geldreserve in zich
+     */
     public Geld (double teamTalent, int currentGeld, int weeklyIncome, int id)
     {
         int teamIncomeFactor = (int) ((teamTalent + 1) * 30000);

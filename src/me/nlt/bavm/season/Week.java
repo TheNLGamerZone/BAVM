@@ -14,6 +14,9 @@ public class Week
     public static int weekNumber;
     public static int seasonNumber;
 
+    /*
+     * Deze methode wordt aangeroepen aan het einde van de week en zorgt er o.a. voor dat alle PlannedMatches gespeeld worden
+     */
     public static boolean endWeek(boolean endSeason)
     {
         if (weekNumber == 38)
@@ -83,6 +86,9 @@ public class Week
         return true;
     }
 
+    /*
+     * Deze methode zorgt ervoor dat een seizoen correct wordt afgesloten
+     */
     public static void nextSeason()
     {
     	BAVM.getDisplay().readLine(false, "Typ iets om verder te gaan naar het volgende seizoen");

@@ -8,6 +8,9 @@ import me.nlt.bavm.season.PlannedMatch;
 
 public class MatchConversation implements Conversation
 {
+    /*
+     * In deze "Conversation" kun je gespeelde wedstrijden bekijken
+     */
     @Override
     public void startConversation(Display display)
     {

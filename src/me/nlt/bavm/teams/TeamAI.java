@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class TeamAI {
+
+    /*
+     * TeamAI zorgt ervoor dat de teams ook hun geld besteden aan trainen en ook beter worden
+     */
     public static void doTeamAI()
     {
         for (int i = 0; i < 19; i++)

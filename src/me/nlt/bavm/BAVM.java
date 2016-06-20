@@ -238,17 +238,17 @@ public class BAVM
         {
             String[] messages = {
                     "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-                    "Bedankt voor het spelen van de BrinkAnema Voetbal Manager!", "", "", "Dit spel is gemaakt voor de NLT Java opdracht.", "", "", "Game Director: Tim Anema", "", "",
-                    "Co-Game Director: Tip ten Brink", "", "", "Lead Designer: Tim Anema", "", "", "Co-Lead Designer: Tip ten Brink", "", "", "Lead Programmer: Tim Anema", "", "",
-                    "Co-Lead Programmer: Tip ten Brink", "", "", "Muziek: 'Victory' by Two Steps from Hell", "", "", "Special thanks:", " Stackoverflow", " Meneer Smedema", " Meneer Theulings",
-                    "", "",
-                    "More credits:", "Conversation: Tim", "InformationConversation: Tip & Tim", "ManagementConversation: Tim", "MarketConversation: Tim", "MarketFilter: Tim", "MatchConversation: Tip", "SeasonConversation: Tip", "WeekendConversation: Tip",
+                    "Bedankt voor het spelen van de BrinkAnema Voetbal Manager!", "", "", "Dit spel is gemaakt voor de NLT Java opdracht.", "", "", "Co-Game Director: Tim Anema", "", "",
+                    "Co-Game Director: Tip ten Brink", "", "", "Co-Lead Designer: Tim Anema", "", "", "Co-Lead Designer: Tip ten Brink", "", "", "Co-Lead Programmer: Tim Anema", "", "",
+                    "Co-Lead Programmer: Tip ten Brink", "", "", "Muziek: 'Victory' by Two Steps from Hell", "", "", "Met dank aan:", " Stackoverflow", " Meneer Smedema", " Meneer Theulings",
+                    " Java door Sun/Oracle", "", "",
+                    "Meer credits:", "Conversation: Tim", "InformationConversation: Tip & Tim", "ManagementConversation: Tim", "MarketConversation: Tim", "MarketFilter: Tim", "MatchConversation: Tip", "SeasonConversation: Tip", "WeekendConversation: Tip",
                     "FileManager: Tim", "Game (simulatie): Tip", "Match: Tip", "MatchManager: Tip & Tim", "MatchSequence: Tip", "RandomNames: Tip", "RandomStats: Tip & Tim",
                     "AllScores: Tip", "MatchWeek: Tip", "PlannedWeek: Tip", "Season: Tip", "Week: Tip",
                     "Coach: Tip & Tim", "CoachManager: Tim", "CoachStats: Tip & Tim", "FactoryException: Tim", "InvalidPlayerException: Tim", "Player: Tim", "PlayerManager: Tim", "PlayerStats: Tim", "Position: Tim",
                     "Geld: Tip", "PlayerPlacement: Tim", "Team: Tip & Tim", "TeamInfo: Tip & Tim", "TeamManager: Tim", "TransferResult: Tim",
                     "Manageable: Tim", "Manager: Tim", "Market: Tim", "BAVM (multi-threading): Tim", "BAVM (menu): Tip & Tim", "Display: Tim", "Factory: Tim", "XML-Indeling: Tim",
-                    "", "Dat was het!", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "\n"
+                    "TeamAI: Tip", "", "Dat was het!", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "\n"
             };
             int delay = (2 * 60 + 48) * 1000 / messages.length;
             URL url = new URL("http://tim.suppatim.me/credit_music_edited.wav");
@@ -274,7 +274,7 @@ public class BAVM
         }
     }
 
-    public static boolean restartGame(boolean restart)
+    public static boolean restartGame(boolean reset)
     {
         try
         {
@@ -293,7 +293,7 @@ public class BAVM
             commands.add(gameJAR.getPath());
             processBuilder = new ProcessBuilder(commands);
             processBuilder.start();
-            if (restart)
+            if (reset)
             {
                 fileManager.deleteData();
             }

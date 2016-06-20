@@ -9,6 +9,9 @@ import java.util.Objects;
 
 public class AllScores
 {
+    /*
+     * Deze methode laat een mooie stand zien (alle punten, doelsaldo etc.) en returnt ook de teamID van de nr. 1
+     */
     public static int displayScores()
     {
         ArrayList<Integer> sortedTeams = new ArrayList<>();
@@ -88,6 +91,7 @@ public class AllScores
             }
         }
 
+        //Pts=punten, W=wins (gewonnen), D=draws (gelijkspellen), L=losses (verliezen), F=for (voordoelpunten), A=against (tegendoelpunten)
         BAVM.getDisplay().appendText("\t\t- - - - - - - - - - - [ Competitiestand ] - - - - - - - - - - - ",
                 "\tPts\tW\tD\tL\tF\tA");
 

@@ -4,6 +4,9 @@ import java.util.Random;
 
 public class RandomNames
 {
+    /*
+     * Deze methode maakt een teamnaam aan op basis van een willekeurig woord + SV, FC, of niks
+     */
     public static String getTeamName()
     {
         //in deze method wordt een willekeurige teamnaam gemaakt
@@ -19,6 +22,9 @@ public class RandomNames
         return teamName;
     }
 
+    /*
+     * Deze methode maakt een persoonsnaam door twee woorden als voor- en achternaam bij elkaar te doen
+     */
     public static String getPeopleName()
     {
         //deze methode voegt twee willekeurige woorden samen als een voor- en achternaam
@@ -26,6 +32,9 @@ public class RandomNames
         return getRandomWord() + " " + getRandomWord();
     }
 
+    /*
+     * Deze methode genereert een willekeurig (maar wel leesbaar, meestal) woord
+     */
     public static String getRandomWord()
     {
         //deze methode maakt willekeurige woorden aan, altijd in de volgorde (klinker-)medeklinkder-klinker-medeklinker etc.

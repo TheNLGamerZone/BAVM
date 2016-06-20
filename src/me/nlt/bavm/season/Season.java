@@ -8,6 +8,9 @@ public class Season
 {
     private ArrayList<MatchWeek> seasonWeeks = new ArrayList<>();
 
+    /*
+     * Season heeft alle geplande wedstrijden in MatchWeeks in zich
+     */
     public Season(boolean createSeason) {
         int matchWeeks = 38;
 

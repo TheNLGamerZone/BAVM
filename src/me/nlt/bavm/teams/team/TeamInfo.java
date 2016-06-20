@@ -19,6 +19,9 @@ public class TeamInfo
 
     private HashMap<StatCoefficient, Double> statCoefficients = new HashMap<>();
 
+    /*
+     * TeamInfo heeft alle extra informatie van een team in zich
+     */
     public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
         this.team = team;

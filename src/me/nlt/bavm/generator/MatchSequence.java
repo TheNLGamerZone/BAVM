@@ -4,62 +4,68 @@ package me.nlt.bavm.generator;
 import java.util.ArrayList;
 
 public class MatchSequence {
+
+    /*
+     * Deze ZEER BELANGRIJKE methode zorgt dat er een goede volgorde van alle wedstrijden wordt gemaakt (iedereen speelt 1 keer uit en 1 keer thuis, dit wordt gedaan door de teams "door te draaien"
+     * De volgorde wordt opgeslagen in een arraylist met strings in de vorm "homeID-visitorID"
+     */
+
     public static ArrayList<String> getMatchSequence() {
         ArrayList<String> matchSequence = new ArrayList<>();
 
-        int array1[] = new int[9];
-        int array2[] = new int[array1.length + 1];
-        int array3[] = new int[array1.length + array2.length];
-        int array1Rev[] = new int[array1.length];
+        int leftColumn[] = new int[9];
+        int rightColumn[] = new int[leftColumn.length + 1];
+        int teamCycle[] = new int[leftColumn.length + rightColumn.length];
+        int reversedLeftColumn[] = new int[leftColumn.length];
         int adder = 2;
         int shiftAmount = 39;
 
-        for (int i = 0; i < array2.length; i++) {
-            if (i == array2.length - 1) {
-                array2[i] = adder - 1;
+        for (int i = 0; i < rightColumn.length; i++) {
+            if (i == rightColumn.length - 1) {
+                rightColumn[i] = adder - 1;
             } else {
-                array1[i] = adder;
-                array2[i] = adder - 1;
+                leftColumn[i] = adder;
+                rightColumn[i] = adder - 1;
             }
             adder = adder + 2;
         }
 
-        int it = array1.length - 1;
+        int iterator = leftColumn.length - 1;
 
-        for (int i : array1) {
-            array1Rev[it] = i;
-            it--;
+        for (int i : leftColumn) {
+            reversedLeftColumn[iterator] = i;
+            iterator--;
         }
 
-        it = 0;
+        iterator = 0;
 
-        for (int i : array2) {
-            array3[it] = i;
-            it++;
+        for (int i : rightColumn) {
+            teamCycle[iterator] = i;
+            iterator++;
         }
-        for (int i : array1Rev) {
-            array3[it] = i;
-            it++;
+        for (int i : reversedLeftColumn) {
+            teamCycle[iterator] = i;
+            iterator++;
         }
 
-        for (int i = 0; i < (array3.length / 2) + 1; i++) {
+        for (int i = 0; i < (teamCycle.length / 2) + 1; i++) {
             if (i == 0) {
-                matchSequence.add(0 + "-" + array3[i]);
+                matchSequence.add(0 + "-" + teamCycle[i]);
             } else {
-                matchSequence.add(array3[array3.length - i] + "-" + array3[i]);
+                matchSequence.add(teamCycle[teamCycle.length - i] + "-" + teamCycle[i]);
             }
         }
 
         for (int i = 0; i < shiftAmount; i++) {
-            int lastE = array3[array3.length - 1];
-            System.arraycopy(array3, 0, array3, 1, array3.length - 1);
-            array3[0] = lastE;
+            int lastE = teamCycle[teamCycle.length - 1];
+            System.arraycopy(teamCycle, 0, teamCycle, 1, teamCycle.length - 1);
+            teamCycle[0] = lastE;
 
-            for (int j = 0; j < (array3.length / 2) + 1; j++) {
+            for (int j = 0; j < (teamCycle.length / 2) + 1; j++) {
                 if (j == 0) {
-                    matchSequence.add(0 + "-" + array3[j]);
+                    matchSequence.add(0 + "-" + teamCycle[j]);
                 } else {
-                    matchSequence.add(array3[array3.length - j] + "-" + array3[j]);
+                    matchSequence.add(teamCycle[teamCycle.length - j] + "-" + teamCycle[j]);
                 }
             }
         }
