@@ -12,7 +12,7 @@ public class SeasonConversation implements Conversation
     public void startConversation(Display display)
     {
         display.clearText();
-        
+
         backToMain:
         while (true)
         {

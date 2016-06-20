@@ -120,7 +120,7 @@ public class Game
              */
 
             //TODO fix memory leak?
-            /*if (conditionModify)
+            if (conditionModify)
             {
                 for (int i = 0; i < 5; i++)
                 {
@@ -129,7 +129,7 @@ public class Game
                 }
 
                 conditionModify = false;
-            }*/
+            }
 
             /*
              * Hij past de attack skill aan zodat er niet te veel goals worden gemaakt. modifyCoefficients is alleen true als er gescoord is.
