@@ -24,7 +24,7 @@ import me.nlt.bavm.BAVM;
 
 public class FileManager
 {
-    private File storageFile = null;
+    public File storageFile = null;
 
     private Document document;
     private Element players;

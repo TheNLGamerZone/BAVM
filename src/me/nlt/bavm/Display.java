@@ -146,6 +146,20 @@ public class Display
         appendText("\nAfsluiten .. Forceer het programma niet af te sluiten, opslaan kan even duren!");
 
         BAVM.getFileManager().saveAll();
+        
+        if (BAVM.getFileManager().firstStart && 
+        		(BAVM.getTeamManager() == null ||
+        		!BAVM.getTeamManager().dataLoaded || 
+        		BAVM.getPlayerManager() == null || 
+        		!BAVM.getPlayerManager().dataLoaded || 
+        		!BAVM.getCoachManager().dataLoaded || 
+        		BAVM.getMatchManager() == null ||
+        		!BAVM.getMatchManager().dataLoaded))
+        {
+        	System.out.println("Bestanden en managers zijn nog niet geladen tijdens aanmaken objecten, alles is verwijderd!");
+        	BAVM.getFileManager().storageFile.delete();
+        }
+        
         System.exit(1);
     }
 

@@ -21,6 +21,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -108,6 +110,7 @@ public class BAVM
         if (fileManager.firstStart)
         {
             new StartingConversation().startConversation(display);
+            fileManager.firstStart = false;
         }
 
         while (true)
@@ -261,9 +264,12 @@ public class BAVM
             clip.stop();
             clip.close();
             Week.nextSeason();
+        } catch (IllegalArgumentException e)
+        {
+        	BAVM.display.appendText("We konden geen output voor de muziek vinden, geen credits voor jou!");
         } catch (Exception e)
         {
-            BAVM.getDisplay().printException(e);
+        	BAVM.getDisplay().printException(e);
         }
     }
 
@@ -291,10 +297,9 @@ public class BAVM
                 fileManager.deleteData();
             }
             System.exit(0);
-        } catch (Exception e)
-        {
-            BAVM.getDisplay().printException(e);
-        }
+        } catch (Exception e) {
+        	BAVM.getDisplay().printException(e);
+		} 
 
         return false;
     }
