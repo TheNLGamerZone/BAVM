@@ -287,6 +287,11 @@ public class Factory
 
     public static Match createMatch(String matchString) throws FactoryException
     {
+    	if (matchString.equals("NULL <-> PH"))
+    	{
+    		return null;
+    	}
+    	
         int matchID = -1, homeID = -1, visitorID = -1;
         int[] matchResult = new int[2];
         ArrayList<String> matchLog = new ArrayList<>();

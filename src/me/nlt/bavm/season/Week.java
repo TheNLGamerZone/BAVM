@@ -1,7 +1,9 @@
 package me.nlt.bavm.season;
 
 import me.nlt.bavm.BAVM;
+import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
+import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.TeamAI;
 import me.nlt.bavm.teams.team.Geld;
 import me.nlt.bavm.teams.team.Team;
@@ -49,7 +51,7 @@ public class Week
         }
 
         weekNumber++;
-        BAVM.getFileManager().addWeek(false);
+        BAVM.getFileManager().addDate("week", false);
 
         if (endSeason)
         {
@@ -83,17 +85,26 @@ public class Week
 
     public static void nextSeason()
     {
+    	BAVM.getDisplay().readLine(false, "Typ iets om verder te gaan naar het volgende seizoen");
+    	
         for (int i = 0; i < 20; i++)
         {
             BAVM.getTeamManager().getTeam(i).getTeamInfo().resetTeamScores();
         }
+        
+        for (Object object : BAVM.getMatchManager().manageables)
+        {
+        	BAVM.getFileManager().writeData("match", "NULL <-> PH", ((Manageable) object).getID());
+        }
+        
+        BAVM.getMatchManager().manageables.clear();
 
-        //TODO change stuff here
         weekNumber = 0;
-        BAVM.getFileManager().addWeek(true);
         seasonNumber++;
-        //TODO save season number
-
+        
+        BAVM.getFileManager().addDate("week", true);
+        BAVM.getFileManager().addDate("season", true);
+        
         for (int i = 0; i < 20; i++)
         {
             Geld geld = BAVM.getTeamManager().getTeam(i).getTeamInfo().getTeamGeld();

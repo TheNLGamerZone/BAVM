@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Manager<T extends Manageable>
 {
-    protected ArrayList<T> manageables;
+    public ArrayList<T> manageables;
 
     public Manager()
     {

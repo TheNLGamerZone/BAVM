@@ -83,6 +83,7 @@ public class FileManager
                 coaches.appendChild(coach);
                 matches.setAttribute("amount", "0");
                 matches.setAttribute("week", "0");
+                matches.setAttribute("season", "0");
                 matches.appendChild(match);
                 player.setAttribute("id", "-1");
                 team.setAttribute("id", "-1");
@@ -253,15 +254,15 @@ public class FileManager
         storageFile.delete();
     }
 
-    public void addWeek(boolean newSeason)
+    public void addDate(String tag, boolean newSeason)
     {
-        int newWeek = Integer.parseInt(matches.getAttribute("week")) + 1;
+        int newWeek = Integer.parseInt(matches.getAttribute(tag)) + 1;
 
-        matches.removeAttribute("week");
-        matches.setAttribute("week", (newSeason ? 0 : newWeek) + "");
+        matches.removeAttribute(tag);
+        matches.setAttribute(tag, (newSeason ? 0 : newWeek) + "");
     }
-
-    public int getWeekNumber()
+    
+    public int getDateNumber(String tag)
     {
         try
         {
@@ -277,7 +278,7 @@ public class FileManager
                 {
                     Element element = (Element) node;
 
-                    return Integer.parseInt(element.getAttribute("week"));
+                    return Integer.parseInt(element.getAttribute(tag));
                 }
             }
         } catch (Exception e)

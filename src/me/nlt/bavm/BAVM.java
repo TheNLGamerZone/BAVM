@@ -89,7 +89,8 @@ public class BAVM
         coachManager = new CoachManager<>(fileManager.firstStart);
         teamManager = new TeamManager<>(fileManager.firstStart);
         matchManager = new MatchManager<>(fileManager.firstStart);
-        Week.weekNumber = fileManager.getWeekNumber();
+        Week.weekNumber = fileManager.getDateNumber("week");
+        Week.seasonNumber = fileManager.getDateNumber("season");
         season = new Season(true);
 
         // Iedere 5 minuten een autosave starten

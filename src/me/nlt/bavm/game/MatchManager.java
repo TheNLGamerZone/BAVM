@@ -28,6 +28,11 @@ public class MatchManager<T extends Manageable> extends Manager<T>
             {
             	Match match = Factory.createMatch(BAVM.getFileManager().readData("match", i));
             	
+            	if (match == null)
+            	{
+            		continue;
+            	}
+            	
                 manageables.add((T) match);
                 match.clearMatchLog();
                 
