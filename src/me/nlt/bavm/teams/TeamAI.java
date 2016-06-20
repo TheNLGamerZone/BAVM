@@ -9,9 +9,9 @@ import me.nlt.bavm.teams.team.TeamInfo;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class TeamAI {
-
-    /*
+public class TeamAI
+{
+    /**
      * TeamAI zorgt ervoor dat de teams ook hun geld besteden aan trainen en ook beter worden
      */
     public static void doTeamAI()
@@ -71,7 +71,8 @@ public class TeamAI {
                 if (counter != 1)
                 {
                     price = prices.get(counter - 2);
-                } else {
+                } else
+                {
                     price = prices.get(counter - 1);
                 }
 

@@ -10,7 +10,10 @@ public class MatchManager<T extends Manageable> extends Manager<T>
 {
     public boolean dataLoaded = false;
 
-    public MatchManager(boolean firstStart)
+    /**
+     * MatchManager contructor
+     */
+    public MatchManager()
     {
         super();
 
@@ -18,6 +21,9 @@ public class MatchManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Laadt alle matches uit het databestand en schrijft ze naar het geheugen
+     */
     public void loadManageables()
     {
         int amount = BAVM.getFileManager().readAmount("matches");
@@ -26,17 +32,17 @@ public class MatchManager<T extends Manageable> extends Manager<T>
         {
             try
             {
-            	Match match = Factory.createMatch(BAVM.getFileManager().readData("match", i));
-            	
-            	if (match == null)
-            	{
-            		continue;
-            	}
-            	
+                Match match = Factory.createMatch(BAVM.getFileManager().readData("match", i));
+
+                if (match == null)
+                {
+                    continue;
+                }
+
                 manageables.add((T) match);
                 match.clearMatchLog();
-                
-                if (i%30 == 0)
+
+                if (i % 30 == 0)
                 {
                     BAVM.getDisplay().clearText();
                     BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  Alle coaches geladen", "  Alle teams geladen", "  " + i + " wedstrijden geladen ...");
@@ -52,6 +58,9 @@ public class MatchManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Schrijft alle matches uit het geheugen naar het databestand
+     */
     public void saveManageables(boolean firstSave)
     {
         if (!BAVM.getFileManager().firstStart)
@@ -67,9 +76,9 @@ public class MatchManager<T extends Manageable> extends Manager<T>
 
             if ((firstSave || match.unsavedChanges()))
             {
-            	match.loadLogs();
+                match.loadLogs();
                 BAVM.getFileManager().writeData("match", match.toString(), match.getID());
-                
+
                 match.unsavedChanges = false;
                 counter++;
             }
@@ -80,13 +89,16 @@ public class MatchManager<T extends Manageable> extends Manager<T>
 
     @Override
     public void generateManageables()
-    {
+    {// Niks
     }
 
-    /*
+    /**
      * Hier wordt een nieuw Match object gemaakt en de data daarvoor wordt genereerd uit een Game object
+     *
+     * @param homeID    ID van team dat thuis speelt
+     * @param visitorID ID van team dat uit speelt
+     * @return ID van de match
      */
-
     public int simulateMatch(int homeID, int visitorID)
     {
         Game game = new Game(homeID, visitorID);
@@ -96,14 +108,19 @@ public class MatchManager<T extends Manageable> extends Manager<T>
 
         manageables.add((T) match);
         match.unsavedChanges = true;
-        
+
         BAVM.getFileManager().writeData("match", match.toString(), matchID);
         match.clearMatchLog();
-        
+
         return matchID;
     }
 
-
+    /**
+     * Returnt de match met het gegeven ID
+     *
+     * @param matchID ID van de match
+     * @return De match
+     */
     public Match getMatch(int matchID)
     {
         T match = super.getManageable(matchID);
@@ -111,6 +128,11 @@ public class MatchManager<T extends Manageable> extends Manager<T>
         return match == null ? null : (Match) match;
     }
 
+    /**
+     * Returnt het ID dat als volgende beschikbaar is
+     *
+     * @return Beschikbaar ID
+     */
     public int getNextAvailableID()
     {
         return manageables.size();

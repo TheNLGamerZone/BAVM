@@ -14,8 +14,13 @@ import java.util.ArrayList;
 
 public class CoachManager<T extends Manageable> extends Manager<T>
 {
-	public boolean dataLoaded = false;
-	
+    public boolean dataLoaded = false;
+
+    /**
+     * CoachManager constructor
+     *
+     * @param generateCoaches Boolean die aangeeft of er coaches gegeneerd moeten worden
+     */
     public CoachManager(boolean generateCoaches)
     {
         super();
@@ -29,6 +34,12 @@ public class CoachManager<T extends Manageable> extends Manager<T>
         }
     }
 
+    /**
+     * Returnt de coach met het gegeven ID
+     *
+     * @param coachID et ID
+     * @return De coach
+     */
     public Coach getCoach(int coachID)
     {
         T coach = super.getManageable(coachID);
@@ -37,6 +48,9 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Laadt alle coaches uit het databestand en schrijft ze naar het geheugen
+     */
     public void loadManageables()
     {
         int amount = BAVM.getFileManager().readAmount("coaches");
@@ -47,7 +61,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
             {
                 manageables.add((T) Factory.createCoach(BAVM.getFileManager().readData("coach", i)));
 
-                if (i%15 == 0)
+                if (i % 15 == 0)
                 {
                     BAVM.getDisplay().clearText();
                     BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  " + i + " coaches geladen ...");
@@ -63,6 +77,9 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Schrijft alle coaches uit het geheugen naar het databestand
+     */
     public void saveManageables(boolean firstSave)
     {
         if (!BAVM.getFileManager().firstStart)
@@ -88,6 +105,9 @@ public class CoachManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Genereert de coaches
+     */
     public void generateManageables()
     {
         for (int i = 0; i < 74; i++)
@@ -100,6 +120,14 @@ public class CoachManager<T extends Manageable> extends Manager<T>
         this.saveManageables(true);
     }
 
+    /**
+     * Methode die de tranfer van een coach op zich neemt
+     *
+     * @param coach         De coach in kwestie
+     * @param receivingTeam Team die de coach ontvangt
+     * @param price         Prijs van de tranfer
+     * @return Het resultaat van de transfer
+     */
     public TransferResult transferCoach(Coach coach, Team receivingTeam, double price)
     {
         if (receivingTeam.getTeamInfo().getTeamGeld().getCurrentGeld() < price)
@@ -118,6 +146,11 @@ public class CoachManager<T extends Manageable> extends Manager<T>
         return TransferResult.SUCCESS_COACH;
     }
 
+    /**
+     * Returnt een arraylist met alle coaches die beschikbaar zijn voor een transfer
+     *
+     * @return Een arraylist met alle coaches die beschikbaar zijn voor een transfer
+     */
     public ArrayList<Coach> getFreeCoaches()
     {
         ArrayList<Coach> freeCoaches = new ArrayList<>();

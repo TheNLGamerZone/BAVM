@@ -19,7 +19,7 @@ public class Game
     private int[] gameResult;
     private ArrayList<String> gameLog = new ArrayList<>();
 
-    /*
+    /**
      * Deze methode is de constructor voor het Game object, dat op basis van de team id's van het thuis- en uitteam de wedstrijd simuleert,
      * de twee variabelen zijn de gameResult (uitslag) en gameLog (log vanwedstrijdverloop
      */
@@ -29,9 +29,9 @@ public class Game
          * simulateGame simuleert een voetbalwedstrijd met enkel de id van de twee teams, een home team en een visitor.
          * Verder zijn er nog twee andere methodes die helpen bij het simuleren.
          */
-    	
-    	//een instance van random wordt gemaakt voor willekeurige getallen en een array met als eerste waarde de goals van home en als tweede van visit
-    	Random rnd = new Random();
+
+        //een instance van random wordt gemaakt voor willekeurige getallen en een array met als eerste waarde de goals van home en als tweede van visit
+        Random rnd = new Random();
         int[] goalResult = new int[2];
 
         //er worden twee team objecten geimporteerd op basis van de id's
@@ -42,18 +42,6 @@ public class Game
         HashMap<StatCoefficient, Double> homeCoefficients = home.getTeamInfo().getStatCoefficients();
         HashMap<StatCoefficient, Double> visitorCoefficients = visitor.getTeamInfo().getStatCoefficients();
 
-        //DEBUG
-        /*for (StatCoefficient statCoefficient : homeCoefficients.keySet())
-        {
-            System.out.println("HOME - " + statCoefficient.name() + ": " + homeCoefficients.get(statCoefficient));
-        }
-
-        for (StatCoefficient statCoefficient : visitorCoefficients.keySet())
-        {
-            System.out.println("VISITOR - " + statCoefficient.name() + ": " + visitorCoefficients.get(statCoefficient));
-        }*/
-
-        
         /*
          * Geluk van de wedstrijd wordt hier aangemaakt. Er is altijd een team met minder geluk en een willekeruig getal voorspelt welke.
          * Het verschil zit altijd tussen de 0.075 en 0.275
@@ -68,11 +56,13 @@ public class Game
         double homeLuck;
         double visitorLuck;
 
-        //hier worden de gelukwaardes aan de teams gegeven
-        if (chooser == 1) {
+        // Hier worden de gelukwaardes aan de teams gegeven
+        if (chooser == 1)
+        {
             homeLuck = luck1;
             visitorLuck = luck2;
-        } else {
+        } else
+        {
             homeLuck = luck2;
             visitorLuck = luck1;
         }
@@ -88,7 +78,7 @@ public class Game
 
 
         /*
-         * deze for loop geeft de waarde van de coefficienten aan een simpele array met enkel een index en geen key, zoals de hashmap waar de
+         * Deze for loop geeft de waarde van de coefficienten aan een simpele array met enkel een index en geen key, zoals de hashmap waar de
          * coefficienten in worden opgeslagen. De coefficienten worden ook *10 gedaan voor meer verschil in de formules en de geluksfactor wordt
          * ingebracht, met de verhouding 0.6 deel stats en 0.4 deel geluk.
          */
@@ -101,7 +91,7 @@ public class Game
             visitValues[i] = 10 * ((1.2 * visitor.getTeamInfo().getCoefficientValue(i) / 100) + (0.8 * visitorLuck + 0.5));
         }
 
-        //variabelen initialyzen
+        // Variabelen initializen
         int time = 0;
         int ballQuarter = 0;
         int ballPossession = 0;
@@ -111,7 +101,7 @@ public class Game
         boolean conditionModify = false;
 
         /*
-         * dit is de main while loop. Time is in dit geval de tijd in minuten, de loop kan echer ook teruggaan zonder dat de tijd meer wordt,
+         * Dit is de main while loop. Time is in dit geval de tijd in minuten, de loop kan echer ook teruggaan zonder dat de tijd meer wordt,
          * in het echt kan namelijk een team ook binnen een minuut meerdere helften vooruit gaan.
          */
         while (time < 90)
@@ -123,7 +113,6 @@ public class Game
              * De waardes worden aangepast op basis van de conditieskills
              */
 
-            //TODO fix memory leak?
             if (conditionModify)
             {
                 for (int i = 0; i < 5; i++)
@@ -144,18 +133,20 @@ public class Game
                 {
                     visitValues[0] = visitValues[0] * 0.850;
                     visitValues[1] = visitValues[1] * 0.925;
-                } else {
+                } else
+                {
                     homeValues[0] = homeValues[0] * 0.850;
                     homeValues[1] = homeValues[1] * 0.925;
                 }
                 modifyCoefficients = false;
             }
 
-            if (conflictResult != -1) {
+            if (conflictResult != -1)
+            {
                 conflictResult = getConflictResult(homeValues, visitValues, ballPossession);
                 String conflictString = (ballPossession == 0) ?
                         "Conflict result of " + home.getTeamName() + " against " + visitor.getTeamName() + " on quarter " + ballQuarter + " equals " + conflictResult :
-                        "Conflict result of " + visitor.getTeamName() + " against " + home.getTeamName() + " on quarter " + ballQuarter + " equals " + conflictResult ;
+                        "Conflict result of " + visitor.getTeamName() + " against " + home.getTeamName() + " on quarter " + ballQuarter + " equals " + conflictResult;
                 gameLog.add(conflictString);
             }
 
@@ -165,34 +156,38 @@ public class Game
              */
             switch (conflictResult)
             {
-                case -1 :
-                	//voor als er iets mis is of als er een nieuwe goal attempt gedaan moet worden
+                case -1:
+                    // Voor als er iets mis is of als er een nieuwe goal attempt gedaan moet worden
                     gameLog.add("conflictResult = -1, skipping getConflictResult...");
                     break;
-                case 0 :
-                    //balbezit wordt veranderd
-                	if (ballPossession == 0) {
+                case 0:
+                    // Balbezit wordt veranderd
+                    if (ballPossession == 0)
+                    {
                         ballPossession = 1;
                         gameLog.add(visitor.getTeamName() + " is now in possession of the ball!");
-                    } else {
+                    } else
+                    {
                         ballPossession = 0;
                         gameLog.add(home.getTeamName() + " is now in possession of the ball!");
                     }
                     break;
-                case 1 :
-                    //de ballquarter is absoluut, dus voor visit moeten ze op kwart 0 komen en voor home op kwart 3
-                	if (ballPossession == 0) {
+                case 1:
+                    // De ballquarter is absoluut, dus voor visit moeten ze op kwart 0 komen en voor home op kwart 3
+                    if (ballPossession == 0)
+                    {
                         ballQuarter++;
                         gameLog.add(home.getTeamName() + " has advanced to quarter " + ballQuarter + "!");
-                    } else {
+                    } else
+                    {
                         ballQuarter--;
                         gameLog.add(visitor.getTeamName() + " has advanced to quarter " + ballQuarter + "!");
                     }
                     break;
-                case 2 :
-                    //tijd gaat verder en hij continued naar het einde van de loop, hij slaat goalberekening dus over
+                case 2:
+                    // Tijd gaat verder en hij continued naar het einde van de loop, hij slaat goalberekening dus over
                     gameLog.add("No progress has been made!");
-                	time++;
+                    time++;
                     conditionModify = true;
                     continue;
             }
@@ -200,40 +195,47 @@ public class Game
             conflictResult = 0;
 
             /*
-             * als het programma verder gaat wordt er gekeken of ze kwart 0 of kwart 3 hebben verslagen en dus op de volgende "kwart" zijn.
+             * Als het programma verder gaat wordt er gekeken of ze kwart 0 of kwart 3 hebben verslagen en dus op de volgende "kwart" zijn.
              * op basis daarvan wordt een attemptResult berekent door de methode getAttemptResult
              */
-            if (ballQuarter == 4 && ballPossession == 0) {
+            if (ballQuarter == 4 && ballPossession == 0)
+            {
                 attemptResult = getAttemptResult(homeValues, visitValues, ballPossession);
                 gameLog.add("Atemmpt result of " + visitor.getTeamName() + " against " + home.getTeamName() + " equals " + attemptResult);
-            } else if (ballQuarter == -1 && ballPossession == 1) {
+            } else if (ballQuarter == -1 && ballPossession == 1)
+            {
                 attemptResult = getAttemptResult(homeValues, visitValues, ballPossession);
                 gameLog.add("Attempt result of " + home.getTeamName() + " against " + visitor.getTeamName() + " equals " + attemptResult);
-            } else {
+            } else
+            {
                 attemptResult = -1;
             }
 
-            switch (attemptResult) {
-                case -1 :
-                    //er moet geen goal berekent worden
-                	time++;
+            switch (attemptResult)
+            {
+                case -1:
+                    // Er moet geen goal berekent worden
+                    time++;
                     conditionModify = true;
                     break;
-                case 0 :
-                    //goalkans gefaald, ander krijgt de bal op hun eigen kwart
-                	if (ballPossession == 0) {
+                case 0:
+                    // Goalkans gefaald, ander krijgt de bal op hun eigen kwart
+                    if (ballPossession == 0)
+                    {
                         ballPossession = 1;
                         ballQuarter = 3;
                         gameLog.add("Goal attempt by " + visitor.getTeamName() + " has failed, " + home.getTeamName() + " is now in possession of the ball!");
-                    } else {
+                    } else
+                    {
                         ballPossession = 0;
                         ballQuarter = 0;
                         gameLog.add("Goal attempt by " + visitor.getTeamName() + " has failed, " + home.getTeamName() + " is now in possession of the ball!");
                     }
                     break;
-                case 1 :
-                    //goal gelukt, modifyCoefficients zodat het volgende goal moeilijk wordt (om groot aantal goals tegen te werken)
-                	if (ballPossession == 0) {
+                case 1:
+                    // Goal gelukt, modifyCoefficients zodat het volgende goal moeilijk wordt (om groot aantal goals tegen te werken)
+                    if (ballPossession == 0)
+                    {
                         goalResult[0]++;
                         ballQuarter = 1;
                         ballPossession = 1;
@@ -243,7 +245,8 @@ public class Game
                         gameLog.add(home.getTeamName() + " has scored!");
                         home.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSFOR, 1);
                         visitor.getTeamInfo().increaseTeamScores(TeamInfo.Score.GOALSAGAINST, 1);
-                    } else {
+                    } else
+                    {
                         goalResult[1]++;
                         ballQuarter = 2;
                         ballPossession = 0;
@@ -257,10 +260,10 @@ public class Game
 
                     gameLog.add("Current stance is " + goalResult[0] + "-" + goalResult[1] + ".");
                     break;
-                case 2 :
-                    //opnieuw, nu skipt hij de conflict berekenaar en probeert ie opnieuw een goal totdat er een uitkomst is.
+                case 2:
+                    // Opnieuw, nu skipt hij de conflict berekenaar en probeert ie opnieuw een goal totdat er een uitkomst is.
                     gameLog.add("Goal attempt failed, but they are looking for a rebound!");
-                	conflictResult = -1;
+                    conflictResult = -1;
                     break;
             }
 
@@ -297,25 +300,36 @@ public class Game
         gameResult = goalResult;
     }
 
-    /*
-     * Deze twee methode's worden gebruikt om de variabelen te "getten"
+    /**
+     * Returnt de uitslag van de game
+     *
+     * @return Het gameresult
      */
-
     public int[] getGameResult()
     {
         return gameResult;
     }
 
+    /**
+     * Returnt de gamelog
+     *
+     * @return De Gamelog
+     */
     public ArrayList<String> getGameLog()
     {
         return gameLog;
     }
 
-    /*
+    /**
      * Deze methode berekent het conflictResult, op basis daarvan wordt elke minuut beslist wat er gebeurt
+     *
+     * @param homeValues     De waardes voor het team dat thuis speelt
+     * @param visitValues    De waardes voor het team dat uit speelt
+     * @param ballPossession Het balbezit
+     * @return Het conflict result
      */
-
-    public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession) {
+    public static int getConflictResult(double[] homeValues, double[] visitValues, int ballPossession)
+    {
         double attValues[];
         double defValues[];
         Random rnd = new Random();
@@ -343,18 +357,14 @@ public class Game
         double attackResult = Math.round((attValues[1] * (1 + (rnd.nextInt(20) / 10))) - (defValues[3] * (1 + (rnd.nextInt(20) / 10))));
 
 
-        
         if (attackResult < 0)
         {
-            //als de balbezit hoog genoeg is hebben ze een kans om alsnog de bal te houden.
+            // Als de balbezit hoog genoeg is hebben ze een kans om alsnog de bal te houden.
             attackResult = Math.round(attackResult + (0.25 * (defValues[2] * (1 + Math.random()))));
         }
 
-        //DEBUG
-        //BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", conflictResult: " + attackResult);
-
         /*
-         * de scenario's
+         * De scenario's
          */
         if (attackResult < 0)
         {
@@ -371,14 +381,19 @@ public class Game
         }
     }
 
-    /*
+    /**
      * Als een team de 4e helft heeft gepasseerd (vanuit hun oogpunt) wordt deze methode aangeroepen en die berekent of het goal wordt of niet
+     *
+     * @param homeValues     De waardes voor het team dat thuis speelt
+     * @param visitValues    De waardes voor het team dat uit speelt
+     * @param ballPossession Het balbezit
+     * @return Het pogingresultaat
      */
+    public static int getAttemptResult(double[] homeValues, double[] visitValues, int ballPossession)
+    {
+        // Doet hetzelfde als conflictresult maar dan met andere stats (afmaken en keeper)
 
-    public static int getAttemptResult(double[] homeValues, double[] visitValues, int ballPossession) {
-        //doet hetzelfde als conflictresult maar dan met andere stats (afmaken en keeper)
-    	
-    	double attValues[];
+        double attValues[];
         double defValues[];
 
         if (ballPossession == 0)
@@ -394,38 +409,38 @@ public class Game
             return -1;
         }
 
-        //attempt formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd
+        // Attempt formula, 0=afm, 1=att, 2=pos, 3=def, 4=kep, 5=cnd
         double attemptResult = Math.round((attValues[0] * (1 + Math.random())) - (defValues[4] * (1 + Math.random())));
 
         if (attemptResult < 0)
         {
-        	//als de balbezit hoog genoeg is hebben ze een kans om alsnog de bal te houden.
+            // Als de balbezit hoog genoeg is hebben ze een kans om alsnog de bal te houden.
             attemptResult = Math.round(attemptResult + (0.3 * (attValues[2] * (1 + Math.random()))));
         }
 
-        //DEBUG
-        //BAVM.getDisplay().appendText("ballpossession: " + ballPossession + ", attemptResult: " + attemptResult);
-
         if (attemptResult < 0)
         {
-            //lose possession
+            // Lose possession
             return 0;
         } else if (attemptResult > 4)
         {
-            //goal
-            //BAVM.getDisplay().appendText("Team " + ballPossession + " has scored!");
+            // Goal
             return 1;
         } else
         {
-            //try again
+            // Try again
             return 2;
         }
     }
 
-    /*
+    /**
      * Deze methode zorgt dat de spelers beter worden na de wedstrijd
+     *
+     * @param home        Team dat thuis speelt
+     * @param visitor     Team dat uit speelt
+     * @param homeLuck    Geluk van het team dat thuis speelt
+     * @param visitorLuck Geluk van het team dat uit speelt
      */
-
     public static void playerExperience(Team home, Team visitor, double homeLuck, double visitorLuck)
     {
         double keeperBases[] = {0.4, 0.4, 0.6, 0.8, 1.0, 1.0};
@@ -434,7 +449,8 @@ public class Game
         double attackerBases[] = {1.0, 1.0, 0.5, 0.5, 0.2, 1.0};
 
 
-        for (PlayerStats.Stat stat : PlayerStats.Stat.values()) {
+        for (PlayerStats.Stat stat : PlayerStats.Stat.values())
+        {
             for (int i = 0; i < 2; i++)
             {
                 Team team;
@@ -444,12 +460,13 @@ public class Game
                 {
                     team = home;
                     upgradeValue = homeLuck / 4;
-                } else {
+                } else
+                {
                     team = visitor;
                     upgradeValue = visitorLuck / 4;
                 }
 
-                //Attackers
+                // Attackers
                 for (Player player : team.getTeamInfo().getPlayerPlacement().getAttackers().stream().collect(Collectors.toList()))
                 {
                     upgradeValue = attackerBases[stat.getLocation()] * upgradeValue;
@@ -462,7 +479,7 @@ public class Game
                     player.getPlayerStats().increaseSkill(stat, upgrade);
                 }
 
-                //Midfielders
+                // Midfielders
                 for (Player player : team.getTeamInfo().getPlayerPlacement().getMidfielders().stream().collect(Collectors.toList()))
                 {
                     upgradeValue = midfielderBases[stat.getLocation()] * upgradeValue;
@@ -475,7 +492,7 @@ public class Game
                     player.getPlayerStats().increaseSkill(stat, upgrade);
                 }
 
-                //Defenders
+                // Defenders
                 for (Player player : team.getTeamInfo().getPlayerPlacement().getDefenders().stream().collect(Collectors.toList()))
                 {
                     upgradeValue = defenderBases[stat.getLocation()] * upgradeValue;
@@ -488,7 +505,7 @@ public class Game
                     player.getPlayerStats().increaseSkill(stat, upgrade);
                 }
 
-                //Keepers
+                // Keepers
                 Player player = team.getTeamInfo().getPlayerPlacement().getKeeper();
 
                 upgradeValue = keeperBases[stat.getLocation()] * upgradeValue;

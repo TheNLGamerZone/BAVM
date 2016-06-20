@@ -94,6 +94,12 @@ public class PlayerStats
         return 0.0;
     }
 
+    /**
+     * Geeft de waarde van de skill
+     *
+     * @param stat De stat
+     * @return De waarde van de skill
+     */
     public double getValue(Stat stat)
     {
         for (Stat skill : Stat.values())
@@ -141,7 +147,6 @@ public class PlayerStats
     }
 
 
-
     /**
      * Zoekt de stat bij de string
      *
@@ -163,20 +168,30 @@ public class PlayerStats
         return null;
     }
 
+    /**
+     * Returnt de skill op een bepaalde index
+     *
+     * @param index De index
+     * @return De skill
+     */
     public static Stat getSkill(int index)
     {
-        switch (index)
+        for (Stat stat : Stat.values())
         {
-            case 0 : return Stat.AFMAKEN;
-            case 1 : return Stat.AANVAL;
-            case 2 : return Stat.BALBEZIT;
-            case 3 : return Stat.VERDEDIGEN;
-            case 4 : return Stat.DOELMAN;
-            case 5 : return Stat.CONDITIE;
-            default : return null;
+            if (stat.getLocation() == index)
+            {
+                return stat;
+            }
         }
+
+        return null;
     }
 
+    /**
+     * Returnt de totale skill van de speler
+     *
+     * @return De totale skill van de speler
+     */
     public double getTotalSkill()
     {
         return this.totalSkill;

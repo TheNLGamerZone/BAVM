@@ -22,6 +22,19 @@ public class TeamInfo
     /*
      * TeamInfo heeft alle extra informatie van een team in zich
      */
+
+    /**
+     * TeamInfo constructor
+     *
+     * @param team         Team
+     * @param playerIDs    ID's van spelers
+     * @param coachID      ID van de coach
+     * @param teamTalent   Talent van team
+     * @param currentGeld  Huidige hoeveelheid geld
+     * @param weeklyIncome Wekelijkse inkomen
+     * @param placement    Opstelling
+     * @param scores       Scores
+     */
     public TeamInfo(Team team, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
         this.team = team;
@@ -30,8 +43,6 @@ public class TeamInfo
             teamPlayerList.add(BAVM.getPlayerManager().getPlayer(i));
         }
 
-        //DEBUG
-        //System.out.println(coachID);
         this.teamCoach = BAVM.getCoachManager().getCoach(coachID);
         this.teamGeld = new Geld(teamTalent, currentGeld, weeklyIncome, team.getID());
         this.teamTalent = teamTalent;
@@ -40,6 +51,11 @@ public class TeamInfo
         this.createScores(scores);
     }
 
+    /**
+     * Deze methode laadt en maakt zo nodig de scores van het team
+     *
+     * @param scores Scores
+     */
     private void createScores(String scores)
     {
         if (scores == null)
@@ -63,6 +79,11 @@ public class TeamInfo
         }
     }
 
+    /**
+     * Deze methode laadt de opstelling van het team
+     *
+     * @param placement De opstelling
+     */
     private void createPlacement(String placement)
     {
         if (placement.equals("null") || placement.equals(""))
@@ -118,25 +139,23 @@ public class TeamInfo
 
     public enum Score
     {
-        POINTS(0), WINS(1), DRAWS(2), LOSSES(3), GOALSFOR(4), GOALSAGAINST(5);
-        private int index;
-
-        private Score(int location)
-        {
-            this.index = location;
-        }
-
-        public int getIndex()
-        {
-            return this.index;
-        }
+        POINTS, WINS, DRAWS, LOSSES, GOALSFOR, GOALSAGAINST;
     }
 
+    /**
+     * Deze methode verhoogt de score van een team
+     *
+     * @param score     De score om te verhogen
+     * @param increment De verhoging
+     */
     public void increaseTeamScores(Score score, int increment)
     {
         teamScores.replace(score, teamScores.get(score) + increment);
     }
 
+    /**
+     * Deze methode reset alle scores voor het nieuwe seizoen
+     */
     public void resetTeamScores()
     {
         for (Score score : Score.values())
@@ -173,18 +192,11 @@ public class TeamInfo
         }
     }
 
-    public double getValue(int index)
-    {
-        // Checken of de gegeven waarde bestaat in de hashmap
-        if (index < 0 || index > statCoefficients.size())
-        {
-            return -1;
-        }
-
-
-        return (double) statCoefficients.values().toArray()[index];
-    }
-
+    /**
+     * Returnt de statcoefficienten voor het team
+     *
+     * @return De statcoefficienten voor het team
+     */
     public HashMap<StatCoefficient, Double> getStatCoefficients()
     {
         int afm = 0;
@@ -213,7 +225,7 @@ public class TeamInfo
                 continue;
             }
 
-            switch (player.getPosition().getId())
+            switch (player.getPosition().getID())
             {
                 case 0:
                     //relevant keeper stats
@@ -266,6 +278,12 @@ public class TeamInfo
         return statCoefficients;
     }
 
+    /**
+     * Returnt de waarde op een index
+     *
+     * @param index De index
+     * @return De waarde van de coefficient op de gegeven index
+     */
     public double getCoefficientValue(int index)
     {
         // Checken of de gegeven waarde bestaat in de hashmap
@@ -293,21 +311,41 @@ public class TeamInfo
         return 0.0;
     }
 
+    /**
+     * Returnt een array met alle spelers van het team
+     *
+     * @return Een array met alle spelers van het team
+     */
     public ArrayList<Player> getPlayers()
     {
         return this.teamPlayerList;
     }
 
+    /**
+     * Returnt de coach
+     *
+     * @return De coach van het team
+     */
     public Coach getTeamCoach()
     {
         return this.teamCoach;
     }
 
+    /**
+     * Methode om de coach van het team te veranderen
+     *
+     * @param coach De nieuwe coach
+     */
     public void setTeamCoach(Coach coach)
     {
         this.teamCoach = coach;
     }
 
+    /**
+     * Returnt het geld
+     *
+     * @return Het geld
+     */
     public Geld getTeamGeld()
     {
         // Quick 'n dirty
@@ -315,22 +353,42 @@ public class TeamInfo
         return this.teamGeld;
     }
 
+    /**
+     * Returnt het teamtalent
+     *
+     * @return Teamtalent
+     */
     public double getTeamTalent()
     {
         return this.teamTalent;
     }
 
+    /**
+     * Returnt de opstelling
+     *
+     * @return Opstelling
+     */
     public PlayerPlacement getPlayerPlacement()
     {
         return this.playerPlacement;
     }
 
+    /**
+     * Returnt de huidige scores van het team
+     *
+     * @return Ee huidige scores van het team
+     */
     public HashMap<Score, Integer> getTeamScores()
     {
         return teamScores;
     }
 
     @Override
+    /**
+     * Maakt en antwoord een string met alle data voor de teaminfo
+     *
+     * @return De string met alle data
+     */
     public String toString()
     {
         // Stringbuilder maken

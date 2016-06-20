@@ -1,7 +1,6 @@
 package me.nlt.bavm.season;
 
 import me.nlt.bavm.BAVM;
-import me.nlt.bavm.game.Match;
 import me.nlt.bavm.game.MatchManager;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.TeamAI;
@@ -14,8 +13,11 @@ public class Week
     public static int weekNumber;
     public static int seasonNumber;
 
-    /*
+    /**
      * Deze methode wordt aangeroepen aan het einde van de week en zorgt er o.a. voor dat alle PlannedMatches gespeeld worden
+     *
+     * @param endSeason Boolean die staat voor het einde van het seizoen
+     * @return Boolean die aangeeft of we verder zijn gegaan
      */
     public static boolean endWeek(boolean endSeason)
     {
@@ -28,9 +30,7 @@ public class Week
         MatchManager matchManager = BAVM.getMatchManager();
         MatchWeek matchWeek = BAVM.getSeason().getSeasonWeeks().get(weekNumber);
 
-        /*
-         * Team AI
-         */
+        // Team AI
         TeamAI.doTeamAI();
 
         /*
@@ -79,38 +79,36 @@ public class Week
 
                 geld.addGeld(geld.getWeeklyIncome());
             }
-
-            //BAVM.getDisplay().appendText("\t\t- - - - - - - - - - - - - - - [ WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - - - - -");
         }
 
         return true;
     }
 
-    /*
+    /**
      * Deze methode zorgt ervoor dat een seizoen correct wordt afgesloten
      */
     public static void nextSeason()
     {
-    	BAVM.getDisplay().readLine(false, "Typ iets om verder te gaan naar het volgende seizoen");
-    	
+        BAVM.getDisplay().readLine(false, "Typ iets om verder te gaan naar het volgende seizoen");
+
         for (int i = 0; i < 20; i++)
         {
             BAVM.getTeamManager().getTeam(i).getTeamInfo().resetTeamScores();
         }
-        
+
         for (Object object : BAVM.getMatchManager().manageables)
         {
-        	BAVM.getFileManager().writeData("match", "NULL <-> PH", ((Manageable) object).getID());
+            BAVM.getFileManager().writeData("match", "NULL <-> PH", ((Manageable) object).getID());
         }
-        
+
         BAVM.getMatchManager().manageables.clear();
 
         weekNumber = 0;
         seasonNumber++;
-        
+
         BAVM.getFileManager().addDate("week", true);
         BAVM.getFileManager().addDate("season", false);
-        
+
         for (int i = 0; i < 20; i++)
         {
             Geld geld = BAVM.getTeamManager().getTeam(i).getTeamInfo().getTeamGeld();
@@ -121,6 +119,11 @@ public class Week
         BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - - [ NIEUW SEIZOEN: WEEK " + (weekNumber + 1) + " ] - - - - - - - - - - -");
     }
 
+    /**
+     * Returnt het nummer van de week
+     *
+     * @return Nummer van de week
+     */
     public static int getWeekNumber()
     {
         return weekNumber;

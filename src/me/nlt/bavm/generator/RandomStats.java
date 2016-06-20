@@ -44,10 +44,9 @@ public class RandomStats
 
         for (int i = 0; i < 6; i++)
         {
-            //berekent de halfstat (helft van de stat)
-            switch (position.getId())
+            // Berekent de halfstat (helft van de stat)
+            switch (position.getID())
             {
-                //.setScale(2, RoundingMode.HALF_EVEN)
                 case 0:
                     randomStats[i] = new BigDecimal(String.valueOf((keeperBases[i] + rnd.nextInt((int) (keeperBases[i] * playerTalent) + 1)) * playerTalent), new MathContext(4)).doubleValue();
                     break;

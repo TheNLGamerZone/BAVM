@@ -27,9 +27,9 @@ public class Coach implements Manageable
     }
 
     /**
-     * Stuurt de naam van de speler terug
+     * Stuurt de naam van de coach terug
      *
-     * @return Naam van de speler
+     * @return Naam van de coach
      */
     public String getCoachName()
     {
@@ -37,9 +37,9 @@ public class Coach implements Manageable
     }
 
     /**
-     * Stuurt het ID van de speler terug
+     * Stuurt het ID van de coach terug
      *
-     * @return ID van de speler
+     * @return ID van de coach
      */
     public int getCoachID()
     {
@@ -47,9 +47,9 @@ public class Coach implements Manageable
     }
 
     /**
-     * Stuurt de stats van de speler terug
+     * Stuurt de stats van de coach terug
      *
-     * @return Stats van de speler
+     * @return Stats van de coach
      */
     public CoachStats getCoachStats()
     {
@@ -72,12 +72,22 @@ public class Coach implements Manageable
     }
 
     @Override
+    /**
+     * Stuurt het ID van de coach terug
+     *
+     * @return ID van de coach
+     */
     public int getID()
     {
         return this.coachID;
     }
 
     @Override
+    /**
+     * Stuurt een boolean terug die aangeeft of er dingen moeten worden opgeslagen
+     *
+     * @return Boolean voor opslaan
+     */
     public boolean unsavedChanges()
     {
         return unsavedChanges;

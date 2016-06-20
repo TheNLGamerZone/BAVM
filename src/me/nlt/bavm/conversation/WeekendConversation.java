@@ -5,7 +5,7 @@ import me.nlt.bavm.season.Week;
 
 public class WeekendConversation implements Conversation
 {
-    /*
+    /**
      * In deze "Conversation" kun je naar de volgende week gaan
      */
     @Override
@@ -39,10 +39,10 @@ public class WeekendConversation implements Conversation
 
             if (display.readLine(false, "").equals("123"))
             {
-               if (!Week.endWeek(true))
-               {
-                   display.appendText("Het seizoen is al klaar, wacht op de volgende.");
-               }
+                if (!Week.endWeek(true))
+                {
+                    display.appendText("Het seizoen is al klaar, wacht op de volgende.");
+                }
             } else
             {
                 display.appendText("Je eindigt dit seizoen niet.");

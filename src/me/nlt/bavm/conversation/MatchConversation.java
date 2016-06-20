@@ -8,7 +8,7 @@ import me.nlt.bavm.season.PlannedMatch;
 
 public class MatchConversation implements Conversation
 {
-    /*
+    /**
      * In deze "Conversation" kun je gespeelde wedstrijden bekijken
      */
     @Override
@@ -125,7 +125,7 @@ public class MatchConversation implements Conversation
                         display.appendText("Die wedstrijd bestaat niet!");
                     } else
                     {
-                    	match.loadLogs();
+                        match.loadLogs();
                         match.getMatchLog().forEach(display::appendText);
                         display.readLine(false, "Typ iets om terug te keren naar het wedstrijdcentrum.");
                     }

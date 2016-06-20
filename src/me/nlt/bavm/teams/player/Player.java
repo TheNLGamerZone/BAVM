@@ -74,18 +74,28 @@ public class Player implements Manageable
         return this.playerStats;
     }
 
+    /**
+     * Returnt de marktwaarde van de speler
+     *
+     * @return Marktwaarde
+     */
     public double getMarketValue()
     {
         return this.marketValue;
     }
 
+    /**
+     * Methode om de martktwaarde van een speler aan te passen
+     *
+     * @param newValue De nieuwe marktwaarde
+     */
     public void setMarketValue(double newValue)
     {
         this.marketValue = newValue;
     }
 
     /**
-     * Maakt en antwoord een string met alle data voor players
+     * Maakt en antwoord een string met alle data voor de speler
      *
      * @return De string met alle data
      */
@@ -101,12 +111,22 @@ public class Player implements Manageable
     }
 
     @Override
+    /**
+     * Stuurt het ID van de speler terug
+     *
+     * @return ID van de speler
+     */
     public int getID()
     {
         return this.playerID;
     }
 
     @Override
+    /**
+     * Stuurt een boolean terug die aangeeft of er dingen moeten worden opgeslagen
+     *
+     * @return Boolean voor opslaan
+     */
     public boolean unsavedChanges()
     {
         return unsavedChanges;

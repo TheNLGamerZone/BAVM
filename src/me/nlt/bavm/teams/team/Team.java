@@ -13,10 +13,22 @@ public class Team implements Manageable
 
     public boolean unsavedChanges;
 
+    /**
+     * Team constructor
+     *
+     * @param teamName     Naam van het team
+     * @param directorName Naam van de directeur
+     * @param teamID       ID van het team
+     * @param playerIDs    ID's van de spelers in het team
+     * @param coachID      ID van de coach
+     * @param teamTalent   Teamtalent
+     * @param currentGeld  Huidige hoeveelheid geld
+     * @param weeklyIncome Wekelijkse inkomen
+     * @param placement    Opstelling
+     * @param scores       Scores
+     */
     public Team(String teamName, String directorName, int teamID, int[] playerIDs, int coachID, double teamTalent, int currentGeld, int weeklyIncome, String placement, String scores)
     {
-        //System.out.printf("Created team %s (p=%d, id=%d, t=%f)%n", teamName, playerIDs.length, teamID, teamTalent);
-
         this.teamName = teamName;
         this.directorName = directorName;
         this.teamID = teamID;
@@ -30,32 +42,62 @@ public class Team implements Manageable
         this.unsavedChanges = false;
     }
 
+    /**
+     * Returnt de naam van het team
+     *
+     * @return De naam
+     */
     public String getTeamName()
     {
         return this.teamName;
     }
 
+    /**
+     * Returnt de naam van de directeur
+     *
+     * @return De naam
+     */
     public String getDirectorName()
     {
         return this.directorName;
     }
 
+    /**
+     * Returnt de TeamInfo van dit team
+     *
+     * @return De TeamInfo van dit team
+     */
     public TeamInfo getTeamInfo()
     {
         return this.teamInfo;
     }
 
+    /**
+     * Methode om de naam van de directeur aan te passen
+     *
+     * @param directorName Nieuwe naam
+     */
     public void setDirectorName(String directorName)
     {
         this.directorName = directorName;
     }
 
+    /**
+     * Methode om de naam van het team aan te passen
+     *
+     * @param teamName Nieuwe naam
+     */
     public void setTeamName(String teamName)
     {
         this.teamName = teamName;
     }
 
     @Override
+    /**
+     * Maakt en antwoord een string met alle data voor het team
+     *
+     * @return De string met alle data
+     */
     public String toString()
     {
         return "Team{" +
@@ -67,12 +109,22 @@ public class Team implements Manageable
     }
 
     @Override
+    /**
+     * Stuurt het ID van het team terug
+     *
+     * @return ID van het team
+     */
     public int getID()
     {
         return this.teamID;
     }
 
     @Override
+    /**
+     * Stuurt een boolean terug die aangeeft of er dingen moeten worden opgeslagen
+     *
+     * @return Boolean voor opslaan
+     */
     public boolean unsavedChanges()
     {
         return unsavedChanges;

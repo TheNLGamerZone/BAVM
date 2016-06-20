@@ -12,10 +12,15 @@ import java.util.ArrayList;
 
 public class TeamManager<T extends Manageable> extends Manager<T>
 {
-	public boolean dataLoaded = false;
+    public boolean dataLoaded = false;
     public Team marketTeam;
     public Team playerTeam;
 
+    /**
+     * TeamManager constructor
+     *
+     * @param generateTeams Boolean die aangeeft of er nieuwe teams gemaakt moeten worden
+     */
     public TeamManager(boolean generateTeams)
     {
         super();
@@ -30,6 +35,12 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         }
     }
 
+    /**
+     * Returnt het team met het gegeven ID
+     *
+     * @param teamID ID
+     * @return Het team met het gegeven ID
+     */
     public Team getTeam(int teamID)
     {
         T team = super.getManageable(teamID);
@@ -37,12 +48,20 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         return team == null ? null : (Team) team;
     }
 
+    /**
+     * Returnt alle teams die geladen zijn
+     *
+     * @return Alle teams
+     */
     public ArrayList<T> getLoadedTeams()
     {
         return manageables;
     }
 
     @Override
+    /**
+     * Laadt alle spelers uit het databestand en schrijft ze naar het geheugen
+     */
     public void loadManageables()
     {
         int amount = BAVM.getFileManager().readAmount("teams");
@@ -70,11 +89,14 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         BAVM.getDisplay().clearText();
         BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  Alle coaches gelade", "  Alle teams geladen");
         System.out.println("Alle teams geladen");
-        
+
         dataLoaded = true;
     }
 
     @Override
+    /**
+     * Schrijft alle teams uit het geheugen naar het databestand
+     */
     public void saveManageables(boolean firstSave)
     {
         if (!BAVM.getFileManager().firstStart)
@@ -102,6 +124,9 @@ public class TeamManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Genereert de teams
+     */
     public void generateManageables()
     {
         int teams = 19;

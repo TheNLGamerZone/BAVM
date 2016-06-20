@@ -1,9 +1,9 @@
 package me.nlt.bavm.teams.player;
 
 import me.nlt.bavm.BAVM;
+import me.nlt.bavm.Factory;
 import me.nlt.bavm.generator.RandomNames;
 import me.nlt.bavm.generator.RandomStats;
-import me.nlt.bavm.Factory;
 import me.nlt.bavm.teams.Manageable;
 import me.nlt.bavm.teams.Manager;
 import me.nlt.bavm.teams.Market;
@@ -15,8 +15,13 @@ import java.util.ArrayList;
 
 public class PlayerManager<T extends Manageable> extends Manager<T>
 {
-	public boolean dataLoaded = false;
-	
+    public boolean dataLoaded = false;
+
+    /**
+     * PlayerManager constructor
+     *
+     * @param generatePlayers Boolean die aangeeft of er spelers gegeneerd moeten worden
+     */
     public PlayerManager(boolean generatePlayers)
     {
         super();
@@ -36,6 +41,9 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Laadt alle spelers uit het databestand en schrijft ze naar het geheugen
+     */
     public void loadManageables()
     {
         int amount = BAVM.getFileManager().readAmount("players");
@@ -46,7 +54,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             {
                 manageables.add((T) Factory.createPlayer(BAVM.getFileManager().readData("player", i)));
 
-                if (i%30 == 0)
+                if (i % 30 == 0)
                 {
                     BAVM.getDisplay().clearText();
                     BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  " + i + " spelers geladen ...");
@@ -58,11 +66,14 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         }
 
         System.out.println("Alle spelers geladen");
-        
+
         dataLoaded = true;
     }
 
     @Override
+    /**
+     * Schrijft alle spelers uit het geheugen naar het databestand
+     */
     public void saveManageables(boolean firstSave)
     {
         if (!BAVM.getFileManager().firstStart)
@@ -88,6 +99,9 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
     }
 
     @Override
+    /**
+     * Genereert de spelers
+     */
     public void generateManageables()
     {
         // Amount of players to generate
@@ -104,6 +118,12 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         BAVM.getDisplay().appendText(playersToGenerate + " spelers gegenereerd!");
     }
 
+    /**
+     * Returnt de string die de data bevat om PlayerPlacement te maken
+     *
+     * @param playerIDs De ID's van de spelers
+     * @return De placementstring
+     */
     public String getPlacementString(int[] playerIDs)
     {
         ArrayList<Player> keepers = new ArrayList<>();
@@ -167,6 +187,12 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         return stringBuilder.toString();
     }
 
+    /**
+     * Returnt een array met alle ID's van spelers zonder club
+     *
+     * @param teamManager De teammanager
+     * @return Een array met alle ID's van spelers zonder club
+     */
     public int[] getFreePlayers(TeamManager teamManager)
     {
         ArrayList<Player> players = new ArrayList<>();
@@ -179,7 +205,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             players.add(player);
         }
 
-        for(Object object : teamManager.getLoadedTeams())
+        for (Object object : teamManager.getLoadedTeams())
         {
             Team team = (Team) object;
 
@@ -196,9 +222,15 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         return playerIDs;
     }
 
+    /**
+     * Returnt een array met ID's van spelers die passen bij het teamtalent
+     *
+     * @param teamManager De teammanager
+     * @param teamTalent  Het teamtalent
+     * @return Een array met ID's van spelers die passen bij het teamtalent
+     */
     public int[] getPlayerIDs(TeamManager teamManager, double teamTalent)
     {
-        //System.out.println("----------------");
         int percentage = (int) (teamTalent * 10000);
 
         ArrayList<Player> newTeam = new ArrayList<>();
@@ -224,8 +256,6 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
                 double currentDiff = Math.abs(percentage - stepSize * i);
                 double nextDiff = (i + playersLeft >= players.length ? Double.MAX_VALUE : Math.abs(percentage - stepSize * (i + 1)));
 
-                //System.out.println("CD: " + currentDiff + ", ND: " + nextDiff);
-
                 if (currentDiff < nextDiff || currentDiff == nextDiff)
                 {
                     newTeam.add(players[i - 1]);
@@ -235,16 +265,10 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
 
                 if (playersLeft <= 0)
                 {
-                    //System.out.println("BRK: " + playersLeft);
                     break;
                 }
             }
-
-            //System.out.println("NULL: " + playersLeft);
-
         }
-        //System.out.println("----------------");
-
 
         int[] playerIDs = new int[newTeam.size()];
 
@@ -253,10 +277,16 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             playerIDs[i] = newTeam.get(i).getPlayerID();
         }
 
-        //System.out.println("Size: " + newTeam.size() + " _ " + playerIDs.length);
         return playerIDs;
     }
 
+    /**
+     * Checkt of een speler al in een team zit
+     *
+     * @param teamManager De teammanager
+     * @param playerID    Het ID van de speler
+     * @return Boolean die aangeeft of de speler al in een team zit
+     */
     private boolean playerInTeam(TeamManager teamManager, int playerID)
     {
         if (teamManager.getLoadedTeams().isEmpty())
@@ -280,6 +310,15 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         return false;
     }
 
+    /**
+     * Maakt een array met spelers die voldoen aan de positie
+     * Ook worden ze gesorteerd op hun controlegetal
+     *
+     * @param teamManager          De teammanager
+     * @param position             De positie
+     * @param onlyAvailablePlayers Boolean die aangeeft of speler in een team mogen zitten of niet
+     * @return Een gesorteerd array van spelers die aan alle eisen voldoen
+     */
     private Player[] getPlayers(TeamManager teamManager, Position position, boolean onlyAvailablePlayers)
     {
         ArrayList<Player> players = new ArrayList<>();
@@ -292,88 +331,57 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             {
                 if (players.isEmpty())
                 {
-                    //System.out.println("Added first player: " + player.getPlayerStats().getCheckSum());
                     players.add(player);
                     continue;
                 }
 
                 ArrayList<Player> playerCopy = new ArrayList<>();
 
-                //System.out.println("Loop: " + player.getPlayerStats().getCheckSum());
-
                 for (int i = 0; i < players.size(); i++)
                 {
-                    //System.out.println("    Checking: " + player.getPlayerStats().getCheckSum() + " < " + players.get(i).getPlayerStats().getCheckSum());
-
                     if (players.get(i).getPlayerStats().getCheckSum() > player.getPlayerStats().getCheckSum())
                     {
-                        /*System.out.println("    true -> copying array from index " + i + " to " + (players.size() - 1));
-                        StringBuilder sb = new StringBuilder();
-
-                        for (Player player1 : players)
-                            sb.append(player1.getPlayerStats().getCheckSum() + ", ");
-
-                        System.out.println("    Old array: " + sb.toString());
-                        sb.setLength(0);*/
-
                         int size = players.size();
                         int cuts = 0;
 
                         for (int j = i; j < size; j++)
                         {
                             playerCopy.add(players.get(j));
-
-                           /* for (Player player1 : playerCopy)
-                                sb.append(player1.getPlayerStats().getCheckSum() + ", ");
-
-                            System.out.println("        Copy array: " + sb.toString() + " (j=" + j + ", m=" + (size) + ")");
-                            sb.setLength(0);*/
                             cuts++;
                         }
-                        //System.out.println("        Size copy array: " + playerCopy.size());
 
                         for (int j = 0; j < cuts; j++)
                         {
                             int index = (players.size() == 1 ? 0 : players.size() - 1);
 
-                            //System.out.println("        Removed value: " + players.get(index).getPlayerStats().getCheckSum() + " (i=" + index + ")");
                             players.remove(index);
                         }
 
                         players.add(player);
-
                         players.addAll(playerCopy);
-
-                        /*for (Player player1 : players)
-                            sb.append(player1.getPlayerStats().getCheckSum() + ", ");
-
-                        System.out.println("    New array: " + sb.toString());
-                        sb.setLength(0);*/
                         break;
                     }
 
                     if (i + 1 == players.size())
                     {
-                        //System.out.println("    highest number -> player added");
                         players.add(player);
-
-                        /*StringBuilder sb = new StringBuilder();
-                        for (Player player1 : players)
-                            sb.append(player1.getPlayerStats().getCheckSum() + ", ");
-
-                        System.out.println("    New array: " + sb.toString());*/
                         break;
                     }
-
-                    //System.out.println("    false -> checking next player");
                 }
             }
         }
 
-        //System.out.println("Size: " + players.size() );
         return players.toArray(new Player[players.size()]);
     }
 
+    /**
+     * Maakt een array met posities gebaseerd op percentages
+     * Hier worden later spelers mee gemaakt
+     *
+     * @param amount      Aantal posities om te genereren
+     * @param percentages De percentages van posities
+     * @return Een array met posities
+     */
     private Position[] generatePositions(int amount, int[] percentages)
     {
         ArrayList<Position> positions = new ArrayList<>();
@@ -397,7 +405,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
                 {
                     for (Position position : Position.values())
                     {
-                        if (position.getId() == chance)
+                        if (position.getID() == chance)
                         {
                             positions.add(position);
                         }
@@ -411,6 +419,12 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         return positions.toArray(new Position[positions.size()]);
     }
 
+    /**
+     * Returnt de speler met het gegeven ID
+     *
+     * @param playerID ID
+     * @return De speler met het ID
+     */
     public Player getPlayer(int playerID)
     {
         T player = super.getManageable(playerID);
@@ -418,11 +432,21 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         return player == null ? null : (Player) player;
     }
 
+    /**
+     * Returnt het volgende ID
+     *
+     * @return Volgende ID
+     */
     public int getNextAvailableID()
     {
         return manageables.size();
     }
 
+    /**
+     * Returnt een arraylist met alle spelers in het geheugen
+     *
+     * @return Een arraylist met alle spelers in het geheugen
+     */
     public ArrayList<T> getLoadedPlayers()
     {
         return manageables;

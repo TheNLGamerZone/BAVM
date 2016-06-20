@@ -78,6 +78,12 @@ public class CoachStats
         return 0.0;
     }
 
+    /**
+     * Geeft de waarde van de skill
+     *
+     * @param stat De skill zelf
+     * @return De waarde van de skill
+     */
     public double getValue(CStat stat)
     {
         for (CStat skill : CStat.values())
@@ -124,6 +130,11 @@ public class CoachStats
         return null;
     }
 
+    /**
+     * Geeft de totale skill
+     *
+     * @return Totale skill
+     */
     public double getTotalSkill()
     {
         double skill = 0;

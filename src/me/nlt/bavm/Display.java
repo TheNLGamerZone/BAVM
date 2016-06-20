@@ -39,6 +39,11 @@ public class Display
         this.initDisplay();
     }
 
+    /**
+     * Methode die een exception in onze console print
+     *
+     * @param exception De exception
+     */
     public void printException(Exception exception)
     {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -146,23 +151,26 @@ public class Display
         appendText("\nAfsluiten .. Forceer het programma niet af te sluiten, opslaan kan even duren!");
 
         BAVM.getFileManager().saveAll();
-        
-        if (BAVM.getFileManager().firstStart && 
-        		(BAVM.getTeamManager() == null ||
-        		!BAVM.getTeamManager().dataLoaded || 
-        		BAVM.getPlayerManager() == null || 
-        		!BAVM.getPlayerManager().dataLoaded || 
-        		!BAVM.getCoachManager().dataLoaded || 
-        		BAVM.getMatchManager() == null ||
-        		!BAVM.getMatchManager().dataLoaded))
+
+        if (BAVM.getFileManager().firstStart &&
+                (BAVM.getTeamManager() == null ||
+                        !BAVM.getTeamManager().dataLoaded ||
+                        BAVM.getPlayerManager() == null ||
+                        !BAVM.getPlayerManager().dataLoaded ||
+                        !BAVM.getCoachManager().dataLoaded ||
+                        BAVM.getMatchManager() == null ||
+                        !BAVM.getMatchManager().dataLoaded))
         {
-        	System.out.println("Bestanden en managers zijn nog niet geladen tijdens aanmaken objecten, alles is verwijderd!");
-        	BAVM.getFileManager().storageFile.delete();
+            System.out.println("Bestanden en managers zijn nog niet geladen tijdens aanmaken objecten, alles is verwijderd!");
+            BAVM.getFileManager().storageFile.delete();
         }
-        
+
         System.exit(1);
     }
 
+    /**
+     * Methode die alle tekst wist
+     */
     public void clearText()
     {
         clear = true;
@@ -209,20 +217,31 @@ public class Display
         });
     }
 
+    /**
+     * Overflow method
+     */
     public void appendText(int delay, String... strings)
     {
         this.appendText(delay, true, strings);
     }
 
+    /**
+     * Hiermee kan je berichten laten zien met een vertraging tussen de berichten
+     *
+     * @param delay   De vertraging in milisecondes
+     * @param newLine Boolean die aangeeft of alles op een nieuwe regel moet
+     * @param strings De berichten
+     */
     public void appendText(int delay, boolean newLine, String... strings)
     {
         for (String string : strings)
         {
             this.appendText(newLine, string);
 
-            try {
+            try
+            {
                 Thread.sleep(delay);
-            } catch(InterruptedException e)
+            } catch (InterruptedException e)
             {
                 BAVM.getDisplay().printException(e);
             }
@@ -232,13 +251,10 @@ public class Display
     /**
      * Hiermee kan je de input van de gebruiker lezen zonder eerst een vraag te stellen
      *
+     * @param printAnswer    Boolean die aangeeft of het antwoord van de gebruiker geprint moet worden
+     * @param questionString De vraag die eerst gesteld moet worden
      * @return De input van de gebruiker
      */
-    public String readLine()
-    {
-        return this.readLine("");
-    }
-
     public String readLine(boolean printAnswer, String questionString)
     {
         final String[] inputLine = {null};
@@ -310,16 +326,6 @@ public class Display
     public String readLine(String questionString)
     {
         return readLine(true, questionString);
-    }
-
-    /**
-     * Hiermee kan je om een nummer vragen van de gebruiker zonder een vraag te stellen
-     *
-     * @return Het resultaat in de vorm van een double
-     */
-    public double readDouble()
-    {
-        return this.readDouble(true, "");
     }
 
     public double readDouble(boolean printValue)

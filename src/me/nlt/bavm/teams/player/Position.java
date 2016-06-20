@@ -15,6 +15,15 @@ public enum Position
     private MarketFilter marketFilter;
     private String dutchAlias;
 
+    /**
+     * Position constructor
+     *
+     * @param id           ID van positie
+     * @param minStart     Minimale hoeveelheid spelers
+     * @param maxStart     Maximale hoeveeheid spelers
+     * @param marketFilter De bijhorende marketfilet
+     * @param dutchAlias   De Nederlandse naam
+     */
     private Position(int id, int minStart, int maxStart, MarketFilter marketFilter, String dutchAlias)
     {
         this.id = id;
@@ -24,21 +33,41 @@ public enum Position
         this.dutchAlias = dutchAlias;
     }
 
-    public int getId()
+    /**
+     * Returnt het ID van de positie
+     *
+     * @return ID
+     */
+    public int getID()
     {
         return this.id;
     }
 
+    /**
+     * Returnt de hoeveelheid spelers die op deze positie speler in de opstelling
+     *
+     * @return De hoeveelheid spelers
+     */
     public int getStartPlayers()
     {
         return Math.random() < .5 ? maxStart : minStart;
     }
-    
+
+    /**
+     * Returnt de bijhorende marketfilter
+     *
+     * @return De marketfilter
+     */
     public MarketFilter getMarketFiler()
     {
-    	return this.marketFilter;
+        return this.marketFilter;
     }
 
+    /**
+     * Returnt de Nederlandse naam
+     *
+     * @return De Nederlandse naam
+     */
     public String getDutchAlias()
     {
         return this.dutchAlias;

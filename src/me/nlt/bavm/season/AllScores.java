@@ -9,8 +9,10 @@ import java.util.Objects;
 
 public class AllScores
 {
-    /*
+    /**
      * Deze methode laat een mooie stand zien (alle punten, doelsaldo etc.) en returnt ook de teamID van de nr. 1
+     *
+     * @return ID van winnende team
      */
     public static int displayScores()
     {
@@ -32,54 +34,37 @@ public class AllScores
 
         for (int i = 0; i < 20; i++)
         {
-            //gestolen vna het internet, manier om de hoogste waarde van een hashmap te krijgen
             int key = points.entrySet().stream().max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey();
-            //DEBUG
-            //System.out.println("it: " + i + ", highest key: " + key);
-
 
             if (i != 0 && Objects.equals(pointsCompare.get(sortedTeams.get(i - 1)), pointsCompare.get(key)))
             {
                 int otherKey = sortedTeams.get(i - 1);
-                //DEBUG
-                //System.out.println(key + ", " + otherKey);
 
                 if (goalDifference.get(sortedTeams.get(i - 1)) > goalDifference.get(key))
                 {
                     sortedTeams.add(i, key);
                     points.remove(key);
-                    //DEBUG
-                    //System.out.println(otherKey + " > " + key);
                 } else if (goalDifference.get(sortedTeams.get(i - 1)) < goalDifference.get(key))
                 {
                     sortedTeams.remove(i - 1);
                     sortedTeams.add(key);
                     sortedTeams.add(otherKey);
                     points.remove(key);
-                    //DEBUG
-                    //System.out.println(otherKey + " < " + key);
                 } else
                 {
-                    //DEBUG
-                    //System.out.println(otherKey + " = " + key + " in goal difference");
                     if (goalsFor.get(sortedTeams.get(i - 1)) > goalsFor.get(key))
                     {
                         sortedTeams.add(i, key);
                         points.remove(key);
-                        //DEBUG
-                        //System.out.println(otherKey + " > " + key + " in goals for");
                     } else if (goalsFor.get(sortedTeams.get(i - 1)) < goalsFor.get(key))
                     {
                         sortedTeams.remove(i - 1);
                         sortedTeams.add(key);
                         sortedTeams.add(otherKey);
                         points.remove(key);
-                        //DEBUG
-                        //System.out.println(otherKey + " < " + key + " in goals for");
                     } else
                     {
-                        //DEBUG
-                        //System.out.println("pleez nevu rhappin");
+                        // pleez nevu rhappin
                         sortedTeams.add(i, key);
                         points.remove(key);
                     }

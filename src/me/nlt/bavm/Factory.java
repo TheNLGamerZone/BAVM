@@ -126,6 +126,13 @@ public class Factory
         return player;
     }
 
+    /**
+     * Deze methode maakt een coach-object uit een string met data
+     *
+     * @param coachString String met data
+     * @return De nieuwe coach
+     * @throws FactoryException Als er fouten optreden tijdens het maken van de coach
+     */
     public static Coach createCoach(String coachString) throws FactoryException
     {
         String coachName = null;
@@ -180,6 +187,13 @@ public class Factory
         return new Coach(coachName, coachID, coachStats);
     }
 
+    /**
+     * Deze methode maakt een team-object uit een string met data
+     *
+     * @param teamString String met data
+     * @return Het nieuwe team
+     * @throws FactoryException Als er fouten optreden tijdens het maken van het team
+     */
     public static Team createTeam(String teamString) throws FactoryException
     {
         String teamName = null, directorName = null, placement = null, scores = null;
@@ -267,8 +281,8 @@ public class Factory
                                 placement = infoData;
                                 break;
                             case "scores":
-                            	scores = infoData;
-                            	break;
+                                scores = infoData;
+                                break;
                         }
                     }
                     break;
@@ -285,13 +299,20 @@ public class Factory
         return new Team(teamName, directorName, teamID, playerIDs, coachID, teamTalent, currentGeld, weeklyIncome, placement, scores);
     }
 
+    /**
+     * Deze methode maakt een match-object uit een string met data
+     *
+     * @param matchString String met data
+     * @return De nieuwe match
+     * @throws FactoryException Als er fouten optreden tijdens het maken van de match
+     */
     public static Match createMatch(String matchString) throws FactoryException
     {
-    	if (matchString.equals("NULL <-> PH"))
-    	{
-    		return null;
-    	}
-    	
+        if (matchString.equals("NULL <-> PH"))
+        {
+            return null;
+        }
+
         int matchID = -1, homeID = -1, visitorID = -1;
         int[] matchResult = new int[2];
         ArrayList<String> matchLog = new ArrayList<>();

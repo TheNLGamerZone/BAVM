@@ -21,8 +21,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -88,7 +86,7 @@ public class BAVM
         playerManager = new PlayerManager<>(fileManager.firstStart);
         coachManager = new CoachManager<>(fileManager.firstStart);
         teamManager = new TeamManager<>(fileManager.firstStart);
-        matchManager = new MatchManager<>(fileManager.firstStart);
+        matchManager = new MatchManager<>();
         Week.weekNumber = fileManager.getDateNumber("week");
         Week.seasonNumber = fileManager.getDateNumber("season");
         season = new Season(true);
@@ -195,6 +193,9 @@ public class BAVM
         }
     }
 
+    /*
+     * Deze spreken wel voorzich mag ik hopen
+     */
     public static FileManager getFileManager()
     {
         return fileManager;
@@ -230,6 +231,9 @@ public class BAVM
         return season;
     }
 
+    /**
+     * Deze wordt op het eind gebruikt om de credits te laten zien
+     */
     public static void rollCredits()
     {
         display.clearText();
@@ -267,13 +271,19 @@ public class BAVM
             Week.nextSeason();
         } catch (IllegalArgumentException e)
         {
-        	BAVM.display.appendText("We konden geen output voor de muziek vinden, geen credits voor jou!");
+            BAVM.display.appendText("We konden geen output voor de muziek vinden, geen credits voor jou!");
         } catch (Exception e)
         {
-        	BAVM.getDisplay().printException(e);
+            BAVM.getDisplay().printException(e);
         }
     }
 
+    /**
+     * Deze methode reset alle data en start het programma opnieuw op
+     *
+     * @param reset Boolean die aangeeft of alle data verwijderd moet worden
+     * @return Boolean die aangeeft of dit mogelijk is
+     */
     public static boolean restartGame(boolean reset)
     {
         try
@@ -298,9 +308,10 @@ public class BAVM
                 fileManager.deleteData();
             }
             System.exit(0);
-        } catch (Exception e) {
-        	BAVM.getDisplay().printException(e);
-		} 
+        } catch (Exception e)
+        {
+            BAVM.getDisplay().printException(e);
+        }
 
         return false;
     }

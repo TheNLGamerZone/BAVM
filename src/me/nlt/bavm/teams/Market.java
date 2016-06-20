@@ -20,23 +20,44 @@ public class Market
         private int filterType;
         private String displayName;
 
+        /**
+         * MarketFilter constructor
+         *
+         * @param filterType  Type filter (0=locatie & 1=sorteren)
+         * @param displayName Naam die er mooier uitziet
+         */
         private MarketFilter(int filterType, String displayName)
         {
             this.filterType = filterType;
             this.displayName = displayName;
         }
 
+        /**
+         * Returnt het type filter
+         *
+         * @return Het type filter
+         */
         public int getFilterType()
         {
             return this.filterType;
         }
 
+        /**
+         * Returnt de naam die er mooier uitziet
+         *
+         * @return De naam die er mooier uitziet
+         */
         public String getDisplayName()
         {
             return this.displayName;
         }
     }
 
+    /**
+     * Methode die voor alle spelers hun marktwaarde berekent
+     *
+     * @param playerManager De playermanager
+     */
     public static void calculatePlayerValues(PlayerManager playerManager)
     {
         int totalValue = 112341442;
@@ -59,6 +80,12 @@ public class Market
         }
     }
 
+    /**
+     * Methode die alle spelers sorteert op basis van de gegeven filters en daar een mooie array van maakt
+     *
+     * @param marketFilters De filters
+     * @return Het bericht met de gesorteerde spelers
+     */
     public static String[] listPlayers(ArrayList<MarketFilter> marketFilters)
     {
         if (statsChanged)
@@ -107,6 +134,12 @@ public class Market
         return marketStrings.toArray(new String[marketStrings.size()]);
     }
 
+    /**
+     * Methode die spelers filtert op basis van locatiefilters
+     *
+     * @param marketFilters De locatie filters
+     * @return De gefilterde arraylist met spelers
+     */
     private static ArrayList<Player> getFilteredPlayers(MarketFilter... marketFilters)
     {
         ArrayList<Player> playersInMarket = BAVM.getTeamManager().marketTeam.getTeamInfo().getPlayers();
@@ -125,6 +158,13 @@ public class Market
         return filteredPlayers;
     }
 
+    /**
+     * Methode die spelers sorteerd op basis van filters
+     *
+     * @param players      De spelers die gesorteerd moeten worden
+     * @param marketFilter De filters
+     * @return De gesorteerde arrayList
+     */
     private static ArrayList<Player> sortPlayers(ArrayList<Player> players, MarketFilter marketFilter)
     {
         ArrayList<Player> playerList = new ArrayList<>();
