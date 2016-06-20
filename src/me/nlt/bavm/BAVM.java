@@ -20,8 +20,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.awt.*;
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class BAVM
@@ -255,9 +255,8 @@ public class BAVM
                     "TeamAI: Tip", "", "Dat was het!", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "\n"
             };
             int delay = (2 * 60 + 48) * 1000 / messages.length;
-            URL url = new URL("http://tim.suppatim.me/credit_music_edited.wav");
             Clip clip = AudioSystem.getClip();
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(BAVM.class.getResourceAsStream("/credit_music_edited.wav")));
 
             clip.open(audioInputStream);
             ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-10.0F);
