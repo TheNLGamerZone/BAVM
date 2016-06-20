@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class TeamManager<T extends Manageable> extends Manager<T>
 {
+	public boolean dataLoaded = false;
     public Team marketTeam;
     public Team playerTeam;
 
@@ -69,6 +70,8 @@ public class TeamManager<T extends Manageable> extends Manager<T>
         BAVM.getDisplay().clearText();
         BAVM.getDisplay().appendText("Thread locked, aan het wachten op een unlock", "Thread ge-unlocked", "Spelers, teams, coaches en wedstrijden worden geladen", "  Alle spelers geladen", "  Alle coaches gelade", "  Alle teams geladen");
         System.out.println("Alle teams geladen");
+        
+        dataLoaded = true;
     }
 
     @Override

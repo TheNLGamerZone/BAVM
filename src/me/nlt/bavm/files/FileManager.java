@@ -373,11 +373,11 @@ public class FileManager
 
     public void saveAll()
     {
-        BAVM.getTeamManager().saveManageables(false);
-        BAVM.getPlayerManager().saveManageables(false);
-        BAVM.getCoachManager().saveManageables(false);
-        BAVM.getMatchManager().saveManageables(false);
-
+    	if (BAVM.getTeamManager() != null && BAVM.getTeamManager().dataLoaded) BAVM.getTeamManager().saveManageables(false);
+    	if (BAVM.getPlayerManager() != null && BAVM.getPlayerManager().dataLoaded) BAVM.getPlayerManager().saveManageables(false);
+    	if (BAVM.getCoachManager() != null && BAVM.getCoachManager().dataLoaded) BAVM.getCoachManager().saveManageables(false);
+    	if (BAVM.getMatchManager() != null && BAVM.getMatchManager().dataLoaded) BAVM.getMatchManager().saveManageables(false);
+        
         this.saveData();
     }
 }

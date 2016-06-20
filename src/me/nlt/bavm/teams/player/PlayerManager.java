@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class PlayerManager<T extends Manageable> extends Manager<T>
 {
+	public boolean dataLoaded = false;
+	
     public PlayerManager(boolean generatePlayers)
     {
         super();
@@ -56,6 +58,8 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
         }
 
         System.out.println("Alle spelers geladen");
+        
+        dataLoaded = true;
     }
 
     @Override

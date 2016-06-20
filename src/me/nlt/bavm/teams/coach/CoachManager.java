@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class CoachManager<T extends Manageable> extends Manager<T>
 {
+	public boolean dataLoaded = false;
+	
     public CoachManager(boolean generateCoaches)
     {
         super();
@@ -57,6 +59,7 @@ public class CoachManager<T extends Manageable> extends Manager<T>
         }
 
         System.out.println("Alle coaches geladen");
+        dataLoaded = true;
     }
 
     @Override

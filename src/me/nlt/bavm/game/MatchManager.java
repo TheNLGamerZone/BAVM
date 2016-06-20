@@ -8,7 +8,7 @@ import me.nlt.bavm.teams.exceptions.FactoryException;
 
 public class MatchManager<T extends Manageable> extends Manager<T>
 {
-    public static boolean dataLoaded = false;
+    public boolean dataLoaded = false;
 
     public MatchManager(boolean firstStart)
     {
