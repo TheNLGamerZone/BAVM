@@ -174,7 +174,7 @@ public class ManagementConversation implements Conversation
                         {
                             display.appendText("\t\t- - - - - - - - - - [ Speler trainen ] - - - - - - - - - - ",
                                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
-                                    "Typ het ID van de speler om te trainen:\n"
+                                    "Typ het ID van de speler om te trainen:"
                             );
 
                             for (Player player : BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayers())
@@ -222,7 +222,7 @@ public class ManagementConversation implements Conversation
                             players.addAll(BAVM.getTeamManager().playerTeam.getTeamInfo().getPlayers().stream().collect(Collectors.toList()));
                         }
 
-                        display.appendText("Typ de eerste twee letters van de stat die je wilt trainen: \n");
+                        display.appendText("Typ de eerste twee letters van de stat die je wilt trainen: ");
 
                         for (PlayerStats.Stat stats : PlayerStats.Stat.values())
                         {
@@ -272,17 +272,17 @@ public class ManagementConversation implements Conversation
                                     {
                                         if (currentStat + stepSize > newStat)
                                         {
-                                            price += (currentStat * currentStat * (currentStat / 100)) * currentStat + givenUpgrade * 15000 - players.size() * 1234;
+                                            price += Math.abs((currentStat * currentStat * (currentStat / 100)) * currentStat + givenUpgrade * 15000 - players.size() * 1234);
                                             currentStat += Math.abs(currentStat - newStat);
                                         } else
                                         {
-                                            price += (currentStat * currentStat * (currentStat / 100)) * currentStat + stepSize * 15000 - players.size() * 1234;
+                                            price += Math.abs((currentStat * currentStat * (currentStat / 100)) * currentStat + stepSize * 15000 - players.size() * 1234);
                                             currentStat += stepSize;
                                         }
                                     }
                                 }
 
-                                display.appendText("Je staat op het punt " + stat.name().substring(0, 1) + stat.name().substring(1).toLowerCase() + " voor het hele team te upgraden met " + decimalFormat.format(givenUpgrade) + " voor $" + decimalFormat.format(price));
+                                display.appendText("Je staat op het punt " + stat.name().substring(0, 1) + stat.name().substring(1).toLowerCase() + " voor " + (players.size() == 1 ? players.get(0).getPlayerName() : "het hele team")+ " te upgraden met " + decimalFormat.format(givenUpgrade) + " voor $" + decimalFormat.format(price));
 
                                 for (Player player : players)
                                 {
@@ -342,7 +342,7 @@ public class ManagementConversation implements Conversation
                         display.clearText();
                         display.appendText("\t\t- - - - - - - - - - [ Coach trainen ] - - - - - - - - - - ",
                                 "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
-                                "Typ de eerste twee letters van de stat die je wilt trainen: \n"
+                                "Typ de eerste twee letters van de stat die je wilt trainen: "
                         );
 
                         for (CoachStats.CStat stats : CoachStats.CStat.values())

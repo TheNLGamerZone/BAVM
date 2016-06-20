@@ -60,6 +60,7 @@ public class MatchManager<T extends Manageable> extends Manager<T>
             if ((firstSave || match.unsavedChanges()))
             {
                 BAVM.getFileManager().writeData("match", match.toString(), match.getID());
+                match.unsavedChanges = false;
                 counter++;
             }
         }

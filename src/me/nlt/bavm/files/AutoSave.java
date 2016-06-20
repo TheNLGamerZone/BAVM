@@ -26,6 +26,7 @@ public class AutoSave
             @Override
             public void run()
             {
+                System.out.println("Starting autosave ...");
                 BAVM.getDisplay().appendText("\n  -> Automatisch aan het opslaan ...");
                 BAVM.getFileManager().saveAll();
                 BAVM.getDisplay().appendText("  -> Data automatisch opgeslagen!\n");

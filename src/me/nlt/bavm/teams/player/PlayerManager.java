@@ -75,6 +75,7 @@ public class PlayerManager<T extends Manageable> extends Manager<T>
             if ((firstSave || player.unsavedChanges()))
             {
                 BAVM.getFileManager().writeData("player", player.toString(), player.getID());
+                player.unsavedChanges = false;
                 counter++;
             }
         }

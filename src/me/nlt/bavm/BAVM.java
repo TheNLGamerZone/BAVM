@@ -110,9 +110,6 @@ public class BAVM
             new StartingConversation().startConversation(display);
         }
 
-        //TODO: Probleem met lines fixen
-        System.out.println(display.textArea.getText().trim().length());
-
         while (true)
         {
             display.clearText();

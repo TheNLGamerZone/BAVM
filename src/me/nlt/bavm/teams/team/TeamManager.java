@@ -88,6 +88,7 @@ public class TeamManager<T extends Manageable> extends Manager<T>
             if ((firstSave || team.unsavedChanges()))
             {
                 BAVM.getFileManager().writeData("team", team.toString(), team.getID());
+                team.unsavedChanges = false;
                 counter++;
             }
         }

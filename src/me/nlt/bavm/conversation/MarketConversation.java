@@ -35,7 +35,7 @@ public class MarketConversation implements Conversation
             display.appendText("\t\t- - - - - - - - - - - - - - - - [ De Markt ] - - - - - - - - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ '-3' om je filters aan te passen",
-                    "Typ '-4' om te zoeken",
+                    "Typ '-4' om te zoeken met de actieve filters",
                     "Typ '-5' om spelers te verkopen",
                     "Typ '-6' om een coach aan te nemen"
             );

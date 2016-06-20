@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class AllScores {
-    public static int displayScores() {
+public class AllScores
+{
+    public static int displayScores()
+    {
         ArrayList<Integer> sortedTeams = new ArrayList<>();
         HashMap<Integer, Integer> points = new HashMap<>();
         HashMap<Integer, Integer> pointsCompare = new HashMap<>();
@@ -22,7 +24,7 @@ public class AllScores {
             points.put(i, teamScores.get(TeamInfo.Score.POINTS));
             pointsCompare.put(i, teamScores.get(TeamInfo.Score.POINTS));
             goalDifference.put(i, teamScores.get(TeamInfo.Score.GOALSFOR) - teamScores.get(TeamInfo.Score.GOALSAGAINST));
-            goalsFor.put(i,teamScores.get(TeamInfo.Score.GOALSFOR));
+            goalsFor.put(i, teamScores.get(TeamInfo.Score.GOALSFOR));
         }
 
         for (int i = 0; i < 20; i++)
@@ -71,7 +73,8 @@ public class AllScores {
                         points.remove(key);
                         //DEBUG
                         //System.out.println(otherKey + " < " + key + " in goals for");
-                    } else {
+                    } else
+                    {
                         //DEBUG
                         //System.out.println("pleez nevu rhappin");
                         sortedTeams.add(i, key);
@@ -85,20 +88,24 @@ public class AllScores {
             }
         }
 
-        BAVM.getDisplay().appendText("\n\t\t- - - - - - - - - - - [ Competitiestand ] - - - - - - - - - - - ",
+        BAVM.getDisplay().appendText("\t\t- - - - - - - - - - - [ Competitiestand ] - - - - - - - - - - - ",
                 "\tPts\tW\tD\tL\tF\tA");
 
-                for (int i : sortedTeams)
-                {
-                    String toDisplay = BAVM.getTeamManager().getTeam(i).getTeamName() + " (ID: " + i + ")" + (i == 19 ? " (Dit ben jij)" : "") + ":\n\t";
+        int counter = 1;
+        for (int i : sortedTeams)
+        {
+            String toDisplay = counter + ": " + BAVM.getTeamManager().getTeam(i).getTeamName() + " (ID: " + i + ")" + (i == 19 ? " (Dit ben jij)" : "") + ":\n\t";
 
-                    for (TeamInfo.Score score : TeamInfo.Score.values())
-                    {
-                        toDisplay = toDisplay + BAVM.getTeamManager().getTeam(i).getTeamInfo().getTeamScores().get(score) + "\t";
-                    }
+            for (TeamInfo.Score score : TeamInfo.Score.values())
+            {
+                toDisplay = toDisplay + BAVM.getTeamManager().getTeam(i).getTeamInfo().getTeamScores().get(score) + "\t";
+            }
 
-                    BAVM.getDisplay().appendText(toDisplay);
-                }
+            BAVM.getDisplay().appendText(toDisplay);
+            counter++;
+        }
+
+        BAVM.getDisplay().appendText("\n");
 
         return sortedTeams.get(0);
     }

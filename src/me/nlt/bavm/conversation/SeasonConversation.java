@@ -11,10 +11,11 @@ public class SeasonConversation implements Conversation
     @Override
     public void startConversation(Display display)
     {
+        display.clearText();
+        
         backToMain:
         while (true)
         {
-            display.clearText();
             display.appendText("\t\t- - - - - - - - - [ Het seizoenscentrum ] - - - - - - - - -",
                     "Typ altijd '-1' om terug te keren naar de vorige setting en typ altijd '-2' om terug te keren naar het hoofdmenu",
                     "Typ -3 om de competitiestand te bekijken",
@@ -30,6 +31,7 @@ public class SeasonConversation implements Conversation
 
             if (mainNumber == -3)
             {
+                display.clearText();
                 AllScores.displayScores();
             }
 
@@ -66,7 +68,7 @@ public class SeasonConversation implements Conversation
                     toDisplay = toDisplay + team.getTeamInfo().getTeamScores().get(score) + "\t";
                 }
 
-                BAVM.getDisplay().appendText(toDisplay);
+                BAVM.getDisplay().appendText(toDisplay + "\n");
             }
         }
     }
