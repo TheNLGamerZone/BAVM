@@ -19,7 +19,7 @@ public class TeamAI {
             int currentGeld = teamInfo.getTeamGeld().getCurrentGeld();
             int weeklyIncome = teamInfo.getTeamGeld().getWeeklyIncome();
 
-            //AI must only do something if the team has enough money
+            // AI must only do something if the team has enough money
             if (currentGeld > weeklyIncome)
             {
                 ArrayList<Player> players = new ArrayList<>();

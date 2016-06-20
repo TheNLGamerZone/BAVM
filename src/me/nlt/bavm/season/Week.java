@@ -103,7 +103,7 @@ public class Week
         seasonNumber++;
         
         BAVM.getFileManager().addDate("week", true);
-        BAVM.getFileManager().addDate("season", true);
+        BAVM.getFileManager().addDate("season", false);
         
         for (int i = 0; i < 20; i++)
         {
