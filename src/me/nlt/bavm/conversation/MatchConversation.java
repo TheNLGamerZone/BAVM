@@ -47,13 +47,6 @@ public class MatchConversation implements Conversation
                             BAVM.getDisplay().appendText("Match (ID: " + matchID + "): " + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[1]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
                                     "Result: " + BAVM.getMatchManager().getMatch(matchID).getMatchGoals()[0] + "-" + BAVM.getMatchManager().getMatch(matchID).getMatchGoals()[1]);
                             playedMatches++;
-                            try
-                            {
-                                Thread.sleep(1);
-                            } catch (InterruptedException e)
-                            {
-                                Thread.currentThread().interrupt();
-                            }
                         }
                     }
                 }
@@ -101,14 +94,6 @@ public class MatchConversation implements Conversation
                     }
                     BAVM.getDisplay().appendText("\nMatch (ID: " + matchID + "): " + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[0]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[0] + ")-" + BAVM.getTeamManager().getTeam(plannedMatch.getTeamIDs()[1]).getTeamName() + " (ID: " + plannedMatch.getTeamIDs()[1] + ")",
                             "Result: " + match.getMatchGoals()[0] + "-" + match.getMatchGoals()[1]);
-
-                    try
-                    {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e)
-                    {
-                        Thread.currentThread().interrupt();
-                    }
                 }
 
                 display.readLine(false, "Typ iets om terug te keren naar het wedstrijdcentrum.");
@@ -137,6 +122,7 @@ public class MatchConversation implements Conversation
                         display.appendText("Die wedstrijd bestaat niet!");
                     } else
                     {
+                    	match.loadLogs();
                         match.getMatchLog().forEach(display::appendText);
                         display.readLine(false, "Typ iets om terug te keren naar het wedstrijdcentrum.");
                     }

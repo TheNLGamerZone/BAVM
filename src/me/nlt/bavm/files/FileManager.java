@@ -1,11 +1,9 @@
 package me.nlt.bavm.files;
 
-import me.nlt.bavm.BAVM;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,9 +13,14 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import me.nlt.bavm.BAVM;
 
 public class FileManager
 {
@@ -341,6 +344,31 @@ public class FileManager
         }
 
         return null;
+    }
+    
+    public ArrayList<String> getMatchLog(int matchID)
+    {
+    	ArrayList<String> matchLog = new ArrayList<>();
+    	String matchString = this.readData("match", matchID).trim().substring(6).replaceAll("}", "");
+    	
+    	for (String matchData : matchString.split(","))
+        {
+            String data = matchData.split("=")[1];
+
+            switch (matchData.split("=")[0])
+            {
+                case "logs":
+                    for (String logMessage : data.split("@"))
+                    {
+                        matchLog.add(logMessage.replaceAll("_", " ").replaceAll("%", ",").replaceAll("~", "="));
+                    }
+                    break;
+                default:
+                	break;
+            }
+        }
+    	
+    	return matchLog;
     }
 
     public void saveAll()

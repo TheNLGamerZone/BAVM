@@ -1,5 +1,6 @@
 package me.nlt.bavm.game;
 
+import me.nlt.bavm.BAVM;
 import me.nlt.bavm.teams.Manageable;
 
 import java.util.ArrayList;
@@ -47,7 +48,17 @@ public class Match implements Manageable
 
     public ArrayList<String> getMatchLog()
     {
-        return  matchLog;
+        return matchLog;
+    }
+    
+    public void clearMatchLog()
+    {
+    	this.matchLog.clear();
+    }
+    
+    public void loadLogs()
+    {
+    	this.matchLog = BAVM.getFileManager().getMatchLog(matchID);
     }
 
     @Override

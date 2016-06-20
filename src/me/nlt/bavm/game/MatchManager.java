@@ -26,8 +26,11 @@ public class MatchManager<T extends Manageable> extends Manager<T>
         {
             try
             {
-                manageables.add((T) Factory.createMatch(BAVM.getFileManager().readData("match", i)));
-
+            	Match match = Factory.createMatch(BAVM.getFileManager().readData("match", i));
+            	
+                manageables.add((T) match);
+                match.clearMatchLog();
+                
                 if (i%30 == 0)
                 {
                     BAVM.getDisplay().clearText();
@@ -59,7 +62,9 @@ public class MatchManager<T extends Manageable> extends Manager<T>
 
             if ((firstSave || match.unsavedChanges()))
             {
+            	match.loadLogs();
                 BAVM.getFileManager().writeData("match", match.toString(), match.getID());
+                
                 match.unsavedChanges = false;
                 counter++;
             }
@@ -82,7 +87,10 @@ public class MatchManager<T extends Manageable> extends Manager<T>
 
         manageables.add((T) match);
         match.unsavedChanges = true;
-
+        
+        BAVM.getFileManager().writeData("match", match.toString(), matchID);
+        match.clearMatchLog();
+        
         return matchID;
     }
 
